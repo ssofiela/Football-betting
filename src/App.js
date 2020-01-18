@@ -1,5 +1,6 @@
 import React from 'react';
 import Register from '../src/pages/register.js';
+import Login from '../src/pages/login.js';
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -18,6 +19,7 @@ class App extends React.Component {
 				<Switch>
 					<Route key="home" exact path="/" component={GroupPage} />
 					<Route key="register" exact path="/register" component={Register} />
+					<Route key="login" exact path="/login" component={Login} />
 					<Route key="stats" exact path="/tulokset" component={StatsPage} />
 				</Switch>
 			</Router>
