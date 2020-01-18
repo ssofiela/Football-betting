@@ -64,6 +64,7 @@ export default function Register(props) {
     };
 
     const checkEmail = () => {
+        console.log("emaill")
         setEmailError(false);
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -74,18 +75,16 @@ export default function Register(props) {
 
     const checkPassword = () => {
         setPasswordError(false);
+        console.log("passs")
         /*
         Password:
             At least 6
-            Upper Case
-            Lower Case
             Numerals
         */
         if (
-            password.length < 6 ||
-            password.toLocaleLowerCase() === password.toLocaleUpperCase() ||
-            !password.match("[0-9]+")
+            password.length < 8 || !password.match("[0-9]+")
         ) {
+            console.log("check pass",password.length < 6, password.toLocaleLowerCase() === password.toLocaleUpperCase(),  !password.match("[0-9]+") )
             setPasswordError(true)
         }
     };
@@ -100,7 +99,7 @@ export default function Register(props) {
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component='h1' variant='h5'>
-                    Kirjaudu
+                    Luo käyttäjä
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -128,6 +127,7 @@ export default function Register(props) {
                         autoComplete='current-password'
                         onChange={(event) => handlePassword(event.target.value)}
                         error={passwordError}
+                        helperText={passwordError ? "Salasanan täytyy sisältää 8 merkkiä ja ainakin yksi numero" : null}
                     />
                     {/* id='password'
                         label='Salasana'
@@ -188,9 +188,9 @@ export default function Register(props) {
                         color='primary'
                         className={classes.submit}
                         onClick={ () => {
-                            checkEmail();
-                            checkPassword();
-                            checkGroup();
+                            checkEmail()
+                            checkPassword()
+                            checkGroup()
                             if (!emailError && !passwordError && !GroupNameError){
                                 props.firebase
                                     .doCreateUserWithEmailAndPassword(email, password)
@@ -203,7 +203,7 @@ export default function Register(props) {
                             }
                         }}
                     >
-                        Kirjaudu
+                        Rekisteröidy
                     </Button>
                     <Grid container>
                         <Grid item>

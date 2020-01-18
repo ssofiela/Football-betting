@@ -31,9 +31,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Register(props) {
     const classes = useStyles();
-    /*
-    const [email, setEmail] = React.useState("");§
+
+    const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [error, setError] = React.useState(false)
 
     const handleEmail = (newEmail) => {
         setEmail(newEmail);
@@ -41,14 +42,23 @@ export default function Register(props) {
     const handlePassword = (newPassword) => {
         setPassword(newPassword);
     };
-    */
 
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Typography component="h1" variant="h5">
+                <button type="button"
+                    onClick={() => {
+                        props.firebase.doSignOut().then(() => {
+                            console.log("then log out")
+                        });
+
+                    }}
+                >
+                    Sign Out
+                </button>
+                <Typography component="h1" variant="h4">
                     Kirjaudu
                 </Typography>
                 <form className={classes.form} noValidate>
@@ -62,6 +72,8 @@ export default function Register(props) {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={(event) => handleEmail(event.target.value)}
+                        error={error}
                     />
                     <TextField
                         variant="outlined"
@@ -73,17 +85,33 @@ export default function Register(props) {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={(event) => handlePassword(event.target.value)}
+                        error={error}
+                        helperText={error ? "Sähköposti ja salasana eivät täsmää" : null}
                     />
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={ () => {
+                            setError(false);
+                            props.firebase
+                                .doSignInWithEmailAndPassword(email, password)
+                                .then(() => {
+                                    setEmail("");
+                                    setPassword("");
+                                    props.history.push("/")
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                    setError(true)
+                            })
+                        }}
                     >
                         Kirjaudu
                     </Button>
-                    <Link to="/register">{"Uusi käyttäjä? Luo käyttäjä"}</Link>
+                    <Link to="/register">{"Uusi käyttäjä? Luo tili"}</Link>
                 </form>
             </div>
         </Container>

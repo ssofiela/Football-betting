@@ -1,6 +1,7 @@
 import React from 'react';
 import {withFirebase} from "../components/Firebase";
 import SignInForm from "../components/SignIn/SignInForm.js"
+import {withRouter} from 'react-router-dom'
 
 
 
@@ -14,5 +15,5 @@ export default function Register() {
 
 }
 
-const SignInFormFirebase = withFirebase(SignInForm);
+const SignInFormFirebase = withFirebase(withRouter(SignInForm));
 
