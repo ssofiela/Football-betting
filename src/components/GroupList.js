@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import GroupListItem from './GroupListItem';
 import { withRouter } from 'react-router';
+import data from './../data/matches.json';
 
 const GroupList = props => {
 	const [groups, setGroups] = useState({});
@@ -22,9 +23,9 @@ const GroupList = props => {
 
 	const listGroups = () => {
 		const groupJSX = [];
-		console.log(groups);
-		for (const [key, value] of Object.entries(groups)) {
-			console.log(key, value);
+		const groupsArray = _.sortBy(Object.entries(groups), group => group[0]);
+		console.log(groupsArray);
+		for (const [key, value] of groupsArray) {
 			groupJSX.push(
 				<GroupListItemWithRouter
 					key={key}
@@ -34,6 +35,15 @@ const GroupList = props => {
 			);
 		}
 		return groupJSX;
+	};
+
+	const writeDB = () => {
+		for (let i = 0; i < data.matches.length; i++) {
+			props.firebase
+				.matches()
+				.doc(i.toString())
+				.set(data.matches[i]);
+		}
 	};
 
 	return <div>{listGroups()}</div>;
