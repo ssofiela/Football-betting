@@ -32,6 +32,7 @@ class Firebase {
 	getCurrentUser = () => this.auth.currentUser;
 
 	users = () => this.db.collection('users');
+
 	matches = () => this.db.collection('matches');
 	userGroups = () => this.db.collection('userGroups');
 }
