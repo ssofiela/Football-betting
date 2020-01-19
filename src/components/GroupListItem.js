@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { Redirect, Link } from 'react-router-dom';
 
 const GroupListItem = props => {
 	const styles = useStyles();
@@ -23,7 +24,16 @@ const GroupListItem = props => {
 		});
 	};
 	return (
-		<Paper elevation={3} className={styles.groupContainer}>
+		<Paper
+			elevation={3}
+			className={styles.groupContainer}
+			onClick={() =>
+				props.history.push({
+					pathname: '/veikkaa',
+					state: { matches: props.groupMatches.map(match => match.data()) }
+				})
+			}
+		>
 			<Grid container direction="row" justify="space-evenly">
 				<p>Lohko {props.groupChar}</p>
 				{getTeams()}

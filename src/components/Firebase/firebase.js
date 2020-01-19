@@ -31,6 +31,7 @@ class Firebase {
 	doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
 	users = () => this.db.collection('users');
+
 	matches = () => this.db.collection('matches');
 }
 

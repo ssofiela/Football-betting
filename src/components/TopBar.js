@@ -1,76 +1,55 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import GroupPage from '../pages/GroupPage';
-
-function TabPanel(props) {
-	const { children, value, index, ...other } = props;
-
-	return (
-		<Typography
-			component="div"
-			role="tabpanel"
-			hidden={value !== index}
-			id={`full-width-tabpanel-${index}`}
-			aria-labelledby={`full-width-tab-${index}`}
-			{...other}
-		>
-			{value === index && <Box p={3}>{children}</Box>}
-		</Typography>
-	);
-}
-
-TabPanel.propTypes = {
-	children: PropTypes.node,
-	index: PropTypes.any.isRequired,
-	value: PropTypes.any.isRequired
-};
-
-function a11yProps(index) {
-	return {
-		id: `full-width-tab-${index}`,
-		'aria-controls': `full-width-tabpanel-${index}`
-	};
-}
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Grid from '@material-ui/core/Grid';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		backgroundColor: theme.palette.background.paper,
-		width: 500
+		flexGrow: 1
+	},
+	menuButton: {
+		marginRight: theme.spacing(2)
+	},
+	title: {
+		flexGrow: 1,
+		textAlign: 'center'
+	},
+	logoutIcon: {
+		color: 'white'
 	}
 }));
 
-const TopBar = props => {
+export default function ButtonAppBar() {
 	const classes = useStyles();
-	const theme = useTheme();
-	const [value, setValue] = React.useState('/');
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-		props.history.push(newValue);
-	};
 	return (
 		<div className={classes.root}>
-			<AppBar position="static" color="default">
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					indicatorColor="primary"
-					textColor="primary"
-					variant="fullWidth"
-					aria-label="full width tabs example"
-				>
-					<Tab value="/" label="Veikkaukset" {...a11yProps(0)} />
-					<Tab value="/tulokset" label="Tulokset" {...a11yProps(1)} />
-				</Tabs>
+			<AppBar position="static">
+				<Toolbar>
+					<Grid container spacing={3} justify="center" alignItems="center">
+						<Grid item xs={2} />
+						<Grid item xs={8}>
+							<Typography variant="h5" className={classes.title}>
+								EM-KISAVEIKKAUS
+							</Typography>
+						</Grid>
+						<Grid item xs={2}>
+							<IconButton aria-label="log out">
+								<ExitToAppIcon
+									fontSize="large"
+									className={classes.logoutIcon}
+								/>
+							</IconButton>
+						</Grid>
+					</Grid>
+				</Toolbar>
 			</AppBar>
 		</div>
 	);
-};
-
-export default TopBar;
+}

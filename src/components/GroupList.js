@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import GroupListItem from './GroupListItem';
+import { withRouter } from 'react-router';
 
 const GroupList = props => {
 	const [groups, setGroups] = useState({});
@@ -25,7 +26,11 @@ const GroupList = props => {
 		for (const [key, value] of Object.entries(groups)) {
 			console.log(key, value);
 			groupJSX.push(
-				<GroupListItem key={key} groupChar={key} groupMatches={value} />
+				<GroupListItemWithRouter
+					key={key}
+					groupChar={key}
+					groupMatches={value}
+				/>
 			);
 		}
 		return groupJSX;
@@ -34,8 +39,6 @@ const GroupList = props => {
 	return <div>{listGroups()}</div>;
 };
 
-const createGroupItem = item => {
-	return <li onClick={() => console.log(item.data())}></li>;
-};
+const GroupListItemWithRouter = withRouter(GroupListItem);
 
 export default GroupList;
