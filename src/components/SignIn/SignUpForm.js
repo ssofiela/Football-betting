@@ -12,7 +12,6 @@ import Radio from '@material-ui/core/Radio';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import _ from "lodash";
 
 
 const useStyles = makeStyles(theme => ({
@@ -133,7 +132,7 @@ export default function Register(props) {
     return (
         <Container component='main' maxWidth='xs'>
             <CssBaseline />
-            <div className={classes.paper}>
+            <div onScroll={true} className={classes.paper}>
                 <Typography component='h1' variant='h5'>
                     Luo käyttäjä
                 </Typography>

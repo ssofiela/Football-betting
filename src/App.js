@@ -12,12 +12,13 @@ import StatsPage from './pages/StatsPage';
 import BetPage from './pages/BetPage';
 import TopBar from './components/TopBar';
 import BottomNav from './components/BottomNav';
+import {withFirebase} from "./components/Firebase";
 
 class App extends React.Component {
 	render() {
 		return (
 			<Router>
-				<TopBar />
+				<TopBarWithRouter />
 				<Switch>
 					<Route key="home" exact path="/" component={GroupPageWithNav} />
 					<Route key="register" exact path="/register" component={Register} />
@@ -30,7 +31,7 @@ class App extends React.Component {
 		);
 	}
 }
-
+const TopBarWithRouter = withFirebase(withRouter(TopBar));
 const BottomNavWithRouter = withRouter(BottomNav);
 const GroupPageWithNav = withRouter(GroupPage);
 

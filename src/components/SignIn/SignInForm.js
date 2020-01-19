@@ -48,16 +48,6 @@ export default function Register(props) {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <button type="button"
-                    onClick={() => {
-                        props.firebase.doSignOut().then(() => {
-                            console.log("then log out")
-                        });
-
-                    }}
-                >
-                    Sign Out
-                </button>
                 <Typography component="h1" variant="h4">
                     Kirjaudu
                 </Typography>
