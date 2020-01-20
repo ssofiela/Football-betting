@@ -1,11 +1,15 @@
 import React from 'react';
+import {withFirebase} from "../components/Firebase";
+import BetList from "../components/BetList";
 
-const BetPage = props => {
-	return (
-		<button onClick={() => console.log(props.location.state)}>
-			veikkaukset tänne
-		</button>
-	);
-};
+
+const BetPage = (props) => (
+	<div>
+		<BetListFirebase state={props}/>
+	</div>
+);
+
+const BetListFirebase = withFirebase(BetList);
 
 export default BetPage;
+
