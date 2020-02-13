@@ -57,6 +57,10 @@ export default function Register(props) {
         setPassword(newPassword);
     };
 
+    const handleGroupName = (newGroupName) => {
+        setGroupName(newGroupName);
+    };
+
     const [value, setValue] = React.useState('create');
 
     const handleChange = event => {
@@ -64,7 +68,6 @@ export default function Register(props) {
     };
 
     const checkEmail = () => {
-        console.log("emaill")
         setEmailError(false);
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -75,7 +78,6 @@ export default function Register(props) {
 
     const checkPassword = () => {
         setPasswordError(false);
-        console.log("passs")
         /*
         Password:
             At least 6
@@ -84,20 +86,53 @@ export default function Register(props) {
         if (
             password.length < 8 || !password.match("[0-9]+")
         ) {
-            console.log("check pass",password.length < 6, password.toLocaleLowerCase() === password.toLocaleUpperCase(),  !password.match("[0-9]+") )
             setPasswordError(true)
         }
     };
-    const checkGroup = () => {
-        // If value === "create"  => create new group
-        // If value === "join", check that it already exists
+    const checkGroup = async () => {
+        let error = false;
+        setGroupNameError(false);
+            let groups = await props.firebase
+                .userGroups()
+                .get()
+                .then(querySnapshot => {
+                    return querySnapshot.docs.map(item => {return {id:item.id, data: item.data()}});
+                });
+        if(value === "create") {
+           for(let i = 0; i < groups.length; i ++) {
+               if (groups[i].id === groupName){
+                   setGroupNameError(true);
+                   error = true
+               }
+           }
+            if (error === false) {
+                props.firebase.userGroups().doc(groupName).set({
+                    userIds: [props.firebase.getCurrentUser().uid]
+                })
+            }
+        } else if(value === "join") {
+            let groupFound = false;
+            for(let i = 0; i < groups.length; i ++) {
+                if (groups[i].id === groupName){
+                    groupFound = true;
+                    props.firebase.userGroups().doc(groupName).set({
+                        userIds: groups[i].data.userIds.push(props.firebase.getCurrentUser().uid)
+                    })
+                }
+            }
+            if(groupFound === false) {
+                setGroupNameError(true);
+                error = true
+            }
+        }
+        return error
     };
 
 
     return (
         <Container component='main' maxWidth='xs'>
             <CssBaseline />
-            <div className={classes.paper}>
+            <div onScroll={true} className={classes.paper}>
                 <Typography component='h1' variant='h5'>
                     Luo käyttäjä
                 </Typography>
@@ -156,7 +191,8 @@ export default function Register(props) {
                                     type='create'
                                     id='create'
                                     error={GroupNameError}
-                                    onChange={(event) => checkGroup(event.target.value)}
+                                    helperText={GroupNameError ? 'Valitsemasi nimi on jo käytössä' : null}
+                                    onChange={(event) => handleGroupName(event.target.value)}
                                     />
                                     : null
                                 }
@@ -175,8 +211,9 @@ export default function Register(props) {
                                     label='Syötä ryhmän nimi'
                                     type='join'
                                     id='join'
-                                    onChange={(event) => checkGroup(event.target.value)}
+                                    onChange={(event) => handleGroupName(event.target.value)}
                                     error={GroupNameError}
+                                    helperText={GroupNameError ? 'Laittamaasi nimeä ei löytynyt' : null}
                                 />
                                 : null
                             }
@@ -187,20 +224,22 @@ export default function Register(props) {
                         variant='contained'
                         color='primary'
                         className={classes.submit}
-                        onClick={ () => {
-                            checkEmail()
-                            checkPassword()
-                            checkGroup()
-                            if (!emailError && !passwordError && !GroupNameError){
-                                props.firebase
-                                    .doCreateUserWithEmailAndPassword(email, password)
-                                    .then(() => {
-                                        setEmail("");
-                                        setPassword("");
-                                        setGroupName("");
-                                        props.history.push("/")
-                                    })
-                            }
+                        onClick={ async () => {
+                            await checkGroup().then(groupError => {
+                                checkEmail();
+                                checkPassword();
+                                if (!emailError && !passwordError && !groupError){
+                                    props.firebase
+                                        .doCreateUserWithEmailAndPassword(email, password)
+                                        .then(() => {
+                                            setEmail("");
+                                            setPassword("");
+                                            setGroupName("");
+                                            props.history.push("/")
+                                        })
+                                }
+                            });
+
                         }}
                     >
                         Rekisteröidy
