@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function ButtonAppBar(props) {
+export default function TopBar(props) {
 	const classes = useStyles();
 
 	return (
@@ -31,19 +32,32 @@ export default function ButtonAppBar(props) {
 			<AppBar position="static">
 				<Toolbar>
 					<Grid container spacing={3} justify="center" alignItems="center">
-						<Grid item xs={2} />
+						<Grid item xs={2}>
+							<IconButton
+								aria-label="log out"
+								onClick={() => {
+									props.firebase.doSignOut().then(() => {
+										props.history.push('/login');
+									});
+								}}
+							>
+								<ArrowBack fontSize="large" className={classes.logoutIcon} />
+							</IconButton>
+						</Grid>
 						<Grid item xs={8}>
 							<Typography variant="h5" className={classes.title}>
 								EM-KISAVEIKKAUS
 							</Typography>
 						</Grid>
 						<Grid item xs={2}>
-							<IconButton aria-label="log out" onClick={() => {
-								props.firebase.doSignOut().then(() => {
-									props.history.push('/login')
-								});
-
-							}}>
+							<IconButton
+								aria-label="log out"
+								onClick={() => {
+									props.firebase.doSignOut().then(() => {
+										props.history.push('/login');
+									});
+								}}
+							>
 								<ExitToAppIcon
 									fontSize="large"
 									className={classes.logoutIcon}

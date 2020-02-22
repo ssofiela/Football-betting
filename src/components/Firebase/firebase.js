@@ -18,6 +18,7 @@ class Firebase {
 
 		this.db = app.firestore();
 		this.auth = app.auth();
+		this.firestore = app.firestore;
 	}
 
 	// *** Auth API ***
