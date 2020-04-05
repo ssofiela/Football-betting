@@ -36,9 +36,7 @@ export default function TopBar(props) {
 							<IconButton
 								aria-label="log out"
 								onClick={() => {
-									props.firebase.doSignOut().then(() => {
-										props.history.push('/login');
-									});
+									props.history.goBack();
 								}}
 							>
 								<ArrowBack fontSize="large" className={classes.logoutIcon} />
