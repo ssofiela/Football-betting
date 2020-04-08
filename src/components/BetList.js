@@ -27,7 +27,7 @@ const BetList = state => {
 		const groupJSX = [];
 		for (let i = 0; i < state.state.location.state.matches.length; i++) {
 			groupJSX.push(
-				<Paper elevation={3} className={styles.groupContainer}>
+				<Paper key={i} elevation={3} className={styles.groupContainer}>
 					<form className={styles.root} noValidate autoComplete="off">
 						<Grid container xs direction="row" key={i}>
 							<Grid item xs className={styles.center}>
@@ -83,7 +83,13 @@ const BetList = state => {
 				variant="contained"
 				color="primary"
 				className={styles.submit}
-				onClick={() => console.log(firstBets, secondBets)}
+				onClick={() => {
+					state.state.history.push({
+						pathname: '/matsi',
+						state: {matches: state.state.location.state.matches}
+					});
+					console.log(firstBets, secondBets)
+				}}
 			>
 				Tallenna
 			</Button>
