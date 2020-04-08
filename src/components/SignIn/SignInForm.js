@@ -94,7 +94,6 @@ export default function Register(props) {
                                     props.history.push("/")
                                 })
                                 .catch((error) => {
-                                    console.error(error);
                                     setError(true)
                             })
                         }}

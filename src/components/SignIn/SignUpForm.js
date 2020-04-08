@@ -44,6 +44,7 @@ export default function Register(props) {
 	const [emailError, setEmailError] = React.useState(false);
 	const [passwordError, setPasswordError] = React.useState(false);
 	const [GroupNameError, setGroupNameError] = React.useState(false);
+	const [helperTextAddress, setHelperTextAddress] = React.useState("");
 
 	const handleEmail = newEmail => {
 		setEmail(newEmail);
@@ -67,6 +68,7 @@ export default function Register(props) {
 		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 		if (!re.test(email)) {
+			setHelperTextAddress('Tarkista sähköpostiosoite');
 			setEmailError(true);
 		}
 	};
@@ -174,7 +176,9 @@ export default function Register(props) {
 						autoComplete="email"
 						autoFocus
 						onChange={event => handleEmail(event.target.value)}
-						error={emailError}
+						error={helperTextAddress !== ''}
+						helperText={helperTextAddress}
+
 					/>
 					<TextField
 						variant="outlined"
@@ -269,7 +273,6 @@ export default function Register(props) {
 									props.firebase
 										.doCreateUserWithEmailAndPassword(email, password)
 										.then(() => {
-											console.log(props.firebase.getCurrentUser());
 											value === 'join'
 												? addToGroup(groupName)
 												: createGroup(groupName);
@@ -278,7 +281,13 @@ export default function Register(props) {
 											setPassword('');
 											setGroupName('');
 											props.history.push('/');
-										});
+										})
+										.catch((error) => {
+											console.error("adsdas", error);
+											if (error.code === "auth/email-already-in-use"){
+												setHelperTextAddress("Salasana on jo käytössä")
+											}
+										})
 								}
 							});
 						}}
