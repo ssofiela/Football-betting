@@ -9,19 +9,15 @@ import Box from '@material-ui/core/Box';
 const BetList = state => {
 	const styles = useStyles();
 
-	const [firstBets, setFirstBets] = React.useState([]);
-	const [secondBets, setSecondBets] = React.useState([]);
+	const [bets, setBets] = React.useState([]);
 
-	const handleFirst = (bet, i) => {
-		const firstList = firstBets;
+
+	const handleBets = (bet, i) => {
+		const firstList = bets;
 		firstList[i] = bet;
-		setFirstBets(firstList);
+		setBets(firstList);
 	};
-	const handleSecond = (bet, i) => {
-		const secondList = secondBets;
-		secondList[i] = bet;
-		setSecondBets(secondList);
-	};
+
 
 	const listGroups = () => {
 		const groupJSX = [];
@@ -41,7 +37,7 @@ const BetList = state => {
 										type="number"
 										id="bet"
 										inputProps={{ min: 0, style: { textAlign: 'center' } }}
-										onChange={event => handleFirst(event.target.value, i)}
+										onChange={event => handleBets(event.target.value, i*2)}
 										fullwidth={true}
 									/>
 								</Box>
@@ -59,7 +55,7 @@ const BetList = state => {
 										type="number"
 										id="bet"
 										inputProps={{ min: 0, style: { textAlign: 'center' } }}
-										onChange={event => handleSecond(event.target.value, i)}
+										onChange={event => handleBets(event.target.value, i*2+1)}
 										fullwidth={true}
 									/>
 								</Box>
@@ -88,7 +84,7 @@ const BetList = state => {
 						pathname: '/matsi',
 						state: {matches: state.state.location.state.matches}
 					});
-					console.log(firstBets, secondBets)
+					console.log(bets)
 				}}
 			>
 				Tallenna

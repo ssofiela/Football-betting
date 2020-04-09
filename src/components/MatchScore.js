@@ -8,10 +8,13 @@ import _ from "lodash";
 const MacthScore = state => {
 	const styles = useStyles();
 	const [groupMembers, setGroupMembers] = React.useState('');
+	const [currentUser, setCurrentUser] = React.useState('');
+	const [groupBets, setGroupBets] = React.useState([])
 
 	// Find group members
 	useEffect(() => {
 		const currentUser = state.firebase.getCurrentUser().uid;
+		setCurrentUser(currentUser);
 		console.log("current", currentUser)
 		const findGroupMembers = async () => {
 			let groups = await state.firebase
@@ -29,6 +32,8 @@ const MacthScore = state => {
 			}
 		};
 		findGroupMembers()
+		// TODO: change groupBets using the real values
+		setGroupBets([[1,2,4,3,2,5,4,5,3,4,3,2], [3,2,4,3,2,3,4,5,4,2,3,4]])
 
 	}, []);
 
@@ -38,8 +43,13 @@ const MacthScore = state => {
 	const listGroups = () => {
 		const groupJSX = [];
 		for (let j = 0; j < groupMembers.length; j++) {
-			groupJSX.push(<p key={j}>NAME</p>)
+			if (groupMembers[j] === currentUser){
+				groupJSX.push(<p key={j}>Minä</p>)
+			} else {
+				groupJSX.push(<p key={j}>NAME</p>)
+			}
 			for (let i = 0; i < state.state.location.state.matches.length; i++) {
+				console.log("tää", groupBets[j][i], groupBets[j], groupBets[j][i*2+1])
 				groupJSX.push(
 					<Paper key={`paper${j}${i}`} elevation={3} className={styles.groupContainer}>
 						<form className={styles.root} noValidate autoComplete="off">
@@ -49,7 +59,7 @@ const MacthScore = state => {
 								</Grid>
 								<Grid item xs={2} className={styles.center}>
 									<Box width={1 / 4}>
-										<p>number</p>
+										<p>{groupBets[j][i*2]}</p>
 									</Box>
 								</Grid>
 								<Grid item xs={2} className={styles.center}>
@@ -59,7 +69,7 @@ const MacthScore = state => {
 								</Grid>
 								<Grid item xs={2} className={styles.center}>
 									<Box width={1 / 4}>
-										<p>number2</p>
+										<p>{groupBets[j][i*2+1]}</p>
 									</Box>
 								</Grid>
 								<Grid item xs className={styles.center}>
