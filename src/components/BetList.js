@@ -11,13 +11,11 @@ const BetList = state => {
 
 	const [bets, setBets] = React.useState([]);
 
-
 	const handleBets = (bet, i) => {
 		const firstList = bets;
 		firstList[i] = bet;
 		setBets(firstList);
 	};
-
 
 	const listGroups = () => {
 		const groupJSX = [];
@@ -37,7 +35,7 @@ const BetList = state => {
 										type="number"
 										id="bet"
 										inputProps={{ min: 0, style: { textAlign: 'center' } }}
-										onChange={event => handleBets(event.target.value, i*2)}
+										onChange={event => handleBets(event.target.value, i * 2)}
 										fullwidth={true}
 									/>
 								</Box>
@@ -55,7 +53,9 @@ const BetList = state => {
 										type="number"
 										id="bet"
 										inputProps={{ min: 0, style: { textAlign: 'center' } }}
-										onChange={event => handleBets(event.target.value, i*2+1)}
+										onChange={event =>
+											handleBets(event.target.value, i * 2 + 1)
+										}
 										fullwidth={true}
 									/>
 								</Box>
@@ -80,11 +80,23 @@ const BetList = state => {
 				color="primary"
 				className={styles.submit}
 				onClick={() => {
+					state.firebase
+						.users()
+						.doc(state.firebase.getCurrentUser().uid)
+						.set(
+							{
+								[state.state.location.state.groupChar]: bets
+							},
+							{ merge: true }
+						);
 					state.state.history.push({
 						pathname: '/matsi',
-						state: {matches: state.state.location.state.matches}
+						state: {
+							matches: state.state.location.state.matches,
+							groupChar: state.state.location.state.groupChar
+						}
 					});
-					console.log(bets)
+					console.log(bets);
 				}}
 			>
 				Tallenna

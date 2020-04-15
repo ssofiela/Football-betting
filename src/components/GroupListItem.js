@@ -28,10 +28,23 @@ const GroupListItem = props => {
 			elevation={3}
 			className={styles.groupContainer}
 			onClick={() =>
-				props.history.push({
-					pathname: '/veikkaa',
-					state: { matches: props.groupMatches.map(match => match.data()) }
-				})
+				props.history.push(
+					props.needBet
+						? {
+								pathname: '/veikkaa',
+								state: {
+									matches: props.groupMatches.map(match => match.data()),
+									groupChar: props.groupChar
+								}
+						  }
+						: {
+								pathname: '/matsi',
+								state: {
+									matches: props.groupMatches.map(match => match.data()),
+									groupChar: props.groupChar
+								}
+						  }
+				)
 			}
 		>
 			<Grid container direction="row" justify="space-evenly">

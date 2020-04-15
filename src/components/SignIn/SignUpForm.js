@@ -44,7 +44,7 @@ export default function Register(props) {
 	const [emailError, setEmailError] = React.useState(false);
 	const [passwordError, setPasswordError] = React.useState(false);
 	const [GroupNameError, setGroupNameError] = React.useState(false);
-	const [helperTextAddress, setHelperTextAddress] = React.useState("");
+	const [helperTextAddress, setHelperTextAddress] = React.useState('');
 
 	const handleEmail = newEmail => {
 		setEmail(newEmail);
@@ -178,7 +178,6 @@ export default function Register(props) {
 						onChange={event => handleEmail(event.target.value)}
 						error={helperTextAddress !== ''}
 						helperText={helperTextAddress}
-
 					/>
 					<TextField
 						variant="outlined"
@@ -276,18 +275,23 @@ export default function Register(props) {
 											value === 'join'
 												? addToGroup(groupName)
 												: createGroup(groupName);
-
+											props.firebase
+												.users()
+												.doc(props.firebase.getCurrentUser().uid)
+												.set({
+													userGroup: groupName
+												});
 											setEmail('');
 											setPassword('');
 											setGroupName('');
 											props.history.push('/');
 										})
-										.catch((error) => {
-											console.error("adsdas", error);
-											if (error.code === "auth/email-already-in-use"){
-												setHelperTextAddress("Salasana on jo käytössä")
+										.catch(error => {
+											console.error('adsdas', error);
+											if (error.code === 'auth/email-already-in-use') {
+												setHelperTextAddress('Sähköposti on jo käytössä');
 											}
-										})
+										});
 								}
 							});
 						}}
