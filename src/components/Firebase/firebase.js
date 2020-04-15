@@ -18,6 +18,7 @@ class Firebase {
 
 		this.db = app.firestore();
 		this.auth = app.auth();
+		this.firestore = app.firestore;
 	}
 
 	// *** Auth API ***
@@ -29,9 +30,12 @@ class Firebase {
 	doSignOut = () => this.auth.signOut();
 	doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 	doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+	getCurrentUser = () => this.auth.currentUser;
 
 	users = () => this.db.collection('users');
+
 	matches = () => this.db.collection('matches');
+	userGroups = () => this.db.collection('userGroups');
 }
 
 export default Firebase;

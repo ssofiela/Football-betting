@@ -1,0 +1,292 @@
+{
+	"matches": [
+		{
+			"id": 0,
+			"home": "TUR",
+			"away": "ITA",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "A"
+		},
+		{
+			"id": 1,
+			"home": "WAL",
+			"away": "SUI",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "A"
+		},
+		{
+			"id": 2,
+			"home": "DEN",
+			"away": "FIN",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "B"
+		},
+		{
+			"id": 3,
+			"home": "BEL",
+			"away": "RUS",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "B"
+		},
+		{
+			"id": 4,
+			"home": "ENG",
+			"away": "CRO",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "D"
+		},
+		{
+			"id": 5,
+			"home": "AUT",
+			"away": "UND",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "C"
+		},
+		{
+			"id": 6,
+			"home": "NED",
+			"away": "UKR",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "C"
+		},
+		{
+			"id": 7,
+			"home": "UND",
+			"away": "CZE",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "D"
+		},
+		{
+			"id": 8,
+			"home": "POL",
+			"away": "UND",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "E"
+		},
+		{
+			"id": 9,
+			"home": "ESP",
+			"away": "SWE",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "E"
+		},
+		{
+			"id": 10,
+			"home": "UND",
+			"away": "POR",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "F"
+		},
+		{
+			"id": 11,
+			"home": "FRA",
+			"away": "GER",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "F"
+		},
+		{
+			"id": 12,
+			"home": "FIN",
+			"away": "RUS",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "B"
+		},
+		{
+			"id": 13,
+			"home": "TUR",
+			"away": "WAL",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "A"
+		},
+		{
+			"id": 14,
+			"home": "ITA",
+			"away": "SUI",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "A"
+		},
+		{
+			"id": 15,
+			"home": "UKR",
+			"away": "UND",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "C"
+		},
+		{
+			"id": 16,
+			"home": "DEN",
+			"away": "BEL",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "B"
+		},
+		{
+			"id": 17,
+			"home": "NED",
+			"away": "AUT",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "C"
+		},
+		{
+			"id": 18,
+			"home": "SWE",
+			"away": "UND",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "E"
+		},
+		{
+			"id": 19,
+			"home": "CRO",
+			"away": "CZE",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "D"
+		},
+		{
+			"id": 20,
+			"home": "ENG",
+			"away": "UND",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "D"
+		},
+		{
+			"id": 21,
+			"home": "UND",
+			"away": "FRA",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "F"
+		},
+		{
+			"id": 22,
+			"home": "POR",
+			"away": "GER",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "F"
+		},
+		{
+			"id": 23,
+			"home": "ESP",
+			"away": "POL",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "E"
+		},
+		{
+			"id": 24,
+			"home": "ITA",
+			"away": "WAL",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "A"
+		},
+		{
+			"id": 25,
+			"home": "SUI",
+			"away": "TUR",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "A"
+		},
+		{
+			"id": 26,
+			"home": "UKR",
+			"away": "AUT",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "C"
+		},
+		{
+			"id": 27,
+			"home": "UND",
+			"away": "NED",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "C"
+		},
+		{
+			"id": 28,
+			"home": "RUS",
+			"away": "DEN",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "B"
+		},
+		{
+			"id": 29,
+			"home": "FIN",
+			"away": "BEL",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "B"
+		},
+		{
+			"id": 30,
+			"home": "CRO",
+			"away": "UND",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "D"
+		},
+		{
+			"id": 31,
+			"home": "CZE",
+			"away": "ENG",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "D"
+		},
+		{
+			"id": 32,
+			"home": "SWE",
+			"away": "POL",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "E"
+		},
+		{
+			"id": 33,
+			"home": "UND",
+			"away": "ESP",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "E"
+		},
+		{
+			"id": 34,
+			"home": "POR",
+			"away": "FRA",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "F"
+		},
+		{
+			"id": 35,
+			"home": "GER",
+			"away": "UND",
+			"homeScore": -1,
+			"awayScore": -1,
+			"group": "F"
+		}
+	]
+}

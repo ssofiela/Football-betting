@@ -1,32 +1,18 @@
 import React from 'react';
-import Register from '../src/pages/register.js';
-import Login from '../src/pages/login.js';
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	withRouter
-} from 'react-router-dom';
-import GroupPage from './pages/GroupPage';
-import StatsPage from './pages/StatsPage';
-import TopBar from './components/TopBar';
+import {withFirebase} from "./components/Firebase";
+import {theme} from './utils/theme'
+import AppRouter from './AppRouter'
+import { ThemeProvider } from '@material-ui/core/styles';
 
 class App extends React.Component {
 	render() {
 		return (
-			<Router>
-				<TopBarNav />
-				<Switch>
-					<Route key="home" exact path="/" component={GroupPage} />
-					<Route key="register" exact path="/register" component={Register} />
-					<Route key="login" exact path="/login" component={Login} />
-					<Route key="stats" exact path="/tulokset" component={StatsPage} />
-				</Switch>
-			</Router>
+				<ThemeProvider theme={theme}>
+					<AppWithRouter/>
+				</ThemeProvider>
 		);
 	}
 }
 
-const TopBarNav = withRouter(TopBar);
-
+const AppWithRouter = withFirebase(AppRouter);
 export default App;
