@@ -8,7 +8,7 @@ const GroupListItem = props => {
 	const styles = useStyles();
 	const getTeams = () => {
 		const uniqTeams = [];
-		console.log(props.groupMatches);
+		//console.log(props.groupMatches);
 		props.groupMatches.forEach(match => {
 			const matchData = match.data();
 			if (!uniqTeams.includes(matchData.home)) {
@@ -19,8 +19,16 @@ const GroupListItem = props => {
 			}
 		});
 		return uniqTeams.map(team => {
-			console.log(team);
-			return <p key={team}>{team}</p>;
+			//console.log(team);
+			return (
+				<img
+					key={team}
+					src={'https://restcountries.eu/data/' + team.toLowerCase() + '.svg'}
+					alt={team}
+					width="32"
+					height="16"
+				/>
+			);
 		});
 	};
 	return (
