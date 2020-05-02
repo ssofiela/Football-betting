@@ -41,6 +41,7 @@ export default function Register(props) {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [groupName, setGroupName] = React.useState('');
+	const [name, setName] = React.useState('');
 	const [emailError, setEmailError] = React.useState(false);
 	const [passwordError, setPasswordError] = React.useState(false);
 	const [GroupNameError, setGroupNameError] = React.useState(false);
@@ -61,6 +62,10 @@ export default function Register(props) {
 
 	const handleChange = event => {
 		setValue(event.target.value);
+	};
+
+	const handleName = name => {
+		setName(name);
 	};
 
 	const checkEmail = () => {
@@ -170,11 +175,22 @@ export default function Register(props) {
 						margin="normal"
 						required
 						fullWidth
+						autoFocus
+						name="name"
+						label="Nimesi"
+						type="Name"
+						id="Name"
+						onChange={event => handleName(event.target.value)}
+					/>
+					<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
 						id="email"
 						label="sähköposti"
 						name="email"
 						autoComplete="email"
-						autoFocus
 						onChange={event => handleEmail(event.target.value)}
 						error={helperTextAddress !== ''}
 						helperText={helperTextAddress}
@@ -279,7 +295,8 @@ export default function Register(props) {
 												.users()
 												.doc(props.firebase.getCurrentUser().uid)
 												.set({
-													userGroup: groupName
+													userGroup: groupName,
+													name: name
 												});
 											setEmail('');
 											setPassword('');

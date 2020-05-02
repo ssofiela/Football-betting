@@ -43,30 +43,32 @@ const Scoreboard = props => {
 		let points = 0;
 		for (let groupChar of groupChars) {
 			const userBets = user[groupChar];
-			matches[groupChar].forEach((match, index) => {
-				if (
-					match.homeScore >= 0 &&
-					match.awayScore >= 0 &&
-					userBets[index] >= 0 &&
-					userBets[index + 1] >= 0
-				)
+			if (userBets) {
+				matches[groupChar].forEach((match, index) => {
 					if (
-						(match.homeScore - match.awayScore) *
+						match.homeScore >= 0 &&
+						match.awayScore >= 0 &&
+						userBets[index] >= 0 &&
+						userBets[index + 1] >= 0
+					)
+						if (
+							(match.homeScore - match.awayScore) *
 							(userBets[index] - userBets[index + 1]) >
 							0 ||
-						match.homeScore - match.awayScore ==
+							match.homeScore - match.awayScore ==
 							userBets[index] - userBets[index + 1]
-					) {
-						if (
-							match.homeScore == userBets[index] &&
-							match.awayScore == userBets[index + 1]
 						) {
-							points += 3;
-						} else {
-							points += 1;
+							if (
+								match.homeScore == userBets[index] &&
+								match.awayScore == userBets[index + 1]
+							) {
+								points += 3;
+							} else {
+								points += 1;
+							}
 						}
-					}
-			});
+				});
+			}
 		}
 		return points;
 	};
