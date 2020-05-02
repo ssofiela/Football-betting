@@ -79,9 +79,9 @@ const MacthScore = state => {
 	const listGroups = () => {
 		const groupJSX = [];
 		for (let j = 0; j < Object.keys(groupBets).length; j++) {
-			groupJSX.push(<p key={j}>{Object.values(groupBets)[j].name}</p>);
+			groupJSX.push(<p className={styles.center} key={j}>{Object.values(groupBets)[j].name}</p>);
 			if (_.values(groupBets)[j].bets === undefined){
-				groupJSX.push(<p>Käyttäjä ei ole veikannut vielä</p>)
+				groupJSX.push(<p className={styles.center}>Käyttäjä ei ole veikannut vielä</p>)
 			} else {
 				for (let i = 0; i < state.state.location.state.matches.length; i++) {
 					groupJSX.push(
@@ -146,7 +146,8 @@ const useStyles = makeStyles(theme => ({
 		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center'
-	}
+	},
+
 }));
 
 export default MacthScore;
