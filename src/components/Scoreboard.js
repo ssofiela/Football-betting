@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
-import GroupListItem from './GroupListItem';
-import { withRouter } from 'react-router';
-import data from './../data/matches.json';
+import { makeStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+
+const useStyles = makeStyles(theme => ({
+	chip: {
+		marginTop: 10,
+		margin: 5
+	}
+}));
 
 const Scoreboard = props => {
+	const classes = useStyles();
 	const [groups, setGroups] = useState({});
 	const [scoreboard, setScoreBoard] = useState([]);
 
@@ -23,11 +30,24 @@ const Scoreboard = props => {
 				.users()
 				.get()
 				.then(querySnapshot => {
-					return querySnapshot.docs.map(item => item.data());
+					return _.fromPairs(
+						querySnapshot.docs.map(item => [
+							item.id,
+							{ ...item.data(), id: item.id }
+						])
+					);
 				});
+			const currentUser = users[props.firebase.getCurrentUser().uid];
+			console.log(currentUser);
 			const scoreboard = _.sortBy(
-				users.map(user => {
-					return { points: countPoints(user, matches), username: 'asd' };
+				_.values(
+					_.pickBy(users, item => item.userGroup == currentUser.userGroup)
+				).map(user => {
+					return {
+						points: countPoints(user, matches),
+						username: user.name ? user.name : 'asd',
+						id: user.id
+					};
 				}),
 				['points']
 			).reverse();
@@ -41,32 +61,36 @@ const Scoreboard = props => {
 	const countPoints = (user, matches) => {
 		const groupChars = 'ABCDEF';
 		let points = 0;
+		console.log(user);
 		for (let groupChar of groupChars) {
 			const userBets = user[groupChar];
-			matches[groupChar].forEach((match, index) => {
-				if (
-					match.homeScore >= 0 &&
-					match.awayScore >= 0 &&
-					userBets[index] >= 0 &&
-					userBets[index + 1] >= 0
-				)
+			if (userBets) {
+				console.log(groupChar, userBets);
+				matches[groupChar].forEach((match, index) => {
 					if (
-						(match.homeScore - match.awayScore) *
-							(userBets[index] - userBets[index + 1]) >
-							0 ||
-						match.homeScore - match.awayScore ==
-							userBets[index] - userBets[index + 1]
-					) {
+						match.homeScore >= 0 &&
+						match.awayScore >= 0 &&
+						userBets[index] >= 0 &&
+						userBets[index + 1] >= 0
+					)
 						if (
-							match.homeScore == userBets[index] &&
-							match.awayScore == userBets[index + 1]
+							(match.homeScore - match.awayScore) *
+								(userBets[index] - userBets[index + 1]) >
+								0 ||
+							match.homeScore - match.awayScore ==
+								userBets[index] - userBets[index + 1]
 						) {
-							points += 3;
-						} else {
-							points += 1;
+							if (
+								match.homeScore == userBets[index] &&
+								match.awayScore == userBets[index + 1]
+							) {
+								points += 3;
+							} else {
+								points += 1;
+							}
 						}
-					}
-			});
+				});
+			}
 		}
 		return points;
 	};
@@ -74,9 +98,15 @@ const Scoreboard = props => {
 	const getScoreboard = () => {
 		console.log(scoreboard);
 		return scoreboard.map(user => (
-			<p>
-				{user.username}: {user.points}
-			</p>
+			<Chip
+				label={user.username + ' ' + user.points + 'p'}
+				clickable
+				color="primary"
+				className={classes.chip}
+				onClick={() =>
+					props.history.push({ pathname: 'pelaaja', state: { user } })
+				}
+			/>
 		));
 	};
 

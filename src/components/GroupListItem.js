@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Redirect, Link } from 'react-router-dom';
+import Flag from 'react-flags';
+import { convertIocCode } from 'convert-country-codes';
+import _ from 'lodash';
 
 const GroupListItem = props => {
 	const styles = useStyles();
@@ -19,14 +22,22 @@ const GroupListItem = props => {
 			}
 		});
 		return uniqTeams.map(team => {
-			//console.log(team);
+			const greatBritain = { WAL: '_wales', ENG: '_england' };
+			const convertedCountryCode = convertIocCode(team)
+				? convertIocCode(team).iso3
+				: _.has(greatBritain, team)
+				? greatBritain[team]
+				: 'UND';
 			return (
-				<img
-					key={team}
-					src={'https://restcountries.eu/data/' + team.toLowerCase() + '.svg'}
-					alt={team}
-					width="32"
-					height="16"
+				<Flag
+					country={convertedCountryCode}
+					format="png"
+					pngSize={64}
+					shiny={false}
+					alt="Canada Flag"
+					basePath="../img/flags/"
+					width={48}
+					height={48}
 				/>
 			);
 		});
