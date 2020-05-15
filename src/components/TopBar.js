@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -19,8 +19,15 @@ const useStyles = makeStyles(theme => ({
 		flexGrow: 1,
 		textAlign: 'center'
 	},
-	logoutIcon: {
-		color: 'white'
+	iconButton: {
+		padding: 0,
+		margin: 0,
+		color: 'black'
+	},
+	whiteIcon: {
+		color: 'white',
+		padding: 0,
+		margin: 0
 	}
 }));
 
@@ -34,12 +41,15 @@ export default function TopBar(props) {
 					<Grid container spacing={3} justify="center" alignItems="center">
 						<Grid item xs={2}>
 							<IconButton
-								aria-label="log out"
+								aria-label="main page"
 								onClick={() => {
-									props.history.goBack();
+									props.history.push('/login');
 								}}
 							>
-								<ArrowBack fontSize="large" className={classes.logoutIcon} />
+								<SportsSoccerIcon
+									fontSize="large"
+									className={classes.whiteIcon}
+								/>
 							</IconButton>
 						</Grid>
 						<Grid item xs={8}>
@@ -51,15 +61,11 @@ export default function TopBar(props) {
 							<IconButton
 								aria-label="log out"
 								onClick={() => {
-									props.firebase.doSignOut().then(() => {
-										props.history.push('/login');
-									});
+									props.firebase.doSignOut();
 								}}
+								className={classes.iconButton}
 							>
-								<ExitToAppIcon
-									fontSize="large"
-									className={classes.logoutIcon}
-								/>
+								<ExitToAppIcon fontSize="large" className={classes.whiteIcon} />
 							</IconButton>
 						</Grid>
 					</Grid>
@@ -68,13 +74,3 @@ export default function TopBar(props) {
 		</div>
 	);
 }
-/*<button type="button"
-                    onClick={() => {
-                        props.firebase.doSignOut().then(() => {
-                            console.log("then log out")
-                        });
-
-                    }}
-                >
-                    Sign Out
-                </button>*/

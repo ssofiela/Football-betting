@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
+import { getFlag } from '../utils/utils';
+import Card from './Card';
 
 const MacthScore = props => {
 	const styles = useStyles();
@@ -47,7 +46,6 @@ const MacthScore = props => {
 		fetchUserData();
 	}, []);
 
-	// TODO: Use real names
 	const listBets = () => {
 		const betsJSX = [];
 		_.toPairs(_.pick(userData, ['A', 'B', 'C', 'D', 'E', 'F'])).forEach(
@@ -56,35 +54,13 @@ const MacthScore = props => {
 				matches[group[0]].forEach((match, index) => {
 					console.log(match);
 					betsJSX.push(
-						<Paper
-							key={`paper_${match.id}`}
-							elevation={3}
-							className={styles.groupContainer}
-						>
-							<Grid container xs direction="row" key={`grid_${match.id}`}>
-								<Grid item xs className={styles.center}>
-									<a>{match.away}</a>
-								</Grid>
-								<Grid item xs={2} className={styles.center}>
-									<Box width={1 / 4}>
-										<p>{group[1][index * 2]}</p>
-									</Box>
-								</Grid>
-								<Grid item xs={2} className={styles.center}>
-									<Box fontWeight="fontWeightMedium" fontSize={20}>
-										-
-									</Box>
-								</Grid>
-								<Grid item xs={2} className={styles.center}>
-									<Box width={1 / 4}>
-										<p>{group[1][index * 2 + 1]}</p>
-									</Box>
-								</Grid>
-								<Grid item xs className={styles.center}>
-									<a>{match.home}</a>
-								</Grid>
-							</Grid>
-						</Paper>
+						<Card
+							key={index}
+							home={getFlag(match.home)}
+							away={getFlag(match.away)}
+							homeScore={<Typography>{group[1][index * 2]}</Typography>}
+							awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
+						/>
 					);
 				});
 			}

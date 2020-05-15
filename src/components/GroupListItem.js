@@ -2,10 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { Redirect, Link } from 'react-router-dom';
-import Flag from 'react-flags';
-import { convertIocCode } from 'convert-country-codes';
 import _ from 'lodash';
+import { getFlag } from '../utils/utils';
 
 const GroupListItem = props => {
 	const styles = useStyles();
@@ -22,24 +20,7 @@ const GroupListItem = props => {
 			}
 		});
 		return uniqTeams.map(team => {
-			const greatBritain = { WAL: '_wales', ENG: '_england' };
-			const convertedCountryCode = convertIocCode(team)
-				? convertIocCode(team).iso3
-				: _.has(greatBritain, team)
-				? greatBritain[team]
-				: 'UND';
-			return (
-				<Flag
-					country={convertedCountryCode}
-					format="png"
-					pngSize={64}
-					shiny={false}
-					alt="Canada Flag"
-					basePath="../img/flags/"
-					width={48}
-					height={48}
-				/>
-			);
+			return getFlag(team);
 		});
 	};
 	return (

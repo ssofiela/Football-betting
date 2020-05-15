@@ -72,7 +72,7 @@ const Scoreboard = props => {
 						match.awayScore >= 0 &&
 						userBets[index] >= 0 &&
 						userBets[index + 1] >= 0
-					)
+					) {
 						if (
 							(match.homeScore - match.awayScore) *
 								(userBets[index] - userBets[index + 1]) >
@@ -89,6 +89,7 @@ const Scoreboard = props => {
 								points += 1;
 							}
 						}
+					}
 				});
 			}
 		}
@@ -99,6 +100,7 @@ const Scoreboard = props => {
 		console.log(scoreboard);
 		return scoreboard.map(user => (
 			<Chip
+				key={user.username}
 				label={user.username + ' ' + user.points + 'p'}
 				clickable
 				color="primary"
