@@ -104,7 +104,7 @@ const MacthScore = state => {
 
     const listGroups = () => {
         const groupJSX = [];
-        let resultFound = false;
+        let resultFound = true;
         if (Object.keys(groups).length > 0) {
             for (let j = 0; j < Object.keys(groupBets).length; j++) {
                 groupJSX.push(
@@ -119,13 +119,13 @@ const MacthScore = state => {
                 } else {
 
                     for (let i = 0; i < state.state.location.state.matches.length; i++) {
-                        // Check if the game is ended
+                        // Check if the game is end
                         const rightGame = groups[state.state.location.state.groupChar][i]
-                        if (rightGame.homeScore > -1 && rightGame.awayScore > -1) {
-                            resultFound = true;
+                        if (rightGame.homeScore === -1 || rightGame.awayScore === -1) {
+                            resultFound = false;
                         }
                         groupJSX.push(
-                            <Grid container style={{direction: 'row', display: 'flex'}}>
+                            <Grid key={`grid ${i}, ${j}`} container style={{direction: 'row', display: 'flex'}}>
                                 <Grid item xs={!resultFound ? 12 : 10}>
                                     <Card
                                         key={`${Object.values(groupBets)[j].name} ${i}`}
@@ -163,7 +163,7 @@ const MacthScore = state => {
             }
         } else {
             groupJSX.push(
-                <div>
+                <div key={'inProgress'}>
                     <Grid container justify="center" alignItems="center">
                         <Grid item>
                             <CircularProgress color="secondary" />
