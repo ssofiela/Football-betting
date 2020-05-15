@@ -16,7 +16,6 @@ import PlayerPage from './pages/PlayerPage';
 
 import { withFirebase } from './components/Firebase';
 import TopBar from './components/TopBar';
-import BottomNav from './components/BottomNav';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 
@@ -60,7 +59,7 @@ export default function AppRouter(props) {
 	};
 
 	return (
-		<Router>
+		<Router style={{ color: '#c9c9c9' }}>
 			<TopBarWithRouter />
 			{indicator ? (
 				<div>
@@ -79,4 +78,3 @@ export default function AppRouter(props) {
 
 const HomePageWithNav = withRouter(HomePage);
 const TopBarWithRouter = withFirebase(withRouter(TopBar));
-const BottomNavWithRouter = withRouter(BottomNav);

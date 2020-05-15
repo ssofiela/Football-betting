@@ -35,42 +35,40 @@ export default function TopBar(props) {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.root}>
-			<AppBar position="static">
-				<Toolbar>
-					<Grid container spacing={3} justify="center" alignItems="center">
-						<Grid item xs={2}>
-							<IconButton
-								aria-label="main page"
-								onClick={() => {
-									props.history.push('/login');
-								}}
-							>
-								<SportsSoccerIcon
-									fontSize="large"
-									className={classes.whiteIcon}
-								/>
-							</IconButton>
-						</Grid>
-						<Grid item xs={8}>
-							<Typography variant="h5" className={classes.title}>
-								EM-KISAVEIKKAUS
-							</Typography>
-						</Grid>
-						<Grid item xs={2}>
-							<IconButton
-								aria-label="log out"
-								onClick={() => {
-									props.firebase.doSignOut();
-								}}
-								className={classes.iconButton}
-							>
-								<ExitToAppIcon fontSize="large" className={classes.whiteIcon} />
-							</IconButton>
-						</Grid>
+		<AppBar position="sticky">
+			<Toolbar>
+				<Grid container spacing={3} justify="center" alignItems="center">
+					<Grid item xs={2}>
+						<IconButton
+							aria-label="main page"
+							onClick={() => {
+								props.history.push('/login');
+							}}
+						>
+							<SportsSoccerIcon
+								fontSize="large"
+								className={classes.whiteIcon}
+							/>
+						</IconButton>
 					</Grid>
-				</Toolbar>
-			</AppBar>
-		</div>
+					<Grid item xs={8}>
+						<Typography variant="h5" className={classes.title}>
+							EM-KISAVEIKKAUS
+						</Typography>
+					</Grid>
+					<Grid item xs={2}>
+						<IconButton
+							aria-label="log out"
+							onClick={() => {
+								props.firebase.doSignOut();
+							}}
+							className={classes.iconButton}
+						>
+							<ExitToAppIcon fontSize="large" className={classes.whiteIcon} />
+						</IconButton>
+					</Grid>
+				</Grid>
+			</Toolbar>
+		</AppBar>
 	);
 }

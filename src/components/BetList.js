@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { getFlag } from '../utils/utils';
 import Card from './Card';
-import Box from '@material-ui/core/Box';
 import HeaderComponent from './HeaderComponent';
 
 const BetList = state => {

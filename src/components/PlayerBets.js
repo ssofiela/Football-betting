@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import { getFlag } from '../utils/utils';
@@ -6,15 +6,11 @@ import Card from './Card';
 
 const MacthScore = props => {
 	const styles = useStyles();
-	const [currentUser, setCurrentUser] = React.useState('');
 	const [userData, setUserData] = React.useState([]);
 	const [matches, setMatches] = React.useState([]);
 
 	// Find group members
 	useEffect(() => {
-		const currentUser = props.firebase.getCurrentUser().uid;
-		setCurrentUser(currentUser);
-
 		const fetchMatches = async () => {
 			await props.firebase
 				.matches()
@@ -38,7 +34,7 @@ const MacthScore = props => {
 					setUserData(
 						_.find(
 							users.docs,
-							user => user.id == props.props.location.state.user.id
+							user => user.id === props.props.location.state.user.id
 						).data()
 					);
 				});
@@ -50,7 +46,7 @@ const MacthScore = props => {
 		const betsJSX = [];
 		_.toPairs(_.pick(userData, ['A', 'B', 'C', 'D', 'E', 'F'])).forEach(
 			group => {
-				betsJSX.push('Lohko ' + group[0]);
+				betsJSX.push(<h2 className={styles.center}>{`LOHKO ${group[0]}`}</h2>);
 				matches[group[0]].forEach((match, index) => {
 					console.log(match);
 					betsJSX.push(
@@ -63,6 +59,15 @@ const MacthScore = props => {
 						/>
 					);
 				});
+				betsJSX.push(
+					<div
+						style={{
+							color: '#e9e9e9',
+							backgroundColor: '#e9e9e9',
+							height: 15
+						}}
+					/>
+				);
 			}
 		);
 		return betsJSX;
@@ -87,7 +92,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	center: {
 		display: 'flex',
-		margin: '10px',
 		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center'

@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import React, { useEffect } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import _ from 'lodash';
 import { getFlag } from '../utils/utils';
 import Card from './Card';
