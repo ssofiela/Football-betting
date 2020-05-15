@@ -45,7 +45,7 @@ const Scoreboard = props => {
 				).map(user => {
 					return {
 						points: countPoints(user, matches),
-						username: user.name ? user.name : 'asd',
+						username: user.name ? user.name : 'Tomi Panula',
 						id: user.id
 					};
 				}),
