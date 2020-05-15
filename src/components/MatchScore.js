@@ -99,7 +99,7 @@ const MacthScore = state => {
 				for (let i = 0; i < state.state.location.state.matches.length; i++) {
 					groupJSX.push(
 						<Card
-							key={i}
+							key={`${Object.values(groupBets)[j].name} ${i}`}
 							home={getFlag(state.state.location.state.matches[i].home)}
 							away={getFlag(state.state.location.state.matches[i].away)}
 							homeScore={

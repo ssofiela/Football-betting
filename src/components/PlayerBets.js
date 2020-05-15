@@ -55,7 +55,7 @@ const MacthScore = props => {
 					console.log(match);
 					betsJSX.push(
 						<Card
-							key={index}
+							key={`${group[0]}${index}`}
 							home={getFlag(match.home)}
 							away={getFlag(match.away)}
 							homeScore={<Typography>{group[1][index * 2]}</Typography>}
