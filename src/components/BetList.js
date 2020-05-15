@@ -9,7 +9,8 @@ import Box from '@material-ui/core/Box';
 const BetList = state => {
 	const styles = useStyles();
 
-	const [bets, setBets] = React.useState([]);
+	const [bets, setBets] = React.useState(Array(12).fill(-1));
+	const [errors, setErrors] = React.useState([]); // 1 === error, 0 === no error
 
 	const handleBets = (bet, i) => {
 		const firstList = bets;
@@ -37,6 +38,7 @@ const BetList = state => {
 										inputProps={{ min: 0, style: { textAlign: 'center' } }}
 										onChange={event => handleBets(event.target.value, i * 2)}
 										fullwidth={true}
+										error={errors[i*2] === 1}
 									/>
 								</Box>
 							</Grid>
@@ -57,6 +59,7 @@ const BetList = state => {
 											handleBets(event.target.value, i * 2 + 1)
 										}
 										fullwidth={true}
+										error={errors[i*2+1] === 1}
 									/>
 								</Box>
 							</Grid>
@@ -73,6 +76,7 @@ const BetList = state => {
 
 	return (
 		<div>
+			{console.log("data", bets)}
 			<div key={'listGroups'}>{listGroups()}</div>
 			<Button
 				fullWidth
@@ -80,23 +84,33 @@ const BetList = state => {
 				color="primary"
 				className={styles.submit}
 				onClick={() => {
-					state.firebase
-						.users()
-						.doc(state.firebase.getCurrentUser().uid)
-						.set(
-							{
-								[state.state.location.state.groupChar]: bets
-							},
-							{ merge: true }
-						);
-					state.state.history.push({
-						pathname: '/matsi',
-						state: {
-							matches: state.state.location.state.matches,
-							groupChar: state.state.location.state.groupChar
+					let fullList = true;
+					let errorList = Array(12).fill(0);
+					for (let i = 0; i < bets.length; i++){
+						if (bets[i] === -1){
+							fullList = false;
+							errorList[i] = 1;
 						}
-					});
-					console.log(bets);
+					}
+					setErrors(errorList);
+					if (fullList) {
+						state.firebase
+							.users()
+							.doc(state.firebase.getCurrentUser().uid)
+							.set(
+								{
+									[state.state.location.state.groupChar]: bets
+								},
+								{merge: true}
+							);
+						state.state.history.push({
+							pathname: '/matsi',
+							state: {
+								matches: state.state.location.state.matches,
+								groupChar: state.state.location.state.groupChar
+							}
+						});
+					}
 				}}
 			>
 				Tallenna

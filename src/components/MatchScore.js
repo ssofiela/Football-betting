@@ -7,15 +7,15 @@ import _ from 'lodash';
 
 const MacthScore = state => {
 	const styles = useStyles();
-	const [groupMembers, setGroupMembers] = React.useState('');
+	const [groupMembers, setGroupMembers] = React.useState([]);
 	const [currentUser, setCurrentUser] = React.useState('');
 	const [groupBets, setGroupBets] = React.useState([]);
+	const [groupNames, setGroupNames] = React.useState([]);
 
 	// Find group members
 	useEffect(() => {
 		const currentUser = state.firebase.getCurrentUser().uid;
 		setCurrentUser(currentUser);
-		console.log('current', currentUser);
 		const findGroupMembers = async () => {
 			let groups = await state.firebase
 				.userGroups()
@@ -24,12 +24,30 @@ const MacthScore = state => {
 					return _.groupBy(querySnapshot.docs, item => item.data().userIds);
 				});
 			const list = groups;
+			let group = [];
 			for (let i = 0; i < Object.keys(list).length; i++) {
 				const newList = Object.keys(list)[i].split(',');
 				if (newList.includes(currentUser)) {
+					group = newList;
 					setGroupMembers(newList);
 				}
 			}
+			let users = await state.firebase
+				.users()
+				.get()
+				.then(querySnapshot => {
+					return _.fromPairs(querySnapshot.docs.map(item => [item.id, item.data()]));
+				});
+			let names = [];
+			for (let j = 0; j < group.length; j++){
+				for (let z = 0; z < Object.keys(users).length; z++){
+					if (Object.keys(users)[z] === group[j]) {
+						names.push(Object.values(users)[z].name);
+					}
+				}
+
+			}
+			setGroupNames(names)
 		};
 		findGroupMembers();
 
@@ -47,10 +65,10 @@ const MacthScore = state => {
 						item => item.data().userGroup === groupName
 					);
 					setGroupBets(
-						_.map(
+						_.fromPairs(_.map(
 							userGroup,
-							item => item.data()[state.state.location.state.groupChar]
-						)
+							item => [item.id, {bets: item.data()[state.state.location.state.groupChar], name: item.data().name}]
+						))
 					);
 				});
 		};
@@ -60,46 +78,46 @@ const MacthScore = state => {
 	// TODO: Use real names
 	const listGroups = () => {
 		const groupJSX = [];
-		for (let j = 0; j < groupMembers.length; j++) {
-			if (groupMembers[j] === currentUser) {
-				groupJSX.push(<p key={j}>Minä</p>);
+		for (let j = 0; j < Object.keys(groupBets).length; j++) {
+			groupJSX.push(<p className={styles.center} key={j}>{Object.values(groupBets)[j].name}</p>);
+			if (_.values(groupBets)[j].bets === undefined){
+				groupJSX.push(<p className={styles.center}>Käyttäjä ei ole veikannut vielä</p>)
 			} else {
-				groupJSX.push(<p key={j}>NAME</p>);
-			}
-			for (let i = 0; i < state.state.location.state.matches.length; i++) {
-				groupJSX.push(
-					<Paper
-						key={`paper${j}${i}`}
-						elevation={3}
-						className={styles.groupContainer}
-					>
-						<form className={styles.root} noValidate autoComplete="off">
-							<Grid container xs direction="row" key={`grid${j}${i}`}>
-								<Grid item xs className={styles.center}>
-									<a>{state.state.location.state.matches[i].away}</a>
+				for (let i = 0; i < state.state.location.state.matches.length; i++) {
+					groupJSX.push(
+						<Paper
+							key={`paper${j}${i}`}
+							elevation={3}
+							className={styles.groupContainer}
+						>
+							<form className={styles.root} noValidate autoComplete="off">
+								<Grid container xs direction="row" key={`grid${j}${i}`}>
+									<Grid item xs className={styles.center}>
+										<a>{state.state.location.state.matches[i].away}</a>
+									</Grid>
+									<Grid item xs={2} className={styles.center}>
+										<Box width={1 / 4}>
+											<p>{_.values(groupBets)[j].bets[i * 2]}</p>
+										</Box>
+									</Grid>
+									<Grid item xs={2} className={styles.center}>
+										<Box fontWeight="fontWeightMedium" fontSize={20}>
+											-
+										</Box>
+									</Grid>
+									<Grid item xs={2} className={styles.center}>
+										<Box width={1 / 4}>
+											<p>{_.values(groupBets)[j].bets[i * 2 + 1]}</p>
+										</Box>
+									</Grid>
+									<Grid item xs className={styles.center}>
+										<a>{state.state.location.state.matches[i].home}</a>
+									</Grid>
 								</Grid>
-								<Grid item xs={2} className={styles.center}>
-									<Box width={1 / 4}>
-										<p>{groupBets[j][i * 2]}</p>
-									</Box>
-								</Grid>
-								<Grid item xs={2} className={styles.center}>
-									<Box fontWeight="fontWeightMedium" fontSize={20}>
-										-
-									</Box>
-								</Grid>
-								<Grid item xs={2} className={styles.center}>
-									<Box width={1 / 4}>
-										<p>{groupBets[j][i * 2 + 1]}</p>
-									</Box>
-								</Grid>
-								<Grid item xs className={styles.center}>
-									<a>{state.state.location.state.matches[i].home}</a>
-								</Grid>
-							</Grid>
-						</form>
-					</Paper>
-				);
+							</form>
+						</Paper>
+					);
+				}
 			}
 		}
 		return groupJSX;
@@ -128,7 +146,8 @@ const useStyles = makeStyles(theme => ({
 		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center'
-	}
+	},
+
 }));
 
 export default MacthScore;
