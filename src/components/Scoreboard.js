@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import HeaderComponent from "./HeaderComponent";
+import {getPoints } from '../utils/utils'
 
 const useStyles = makeStyles(theme => ({
 	chip: {
@@ -70,29 +71,7 @@ const Scoreboard = props => {
 			if (userBets) {
 				console.log(groupChar, userBets);
 				matches[groupChar].forEach((match, index) => {
-					if (
-						match.homeScore >= 0 &&
-						match.awayScore >= 0 &&
-						userBets[index] >= 0 &&
-						userBets[index + 1] >= 0
-					) {
-						if (
-							(match.homeScore - match.awayScore) *
-								(userBets[index] - userBets[index + 1]) >
-								0 ||
-							match.homeScore - match.awayScore ==
-								userBets[index] - userBets[index + 1]
-						) {
-							if (
-								match.homeScore == userBets[index] &&
-								match.awayScore == userBets[index + 1]
-							) {
-								points += 3;
-							} else {
-								points += 1;
-							}
-						}
-					}
+					points += getPoints( userBets[index * 2], userBets[index * 2 + 1], match.homeScore, match.awayScore)
 				});
 			}
 		}
