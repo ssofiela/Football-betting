@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import HeaderComponent from "./HeaderComponent";
 
 const BetList = state => {
 	const styles = useStyles();
@@ -76,6 +77,7 @@ const BetList = state => {
 
 	return (
 		<div>
+			<HeaderComponent name="Syötä veikkaukset"/>
 			{console.log("data", bets)}
 			<div key={'listGroups'}>{listGroups()}</div>
 			<Button

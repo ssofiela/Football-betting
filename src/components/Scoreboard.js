@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
+import HeaderComponent from "./HeaderComponent";
 
 const useStyles = makeStyles(theme => ({
 	chip: {
@@ -14,6 +15,7 @@ const Scoreboard = props => {
 	const classes = useStyles();
 	const [groups, setGroups] = useState({});
 	const [scoreboard, setScoreBoard] = useState([]);
+	const [groupName, setGroupName] = useState('');
 
 	useEffect(() => {
 		const fetchGroups = async () => {
@@ -52,6 +54,7 @@ const Scoreboard = props => {
 				['points']
 			).reverse();
 
+			setGroupName(currentUser.userGroup);
 			setGroups(matches);
 			setScoreBoard(scoreboard);
 		};
@@ -94,7 +97,6 @@ const Scoreboard = props => {
 		}
 		return points;
 	};
-
 	const getScoreboard = () => {
 		console.log(scoreboard);
 		return scoreboard.map(user => (
@@ -110,7 +112,12 @@ const Scoreboard = props => {
 		));
 	};
 
-	return <div>{getScoreboard()}</div>;
+	return (
+		<div>
+			<HeaderComponent name={groupName}/>
+			<div>{getScoreboard()}</div>
+		</div>
+	);
 };
 
 export default Scoreboard;
