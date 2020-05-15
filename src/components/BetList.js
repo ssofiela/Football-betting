@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { getFlag } from '../utils/utils';
 import Card from './Card';
+import Box from '@material-ui/core/Box';
+import HeaderComponent from './HeaderComponent';
 
 const BetList = state => {
 	const styles = useStyles();
@@ -57,7 +59,7 @@ const BetList = state => {
 
 	return (
 		<div>
-			{console.log('data', bets)}
+			<HeaderComponent name="Syötä veikkaukset" />
 			<div key={'listGroups'}>{listGroups()}</div>
 			<Button
 				fullWidth
