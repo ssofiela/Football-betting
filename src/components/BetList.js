@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { setTitle } from '../redux/actions';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -6,11 +8,16 @@ import { getFlag } from '../utils/utils';
 import Card from './Card';
 import HeaderComponent from './HeaderComponent';
 
-const BetList = state => {
+const BetList = props => {
 	const styles = useStyles();
 
-	const [bets, setBets] = React.useState(Array(12).fill(-1));
-	const [errors, setErrors] = React.useState([]); // 1 === error, 0 === no error
+	const [bets, setBets] = useState(Array(12).fill(-1));
+	const [errors, setErrors] = useState([]); // 1 === error, 0 === no error
+
+	useEffect(() => {
+		console.log(props);
+		props.setTitle('Lohko ' + props.state.location.state.groupChar);
+	}, []);
 
 	const handleBets = (bet, i) => {
 		const firstList = bets;
@@ -20,11 +27,11 @@ const BetList = state => {
 
 	const listGroups = () => {
 		const groupJSX = [];
-		for (let i = 0; i < state.state.location.state.matches.length; i++) {
+		for (let i = 0; i < props.state.location.state.matches.length; i++) {
 			groupJSX.push(
 				<Card
 					key={i}
-					home={getFlag(state.state.location.state.matches[i].home)}
+					home={getFlag(props.state.location.state.matches[i].home)}
 					homeScore={
 						<TextField
 							required
@@ -37,7 +44,7 @@ const BetList = state => {
 							error={errors[i * 2] === 1}
 						/>
 					}
-					away={getFlag(state.state.location.state.matches[i].away)}
+					away={getFlag(props.state.location.state.matches[i].away)}
 					awayScore={
 						<TextField
 							required
@@ -76,20 +83,20 @@ const BetList = state => {
 					}
 					setErrors(errorList);
 					if (fullList) {
-						state.firebase
+						props.firebase
 							.users()
-							.doc(state.firebase.getCurrentUser().uid)
+							.doc(props.firebase.getCurrentUser().uid)
 							.set(
 								{
-									[state.state.location.state.groupChar]: bets
+									[props.state.location.state.groupChar]: bets
 								},
 								{ merge: true }
 							);
-						state.state.history.push({
+						props.state.history.push({
 							pathname: '/matsi',
 							state: {
-								matches: state.state.location.state.matches,
-								groupChar: state.state.location.state.groupChar
+								matches: props.state.location.state.matches,
+								groupChar: props.state.location.state.groupChar
 							}
 						});
 					}
@@ -119,4 +126,4 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default BetList;
+export default connect(null, { setTitle })(BetList);

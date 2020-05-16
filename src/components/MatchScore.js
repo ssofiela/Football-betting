@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { setTitle } from '../redux/actions';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, Typography } from '@material-ui/core';
@@ -36,19 +38,18 @@ const useStyles = makeStyles(theme => ({
 		width: '50px',
 		borderRadius: '50%'
 	},
-	rightAns:{
-		backgroundColor: theme.palette.points.rightAnswer,
+	rightAns: {
+		backgroundColor: theme.palette.points.rightAnswer
 	},
 	rightWin: {
 		backgroundColor: theme.palette.points.rightAnswer
 	},
 	wrongAns: {
-		backgroundColor: theme.palette.points.wrongAnswer,
+		backgroundColor: theme.palette.points.wrongAnswer
 	}
-
 }));
 
-const MacthScore = state => {
+const MacthScore = props => {
 	const styles = useStyles();
 	const [groupMembers, setGroupMembers] = React.useState([]);
 	const [currentUser, setCurrentUser] = React.useState('');
@@ -58,10 +59,12 @@ const MacthScore = state => {
 
 	// Find group members
 	useEffect(() => {
-		const currentUser = state.firebase.getCurrentUser().uid;
+		props.setTitle('Lohko ' + props.state.location.state.groupChar);
+
+		const currentUser = props.firebase.getCurrentUser().uid;
 		setCurrentUser(currentUser);
 		const findGroupMembers = async () => {
-			let groups = await state.firebase
+			let groups = await props.firebase
 				.userGroups()
 				.get()
 				.then(querySnapshot => {
@@ -76,7 +79,7 @@ const MacthScore = state => {
 					setGroupMembers(newList);
 				}
 			}
-			let users = await state.firebase
+			let users = await props.firebase
 				.users()
 				.get()
 				.then(querySnapshot => {
@@ -92,7 +95,7 @@ const MacthScore = state => {
 					}
 				}
 			}
-			let matches = await state.firebase
+			let matches = await props.firebase
 				.matches()
 				.get()
 				.then(querySnapshot => {
@@ -107,7 +110,7 @@ const MacthScore = state => {
 		findGroupMembers();
 
 		const fetchGroupBets = async () => {
-			await state.firebase
+			await props.firebase
 				.users()
 				.get()
 				.then(users => {
@@ -124,7 +127,7 @@ const MacthScore = state => {
 							_.map(userGroup, item => [
 								item.id,
 								{
-									bets: item.data()[state.state.location.state.groupChar],
+									bets: item.data()[props.state.location.state.groupChar],
 									name: item.data().name
 								}
 							])
@@ -135,104 +138,114 @@ const MacthScore = state => {
 		fetchGroupBets();
 	}, []);
 
-		const calculatePoints = (index, homeScore, awayScore) => {
-			const char = state.state.location.state.groupChar;
-			const rightGame = groups[char][index];
-			const rightHomeScore = rightGame.homeScore;
-			const rightAwayScore = rightGame.awayScore;
-			return getPoints(homeScore, awayScore, rightHomeScore, rightAwayScore);
-		};
-
-		const listGroups = () => {
-			const groupJSX = [];
-			if (Object.keys(groups).length > 0) {
-				for (let j = 0; j < Object.keys(groupBets).length; j++) {
-					let resultFound = true;
-					groupJSX.push(
-						<p className={styles.center} key={j}>
-							{Object.values(groupBets)[j].name}
-						</p>
-					);
-					if (_.values(groupBets)[j].bets === undefined) {
-						groupJSX.push(
-							<p className={styles.center}>Käyttäjä ei ole veikannut vielä</p>
-						);
-					} else {
-						for (let i = 0; i < state.state.location.state.matches.length; i++) {
-							// Check if the game is end
-							const rightGame = groups[state.state.location.state.groupChar][i];
-							if (rightGame.homeScore === -1 || rightGame.awayScore === -1) {
-								resultFound = false;
-							}
-							const value = calculatePoints(
-								i,
-								_.values(groupBets)[j].bets[i * 2],
-								_.values(groupBets)[j].bets[i * 2 + 1]
-							)
-							groupJSX.push(
-								<Grid
-									key={`grid ${i}, ${j}`}
-									container
-									style={{direction: 'row', display: 'flex'}}
-								>
-									<Grid item xs={!resultFound ? 12 : 10}>
-										<Card
-											key={`${Object.values(groupBets)[j].name} ${i}`}
-											home={getFlag(state.state.location.state.matches[i].home)}
-											away={getFlag(state.state.location.state.matches[i].away)}
-											homeScore={
-												<Typography>
-													{_.values(groupBets)[j].bets[i * 2]}
-												</Typography>
-											}
-											awayScore={
-												<Typography>
-													{_.values(groupBets)[j].bets[i * 2 + 1]}
-												</Typography>
-											}
-										/>
-									</Grid>
-									{resultFound && (
-										<Grid item xs={1} style={{flexBasis: '0%'}}>
-											<Paper
-												key={`Points ${i}`}
-												elevation={3}
-												className={[styles.points, value === 3? styles.rightAns : value === 1 ? styles.rightWin : styles.wrongAns].join(' ')}
-											>
-												<div style={{justifyContent: 'center', alignItems: 'center', color: 'white'}}>
-													{!_.isEmpty(groups) &&
-													value}
-												</div>
-											</Paper>
-										</Grid>
-									)}
-								</Grid>
-							);
-						}
-					}
-				}
-			} else {
-				groupJSX.push(
-					<div key={'inProgress'}>
-						<Grid container justify="center" alignItems="center">
-							<Grid item>
-								<CircularProgress color="secondary"/>
-							</Grid>
-						</Grid>
-					</div>
-				);
-			}
-
-			return groupJSX;
-		};
-
-		return (
-			<div>
-				<div key={'listGroups'}>{!_.isEmpty(groupBets) && listGroups()}</div>
-			</div>
-		);
+	const calculatePoints = (index, homeScore, awayScore) => {
+		const char = props.state.location.state.groupChar;
+		const rightGame = groups[char][index];
+		const rightHomeScore = rightGame.homeScore;
+		const rightAwayScore = rightGame.awayScore;
+		return getPoints(homeScore, awayScore, rightHomeScore, rightAwayScore);
 	};
 
+	const listGroups = () => {
+		const groupJSX = [];
+		if (Object.keys(groups).length > 0) {
+			for (let j = 0; j < Object.keys(groupBets).length; j++) {
+				let resultFound = true;
+				groupJSX.push(
+					<p className={styles.center} key={j}>
+						{Object.values(groupBets)[j].name}
+					</p>
+				);
+				if (_.values(groupBets)[j].bets === undefined) {
+					groupJSX.push(
+						<p className={styles.center}>Käyttäjä ei ole veikannut vielä</p>
+					);
+				} else {
+					for (let i = 0; i < props.state.location.state.matches.length; i++) {
+						// Check if the game is end
+						const rightGame = groups[props.state.location.state.groupChar][i];
+						if (rightGame.homeScore === -1 || rightGame.awayScore === -1) {
+							resultFound = false;
+						}
+						const value = calculatePoints(
+							i,
+							_.values(groupBets)[j].bets[i * 2],
+							_.values(groupBets)[j].bets[i * 2 + 1]
+						);
+						groupJSX.push(
+							<Grid
+								key={`grid ${i}, ${j}`}
+								container
+								style={{ direction: 'row', display: 'flex' }}
+							>
+								<Grid item xs={!resultFound ? 12 : 10}>
+									<Card
+										key={`${Object.values(groupBets)[j].name} ${i}`}
+										home={getFlag(props.state.location.state.matches[i].home)}
+										away={getFlag(props.state.location.state.matches[i].away)}
+										homeScore={
+											<Typography>
+												{_.values(groupBets)[j].bets[i * 2]}
+											</Typography>
+										}
+										awayScore={
+											<Typography>
+												{_.values(groupBets)[j].bets[i * 2 + 1]}
+											</Typography>
+										}
+									/>
+								</Grid>
+								{resultFound && (
+									<Grid item xs={1} style={{ flexBasis: '0%' }}>
+										<Paper
+											key={`Points ${i}`}
+											elevation={3}
+											className={[
+												styles.points,
+												value === 3
+													? styles.rightAns
+													: value === 1
+													? styles.rightWin
+													: styles.wrongAns
+											].join(' ')}
+										>
+											<div
+												style={{
+													justifyContent: 'center',
+													alignItems: 'center',
+													color: 'white'
+												}}
+											>
+												{!_.isEmpty(groups) && value}
+											</div>
+										</Paper>
+									</Grid>
+								)}
+							</Grid>
+						);
+					}
+				}
+			}
+		} else {
+			groupJSX.push(
+				<div key={'inProgress'}>
+					<Grid container justify="center" alignItems="center">
+						<Grid item>
+							<CircularProgress color="secondary" />
+						</Grid>
+					</Grid>
+				</div>
+			);
+		}
 
+		return groupJSX;
+	};
 
-export default MacthScore;
+	return (
+		<div>
+			<div key={'listGroups'}>{!_.isEmpty(groupBets) && listGroups()}</div>
+		</div>
+	);
+};
+
+export default connect(null, { setTitle })(MacthScore);

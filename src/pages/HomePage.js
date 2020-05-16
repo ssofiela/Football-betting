@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
+import { connect } from 'react-redux';
+import { setTitle } from '../redux/actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import GroupList from '../components/GroupList';
@@ -13,6 +14,7 @@ const HomePage = props => {
 	const [serverData, setServerData] = useState({});
 
 	useEffect(() => {
+		props.setTitle('EM-KISAVEIKKAUS');
 		Promise.all([
 			props.firebase
 				.users()
@@ -66,4 +68,4 @@ const HeaderComponentFirebase = withFirebase(HeaderComponent);
 const GroupListFirebase = withFirebase(GroupList);
 const ScoreboardRouter = withRouter(Scoreboard);
 
-export default HomePage;
+export default connect(null, { setTitle })(HomePage);

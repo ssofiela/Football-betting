@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { setTitle } from '../redux/actions';
 import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import { getFlag } from '../utils/utils';
 import Card from './Card';
 
-const MacthScore = props => {
+const PlayerBets = props => {
 	const styles = useStyles();
 	const [userData, setUserData] = React.useState([]);
 	const [matches, setMatches] = React.useState([]);
 
 	// Find group members
 	useEffect(() => {
+		console.log(props);
+		props.setTitle(props.props.location.state.user.username);
 		const fetchMatches = async () => {
 			await props.firebase
 				.matches()
@@ -98,4 +102,4 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default MacthScore;
+export default connect(null, { setTitle })(PlayerBets);
