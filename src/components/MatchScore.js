@@ -7,6 +7,47 @@ import { getFlag, getPoints } from '../utils/utils';
 import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+const useStyles = makeStyles(theme => ({
+	groupContainer: {
+		margin: '20px',
+		height: 50
+	},
+	root: {
+		'& .MuiTextField-root': {
+			maxWidth: 100
+		}
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2)
+	},
+	center: {
+		display: 'flex',
+		margin: '10px',
+		textAlign: 'center',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	points: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: '20px',
+		height: '50px',
+		width: '50px',
+		borderRadius: '50%'
+	},
+	rightAns:{
+		backgroundColor: theme.palette.points.rightAnswer,
+	},
+	rightWin: {
+		backgroundColor: theme.palette.points.rightAnswer
+	},
+	wrongAns: {
+		backgroundColor: theme.palette.points.wrongAnswer,
+	}
+
+}));
+
 const MacthScore = state => {
 	const styles = useStyles();
 	const [groupMembers, setGroupMembers] = React.useState([]);
@@ -94,128 +135,104 @@ const MacthScore = state => {
 		fetchGroupBets();
 	}, []);
 
-	const calculatePoints = (index, homeScore, awayScore) => {
-		const char = state.state.location.state.groupChar;
-		const rightGame = groups[char][index];
-		const rightHomeScore = rightGame.homeScore;
-		const rightAwayScore = rightGame.awayScore;
-		return getPoints(homeScore, awayScore, rightHomeScore, rightAwayScore);
-	};
+		const calculatePoints = (index, homeScore, awayScore) => {
+			const char = state.state.location.state.groupChar;
+			const rightGame = groups[char][index];
+			const rightHomeScore = rightGame.homeScore;
+			const rightAwayScore = rightGame.awayScore;
+			return getPoints(homeScore, awayScore, rightHomeScore, rightAwayScore);
+		};
 
-	const listGroups = () => {
-		const groupJSX = [];
-		let resultFound = true;
-		if (Object.keys(groups).length > 0) {
-			for (let j = 0; j < Object.keys(groupBets).length; j++) {
-				groupJSX.push(
-					<p className={styles.center} key={j}>
-						{Object.values(groupBets)[j].name}
-					</p>
-				);
-				if (_.values(groupBets)[j].bets === undefined) {
+		const listGroups = () => {
+			const groupJSX = [];
+			if (Object.keys(groups).length > 0) {
+				for (let j = 0; j < Object.keys(groupBets).length; j++) {
+					let resultFound = true;
 					groupJSX.push(
-						<p className={styles.center}>Käyttäjä ei ole veikannut vielä</p>
+						<p className={styles.center} key={j}>
+							{Object.values(groupBets)[j].name}
+						</p>
 					);
-				} else {
-					for (let i = 0; i < state.state.location.state.matches.length; i++) {
-						// Check if the game is end
-						const rightGame = groups[state.state.location.state.groupChar][i];
-						if (rightGame.homeScore === -1 || rightGame.awayScore === -1) {
-							resultFound = false;
-						}
+					if (_.values(groupBets)[j].bets === undefined) {
 						groupJSX.push(
-							<Grid
-								key={`grid ${i}, ${j}`}
-								container
-								style={{ direction: 'row', display: 'flex' }}
-							>
-								<Grid item xs={!resultFound ? 12 : 10}>
-									<Card
-										key={`${Object.values(groupBets)[j].name} ${i}`}
-										home={getFlag(state.state.location.state.matches[i].home)}
-										away={getFlag(state.state.location.state.matches[i].away)}
-										homeScore={
-											<Typography>
-												{_.values(groupBets)[j].bets[i * 2]}
-											</Typography>
-										}
-										awayScore={
-											<Typography>
-												{_.values(groupBets)[j].bets[i * 2 + 1]}
-											</Typography>
-										}
-									/>
-								</Grid>
-								{resultFound && (
-									<Grid item xs={1}>
-										<Paper
-											key={`Points ${i}`}
-											elevation={3}
-											style={{
-												marginTop: '30px',
-												display: 'flex',
-												alignItems: 'center',
-												textAlign: 'center'
-											}}
-										>
-											<div style={{ padding: 5 }}>
-												{!_.isEmpty(groups) &&
-													calculatePoints(
-														i,
-														_.values(groupBets)[j].bets[i * 2],
-														_.values(groupBets)[j].bets[i * 2 + 1]
-													)}
-											</div>
-										</Paper>
-									</Grid>
-								)}
-							</Grid>
+							<p className={styles.center}>Käyttäjä ei ole veikannut vielä</p>
 						);
+					} else {
+						for (let i = 0; i < state.state.location.state.matches.length; i++) {
+							// Check if the game is end
+							const rightGame = groups[state.state.location.state.groupChar][i];
+							if (rightGame.homeScore === -1 || rightGame.awayScore === -1) {
+								resultFound = false;
+							}
+							const value = calculatePoints(
+								i,
+								_.values(groupBets)[j].bets[i * 2],
+								_.values(groupBets)[j].bets[i * 2 + 1]
+							)
+							groupJSX.push(
+								<Grid
+									key={`grid ${i}, ${j}`}
+									container
+									style={{direction: 'row', display: 'flex'}}
+								>
+									<Grid item xs={!resultFound ? 12 : 10}>
+										<Card
+											key={`${Object.values(groupBets)[j].name} ${i}`}
+											home={getFlag(state.state.location.state.matches[i].home)}
+											away={getFlag(state.state.location.state.matches[i].away)}
+											homeScore={
+												<Typography>
+													{_.values(groupBets)[j].bets[i * 2]}
+												</Typography>
+											}
+											awayScore={
+												<Typography>
+													{_.values(groupBets)[j].bets[i * 2 + 1]}
+												</Typography>
+											}
+										/>
+									</Grid>
+									{resultFound && (
+										<Grid item xs={1} style={{flexBasis: '0%'}}>
+											<Paper
+												key={`Points ${i}`}
+												elevation={3}
+												className={[styles.points, value === 3? styles.rightAns : value === 1 ? styles.rightWin : styles.wrongAns].join(' ')}
+											>
+												<div style={{justifyContent: 'center', alignItems: 'center', color: 'white'}}>
+													{!_.isEmpty(groups) &&
+													value}
+												</div>
+											</Paper>
+										</Grid>
+									)}
+								</Grid>
+							);
+						}
 					}
 				}
-			}
-		} else {
-			groupJSX.push(
-				<div key={'inProgress'}>
-					<Grid container justify="center" alignItems="center">
-						<Grid item>
-							<CircularProgress color="secondary" />
+			} else {
+				groupJSX.push(
+					<div key={'inProgress'}>
+						<Grid container justify="center" alignItems="center">
+							<Grid item>
+								<CircularProgress color="secondary"/>
+							</Grid>
 						</Grid>
-					</Grid>
-				</div>
-			);
-		}
+					</div>
+				);
+			}
 
-		return groupJSX;
+			return groupJSX;
+		};
+
+		return (
+			<div>
+				<div key={'listGroups'}>{!_.isEmpty(groupBets) && listGroups()}</div>
+			</div>
+		);
 	};
 
-	return (
-		<div>
-			<div key={'listGroups'}>{!_.isEmpty(groupBets) && listGroups()}</div>
-		</div>
-	);
-};
 
-const useStyles = makeStyles(theme => ({
-	groupContainer: {
-		margin: '20px',
-		height: 50
-	},
-	root: {
-		'& .MuiTextField-root': {
-			maxWidth: 100
-		}
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2)
-	},
-	center: {
-		display: 'flex',
-		margin: '10px',
-		textAlign: 'center',
-		alignItems: 'center',
-		justifyContent: 'center'
-	}
-}));
 
 export default MacthScore;
