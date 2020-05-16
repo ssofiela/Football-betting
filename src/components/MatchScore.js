@@ -57,50 +57,15 @@ const useStyles = makeStyles(theme => ({
 
 const MacthScore = props => {
 	const styles = useStyles();
-	const [groupMembers, setGroupMembers] = React.useState([]);
-	const [currentUser, setCurrentUser] = React.useState('');
 	const [groupBets, setGroupBets] = React.useState([]);
-	const [groupNames, setGroupNames] = React.useState([]);
 	const [groups, setGroups] = useState({});
 
 	// Find group members
 	useEffect(() => {
 		props.setTitle('Lohko ' + props.state.location.state.groupChar);
-
+		console.log(props);
 		const currentUser = props.firebase.getCurrentUser().uid;
-		setCurrentUser(currentUser);
 		const findGroupMembers = async () => {
-			let groups = await props.firebase
-				.userGroups()
-				.get()
-				.then(querySnapshot => {
-					return _.groupBy(querySnapshot.docs, item => item.data().userIds);
-				});
-			const list = groups;
-			let group = [];
-			for (let i = 0; i < Object.keys(list).length; i++) {
-				const newList = Object.keys(list)[i].split(',');
-				if (newList.includes(currentUser)) {
-					group = newList;
-					setGroupMembers(newList);
-				}
-			}
-			let users = await props.firebase
-				.users()
-				.get()
-				.then(querySnapshot => {
-					return _.fromPairs(
-						querySnapshot.docs.map(item => [item.id, item.data()])
-					);
-				});
-			let names = [];
-			for (let j = 0; j < group.length; j++) {
-				for (let z = 0; z < Object.keys(users).length; z++) {
-					if (Object.keys(users)[z] === group[j]) {
-						names.push(Object.values(users)[z].name);
-					}
-				}
-			}
 			let matches = await props.firebase
 				.matches()
 				.get()
@@ -111,7 +76,6 @@ const MacthScore = props => {
 					);
 				});
 			setGroups(matches);
-			setGroupNames(names);
 		};
 		findGroupMembers();
 

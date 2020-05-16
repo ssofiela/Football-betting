@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getMatches, getUserGroup, getUserUid } from '../redux/actions';
 import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
@@ -40,19 +42,17 @@ const Scoreboard = props => {
 	const [showAll, setShowAll] = useState(false);
 
 	useEffect(() => {
-		console.log(props.serverData);
-		const { users, matches, currentUserUid } = props.serverData;
-		const currentUser = users[currentUserUid];
-		console.log(currentUser);
-		console.log(users);
-		console.log(matches);
+		const currentUser = props.getUserGroup[props.getUserUid];
 		const scoreboard = _.sortBy(
 			_.values(
-				_.pickBy(users, item => item.userGroup === currentUser.userGroup)
+				_.pickBy(
+					props.getUserGroup,
+					item => item.userGroup === currentUser.userGroup
+				)
 			).map(user => {
 				console.log(user);
 				return {
-					points: countPoints(user, matches),
+					points: countPoints(user, props.getMatches),
 					username: user.name ? user.name : 'Anonymous',
 					id: user.id
 				};
@@ -131,4 +131,12 @@ const Scoreboard = props => {
 	);
 };
 
-export default Scoreboard;
+const mapStateToProps = state => {
+	return {
+		getMatches: getMatches(state),
+		getUserGroup: getUserGroup(state),
+		getUserUid: getUserUid(state)
+	};
+};
+
+export default connect(mapStateToProps, null)(Scoreboard);

@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getMatches, getUserGroup, getUserUid } from '../redux/actions';
 import _ from 'lodash';
 import GroupListItem from './GroupListItem';
 import { withRouter } from 'react-router';
 import data from './../data/matches.json';
 
 const GroupList = props => {
-	const [groups, setGroups] = useState({});
 	const [bettedGroups, setBettedGroups] = useState([]);
 
 	useEffect(() => {
-		const { users, matches, currentUserUid } = props.serverData;
 		let bettedGroups = _.keys(
-			_.find(users, user => user.id === currentUserUid)
+			_.find(props.getUserGroup, user => user.id === props.getUserUid)
 		).filter(key => _.includes('ABCDEF', key));
 
-		setGroups(matches);
 		setBettedGroups(bettedGroups);
 	}, []);
 
 	const listGroups = () => {
 		const groupJSX = [];
-		const groupsArray = _.sortBy(Object.entries(groups), group => group[0]);
-		console.log(groupsArray);
-		console.log(bettedGroups);
+		const groupsArray = _.sortBy(
+			Object.entries(props.getMatches),
+			group => group[0]
+		);
 		for (const [key, value] of groupsArray) {
-			console.log(key, !_.includes(bettedGroups, key));
 			groupJSX.push(
 				<GroupListItemWithRouter
 					key={key}
@@ -51,4 +50,12 @@ const GroupList = props => {
 
 const GroupListItemWithRouter = withRouter(GroupListItem);
 
-export default GroupList;
+const mapStateToProps = state => {
+	return {
+		getMatches: getMatches(state),
+		getUserGroup: getUserGroup(state),
+		getUserUid: getUserUid(state)
+	};
+};
+
+export default connect(mapStateToProps, null)(GroupList);
