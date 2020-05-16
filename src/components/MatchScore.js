@@ -9,6 +9,7 @@ import { getFlag, getPoints } from '../utils/utils';
 import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PointCircle from './PointCircle';
+import HorizontalDivider from './HorizontalDivider';
 
 const useStyles = makeStyles(theme => ({
 	groupContainer: {
@@ -135,7 +136,7 @@ const MacthScore = props => {
 								container
 								style={{ direction: 'row', display: 'flex' }}
 							>
-								<Grid item xs={!resultFound ? 12 : 10}>
+								<Grid item xs={10}>
 									<Card
 										key={`${Object.values(groupBets)[j].name} ${i}`}
 										home={getFlag(props.state.location.state.matches[i].home)}
@@ -152,21 +153,20 @@ const MacthScore = props => {
 										}
 									/>
 								</Grid>
-								{resultFound && (
-									<Grid item xs={1} style={{ flexBasis: '0%' }}>
-										<PointCircle
-											index={i}
-											groups={groups}
-											groupChar={props.state.location.state.groupChar}
-											homeScore={_.values(groupBets)[j].bets[i * 2]}
-											awayScore={_.values(groupBets)[j].bets[i * 2 + 1]}
-										/>
-									</Grid>
-								)}
+								<Grid item xs={2} style={{ flexBasis: '0%' }}>
+									<PointCircle
+										index={i}
+										groups={groups}
+										groupChar={props.state.location.state.groupChar}
+										homeScore={_.values(groupBets)[j].bets[i * 2]}
+										awayScore={_.values(groupBets)[j].bets[i * 2 + 1]}
+									/>
+								</Grid>
 							</Grid>
 						);
 					}
 				}
+				groupJSX.push(<HorizontalDivider />);
 			}
 		} else {
 			groupJSX.push(

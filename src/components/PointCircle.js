@@ -1,62 +1,93 @@
-import _ from "lodash";
-import Paper from "@material-ui/core/Paper";
-import React, {useEffect} from "react";
-import {getPoints} from "../utils/utils";
-import {makeStyles} from "@material-ui/core";
+import _ from 'lodash';
+import Paper from '@material-ui/core/Paper';
+import React, { useEffect } from 'react';
+import { getPoints } from '../utils/utils';
+import { makeStyles } from '@material-ui/core';
+import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 
 const useStyles = makeStyles(theme => ({
-    points: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '20px',
-        height: '44px',
-        width: '44px',
-        borderRadius: '50%',
-        borderStyle: 'solid',
-        borderWidth: '3px',
-    },
-    rightAns:{
-        backgroundColor: theme.palette.points.rightAnswer,
-        borderColor: theme.palette.chipColor.gold,
-    },
-    rightWin: {
-        backgroundColor: theme.palette.points.rightAnswer,
-        borderColor: theme.palette.points.rightAnswer,
-    },
-    wrongAns: {
-        backgroundColor: theme.palette.points.wrongAnswer,
-        borderColor: theme.palette.points.wrongAnswer,
-    }
-
+	points: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 10,
+		marginBottom: 10,
+		marginRight: 10,
+		height: '44px',
+		width: '44px',
+		borderRadius: '50%',
+		borderStyle: 'solid',
+		borderWidth: '3px'
+	},
+	rightAns: {
+		backgroundColor: theme.palette.points.rightAnswer,
+		borderColor: theme.palette.chipColor.gold
+	},
+	rightWin: {
+		backgroundColor: theme.palette.points.rightAnswer,
+		borderColor: theme.palette.points.rightAnswer
+	},
+	wrongAns: {
+		backgroundColor: theme.palette.points.wrongAnswer,
+		borderColor: theme.palette.points.wrongAnswer
+	},
+	notPlayed: {
+		backgroundColor: theme.palette.points.notPlayed,
+		borderColor: theme.palette.points.notPlayed
+	}
 }));
 
 const PointCircle = props => {
-    const styles = useStyles();
-    const [points, setPoints] = React.useState('');
+	const styles = useStyles();
+	const [points, setPoints] = React.useState(-1);
 
-    useEffect(() => {
-        const calculatePoints = (index, homeScore, awayScore) => {
-            console.log("props,", props)
-            const char = props.groupChar;
-            const rightGame = props.groups[char][index];
-            const rightHomeScore = rightGame.homeScore;
-            const rightAwayScore = rightGame.awayScore;
-            const value = getPoints(homeScore, awayScore, rightHomeScore, rightAwayScore);
-            setPoints(value)
-        };
-        calculatePoints(props.index, props.homeScore, props.awayScore);
-    }, []);
+	useEffect(() => {
+		const calculatePoints = (index, homeScore, awayScore) => {
+			console.log('props,', props);
+			const char = props.groupChar;
+			const rightGame = props.groups[char][index];
+			const rightHomeScore = rightGame.homeScore;
+			const rightAwayScore = rightGame.awayScore;
+			if (rightHomeScore >= 0 && rightAwayScore >= 0) {
+				const value = getPoints(
+					homeScore,
+					awayScore,
+					rightHomeScore,
+					rightAwayScore
+				);
+				setPoints(value);
+			}
+		};
+		calculatePoints(props.index, props.homeScore, props.awayScore);
+	}, []);
 
-    return (<Paper
-        key={`Points ${props.key}`}
-        elevation={3}
-        className={[styles.points, points === 3? styles.rightAns : points === 1 ? styles.rightWin : styles.wrongAns].join(' ')}
-    >
-        <div style={{justifyContent: 'center', alignItems: 'center', color: 'white'}}>
-            {`${points}p` }
-        </div>
-    </Paper>)
-}
+	return (
+		<Paper
+			key={`Points ${props.key}`}
+			elevation={3}
+			className={[
+				styles.points,
+				points < 0
+					? styles.notPlayed
+					: points === 3
+					? styles.rightAns
+					: points === 1
+					? styles.rightWin
+					: styles.wrongAns
+			].join(' ')}
+		>
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					color: 'white'
+				}}
+			>
+				{points < 0 ? <SportsSoccerIcon fontSize="large" /> : `${points}p`}
+			</div>
+		</Paper>
+	);
+};
 
-export default PointCircle
+export default PointCircle;

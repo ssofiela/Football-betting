@@ -6,10 +6,12 @@ import {
 	getUserGroup,
 	getUserUid
 } from '../redux/actions';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography, Grid } from '@material-ui/core';
 import _ from 'lodash';
 import { getFlag } from '../utils/utils';
 import Card from './Card';
+import PointCircle from './PointCircle';
+import HorizontalDivider from './HorizontalDivider';
 
 const PlayerBets = props => {
 	const styles = useStyles();
@@ -28,25 +30,35 @@ const PlayerBets = props => {
 			betsJSX.push(<h2 className={styles.center}>{`LOHKO ${group[0]}`}</h2>);
 			props.getMatches[group[0]].forEach((match, index) => {
 				//console.log(match);
+				const resultFound = match.homeScore >= 0 && match.awayScore >= 0;
 				betsJSX.push(
-					<Card
-						key={`${group[0]}${index}`}
-						home={getFlag(match.home)}
-						away={getFlag(match.away)}
-						homeScore={<Typography>{group[1][index * 2]}</Typography>}
-						awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
-					/>
+					<Grid
+						key={`grid ${group[0]}${index}`}
+						container
+						style={{ direction: 'row', display: 'flex' }}
+					>
+						<Grid item xs={10}>
+							<Card
+								key={`${group[0]}${index}`}
+								home={getFlag(match.home)}
+								away={getFlag(match.away)}
+								homeScore={<Typography>{group[1][index * 2]}</Typography>}
+								awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
+							/>
+						</Grid>
+						<Grid item xs={2} style={{ flexBasis: '0%' }}>
+							<PointCircle
+								index={index}
+								groups={props.getMatches}
+								groupChar={group[0]}
+								homeScore={group[1][index * 2]}
+								awayScore={group[1][index * 2 + 1]}
+							/>
+						</Grid>
+					</Grid>
 				);
 			});
-			betsJSX.push(
-				<div
-					style={{
-						color: '#e9e9e9',
-						backgroundColor: '#e9e9e9',
-						height: 15
-					}}
-				/>
-			);
+			betsJSX.push(<HorizontalDivider />);
 		});
 		return betsJSX;
 	};

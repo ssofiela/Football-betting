@@ -11,7 +11,8 @@ export const theme = createMuiTheme({
 		},
 		points: {
 			rightAnswer: '#1f6650',
-			wrongAnswer: '#c70d3a'
+			wrongAnswer: '#c70d3a',
+			notPlayed: '#e9e9e9'
 		}
 	}
 });
