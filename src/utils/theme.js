@@ -8,6 +8,10 @@ export const theme = createMuiTheme({
 		},
 		secondary: {
 			main: '#27496d'
+		},
+		points: {
+			rightAnswer: '#1f6650',
+			wrongAnswer: '#c70d3a'
 		}
 	}
 });
