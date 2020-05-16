@@ -97,7 +97,10 @@ const Scoreboard = props => {
 						clickable
 						className={`${classes.chip} ${chipColor}`}
 						onClick={() =>
-							props.history.push({ pathname: 'pelaaja', state: { user } })
+							props.history.push({
+								pathname: 'pelaaja',
+								state: { user, serverData: props.serverData }
+							})
 						}
 					/>
 				);

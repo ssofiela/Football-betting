@@ -10,11 +10,11 @@ const PlayerBets = props => {
 	const styles = useStyles();
 	const [userData, setUserData] = React.useState([]);
 	const [matches, setMatches] = React.useState([]);
+	const { user, serverData } = props.props.location.state;
 
 	// Find group members
 	useEffect(() => {
-		console.log(props);
-		props.setTitle(props.props.location.state.user.username);
+		props.setTitle(user.username);
 		const fetchMatches = async () => {
 			await props.firebase
 				.matches()
@@ -52,7 +52,7 @@ const PlayerBets = props => {
 			group => {
 				betsJSX.push(<h2 className={styles.center}>{`LOHKO ${group[0]}`}</h2>);
 				matches[group[0]].forEach((match, index) => {
-					console.log(match);
+					//console.log(match);
 					betsJSX.push(
 						<Card
 							key={`${group[0]}${index}`}

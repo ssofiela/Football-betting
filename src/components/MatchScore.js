@@ -8,6 +8,7 @@ import _ from 'lodash';
 import { getFlag, getPoints } from '../utils/utils';
 import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PointCircle from './PointCircle';
 
 const useStyles = makeStyles(theme => ({
 	groupContainer: {
@@ -34,18 +35,23 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: '20px',
-		height: '50px',
-		width: '50px',
-		borderRadius: '50%'
+		height: '44px',
+		width: '44px',
+		borderRadius: '50%',
+		borderStyle: 'solid',
+		borderWidth: '3px'
 	},
 	rightAns: {
-		backgroundColor: theme.palette.points.rightAnswer
+		backgroundColor: theme.palette.points.rightAnswer,
+		borderColor: theme.palette.chipColor.gold
 	},
 	rightWin: {
-		backgroundColor: theme.palette.points.rightAnswer
+		backgroundColor: theme.palette.points.rightAnswer,
+		borderColor: theme.palette.points.rightAnswer
 	},
 	wrongAns: {
-		backgroundColor: theme.palette.points.wrongAnswer
+		backgroundColor: theme.palette.points.wrongAnswer,
+		borderColor: theme.palette.points.wrongAnswer
 	}
 }));
 
@@ -138,14 +144,6 @@ const MacthScore = props => {
 		fetchGroupBets();
 	}, []);
 
-	const calculatePoints = (index, homeScore, awayScore) => {
-		const char = props.state.location.state.groupChar;
-		const rightGame = groups[char][index];
-		const rightHomeScore = rightGame.homeScore;
-		const rightAwayScore = rightGame.awayScore;
-		return getPoints(homeScore, awayScore, rightHomeScore, rightAwayScore);
-	};
-
 	const listGroups = () => {
 		const groupJSX = [];
 		if (Object.keys(groups).length > 0) {
@@ -167,11 +165,6 @@ const MacthScore = props => {
 						if (rightGame.homeScore === -1 || rightGame.awayScore === -1) {
 							resultFound = false;
 						}
-						const value = calculatePoints(
-							i,
-							_.values(groupBets)[j].bets[i * 2],
-							_.values(groupBets)[j].bets[i * 2 + 1]
-						);
 						groupJSX.push(
 							<Grid
 								key={`grid ${i}, ${j}`}
@@ -197,28 +190,13 @@ const MacthScore = props => {
 								</Grid>
 								{resultFound && (
 									<Grid item xs={1} style={{ flexBasis: '0%' }}>
-										<Paper
-											key={`Points ${i}`}
-											elevation={3}
-											className={[
-												styles.points,
-												value === 3
-													? styles.rightAns
-													: value === 1
-													? styles.rightWin
-													: styles.wrongAns
-											].join(' ')}
-										>
-											<div
-												style={{
-													justifyContent: 'center',
-													alignItems: 'center',
-													color: 'white'
-												}}
-											>
-												{!_.isEmpty(groups) && value}
-											</div>
-										</Paper>
+										<PointCircle
+											index={i}
+											groups={groups}
+											groupChar={props.state.location.state.groupChar}
+											homeScore={_.values(groupBets)[j].bets[i * 2]}
+											awayScore={_.values(groupBets)[j].bets[i * 2 + 1]}
+										/>
 									</Grid>
 								)}
 							</Grid>
