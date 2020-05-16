@@ -1,5 +1,13 @@
 import { createMuiTheme } from '@material-ui/core';
 
 export const theme = createMuiTheme({
-	palette: {}
+	palette: {
+		chipColor: { gold: '#FFDF00', silver: '#C0C0C0', bronze: '#cd7f32' },
+		primary: {
+			main: '#27496d'
+		},
+		secondary: {
+			main: '#27496d'
+		}
+	}
 });

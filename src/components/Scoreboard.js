@@ -26,7 +26,11 @@ const useStyles = makeStyles(theme => ({
 		position: 'absolute',
 		right: 5,
 		bottom: 2
-	}
+	},
+	gold: { backgroundColor: theme.palette.chipColor.gold },
+	silver: { backgroundColor: theme.palette.chipColor.silver },
+	bronze: { backgroundColor: theme.palette.chipColor.bronze },
+	others: { backgroundColor: theme.palette.primary.main, color: 'white' }
 }));
 
 const Scoreboard = props => {
@@ -36,46 +40,28 @@ const Scoreboard = props => {
 	const [showAll, setShowAll] = useState(false);
 
 	useEffect(() => {
-		const fetchGroups = async () => {
-			let matches = await props.firebase
-				.matches()
-				.get()
-				.then(querySnapshot => {
-					return _.groupBy(
-						querySnapshot.docs.map(item => item.data()),
-						item => item.group
-					);
-				});
-			let users = await props.firebase
-				.users()
-				.get()
-				.then(querySnapshot => {
-					return _.fromPairs(
-						querySnapshot.docs.map(item => [
-							item.id,
-							{ ...item.data(), id: item.id }
-						])
-					);
-				});
-			const currentUser = users[props.firebase.getCurrentUser().uid];
-			console.log(currentUser);
-			const scoreboard = _.sortBy(
-				_.values(
-					_.pickBy(users, item => item.userGroup === currentUser.userGroup)
-				).map(user => {
-					return {
-						points: countPoints(user, matches),
-						username: user.name ? user.name : 'Anonymous',
-						id: user.id
-					};
-				}),
-				['points']
-			).reverse();
-
-			setGroupName(currentUser.userGroup);
-			setScoreBoard(scoreboard);
-		};
-		fetchGroups();
+		console.log(props.serverData);
+		const { users, matches, currentUserUid } = props.serverData;
+		const currentUser = users[currentUserUid];
+		console.log(currentUser);
+		console.log(users);
+		console.log(matches);
+		const scoreboard = _.sortBy(
+			_.values(
+				_.pickBy(users, item => item.userGroup === currentUser.userGroup)
+			).map(user => {
+				console.log(user);
+				return {
+					points: countPoints(user, matches),
+					username: user.name ? user.name : 'Anonymous',
+					id: user.id
+				};
+			}),
+			['points']
+		).reverse();
+		console.log(scoreboard);
+		setGroupName(currentUser.userGroup);
+		setScoreBoard(scoreboard);
 	}, []);
 
 	const countPoints = (user, matches) => {
@@ -100,21 +86,19 @@ const Scoreboard = props => {
 	};
 	const getScoreboard = topHowMany => {
 		console.log(scoreboard);
-		const medalColors = ['#FFDF00', '#C0C0C0', '#cd7f32'];
-
+		const medalColors = [classes.gold, classes.silver, classes.bronze];
 		return _.chunk(
 			scoreboard.slice(0, topHowMany).map((user, index) => {
-				const chipColor = index > 2 ? 'blue' : medalColors[index];
+				const chipColor = index > 2 ? classes.others : medalColors[index];
 				return (
 					<Chip
 						key={user.username}
 						label={user.username + ' ' + user.points + 'p'}
 						clickable
-						className={classes.chip}
+						className={`${classes.chip} ${chipColor}`}
 						onClick={() =>
 							props.history.push({ pathname: 'pelaaja', state: { user } })
 						}
-						style={{ backgroundColor: chipColor }}
 					/>
 				);
 			}),

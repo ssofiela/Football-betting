@@ -57,8 +57,8 @@ export default function AppRouter(props) {
 	};
 
 	return (
-		<Router style={{ color: '#c9c9c9' }}>
-			<TopBarWithRouter />
+		<Router>
+			<TopBarWithRouter title={'asd'} />
 			{indicator ? (
 				<div>
 					<Grid container justify="center" alignItems="center">
@@ -74,5 +74,5 @@ export default function AppRouter(props) {
 	);
 }
 
-const HomePageWithNav = withRouter(HomePage);
+const HomePageWithNav = withFirebase(withRouter(HomePage));
 const TopBarWithRouter = withFirebase(withRouter(TopBar));

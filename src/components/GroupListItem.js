@@ -10,12 +10,11 @@ const GroupListItem = props => {
 		const uniqTeams = [];
 		//console.log(props.groupMatches);
 		props.groupMatches.forEach(match => {
-			const matchData = match.data();
-			if (!uniqTeams.includes(matchData.home)) {
-				uniqTeams.push(matchData.home);
+			if (!uniqTeams.includes(match.home)) {
+				uniqTeams.push(match.home);
 			}
-			if (!uniqTeams.includes(matchData.away)) {
-				uniqTeams.push(matchData.away);
+			if (!uniqTeams.includes(match.away)) {
+				uniqTeams.push(match.away);
 			}
 		});
 		return uniqTeams.map(team => {
@@ -32,14 +31,14 @@ const GroupListItem = props => {
 						? {
 								pathname: '/veikkaa',
 								state: {
-									matches: props.groupMatches.map(match => match.data()),
+									matches: props.groupMatches,
 									groupChar: props.groupChar
 								}
 						  }
 						: {
 								pathname: '/matsi',
 								state: {
-									matches: props.groupMatches.map(match => match.data()),
+									matches: props.groupMatches,
 									groupChar: props.groupChar
 								}
 						  }

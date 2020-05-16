@@ -9,30 +9,13 @@ const GroupList = props => {
 	const [bettedGroups, setBettedGroups] = useState([]);
 
 	useEffect(() => {
-		const fetchGroups = async () => {
-			let groups = await props.firebase
-				.matches()
-				.get()
-				.then(querySnapshot => {
-					return _.groupBy(querySnapshot.docs, item => item.data().group);
-				});
-			let bettedGroups = await props.firebase
-				.users()
-				.get()
-				.then(querySnapshot => {
-					return _.keys(
-						_.find(
-							querySnapshot.docs,
-							item => item.id === props.firebase.getCurrentUser().uid
-						).data()
-					).filter(key => key.length === 1);
-				});
+		const { users, matches, currentUserUid } = props.serverData;
+		let bettedGroups = _.keys(
+			_.find(users, user => user.id === currentUserUid)
+		).filter(key => _.includes('ABCDEF', key));
 
-			console.log(groups);
-			setBettedGroups(bettedGroups);
-			setGroups(groups);
-		};
-		fetchGroups();
+		setGroups(matches);
+		setBettedGroups(bettedGroups);
 	}, []);
 
 	const listGroups = () => {
