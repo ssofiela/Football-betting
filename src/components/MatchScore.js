@@ -32,18 +32,23 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: '20px',
-		height: '50px',
-		width: '50px',
-		borderRadius: '50%'
+		height: '44px',
+		width: '44px',
+		borderRadius: '50%',
+		borderStyle: 'solid',
+		borderWidth: '3px',
 	},
 	rightAns:{
 		backgroundColor: theme.palette.points.rightAnswer,
+		borderColor: theme.palette.chipColor.gold,
 	},
 	rightWin: {
-		backgroundColor: theme.palette.points.rightAnswer
+		backgroundColor: theme.palette.points.rightAnswer,
+		borderColor: theme.palette.points.rightAnswer,
 	},
 	wrongAns: {
 		backgroundColor: theme.palette.points.wrongAnswer,
+		borderColor: theme.palette.points.wrongAnswer,
 	}
 
 }));
@@ -200,8 +205,8 @@ const MacthScore = state => {
 												className={[styles.points, value === 3? styles.rightAns : value === 1 ? styles.rightWin : styles.wrongAns].join(' ')}
 											>
 												<div style={{justifyContent: 'center', alignItems: 'center', color: 'white'}}>
-													{!_.isEmpty(groups) &&
-													value}
+													{`${!_.isEmpty(groups) &&
+													value}p` }
 												</div>
 											</Paper>
 										</Grid>
