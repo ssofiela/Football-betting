@@ -10,7 +10,6 @@ import {
 } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import BetPage from './pages/BetPage';
-import StatsPage from './pages/StatsPage';
 import MatchScorePage from './pages/MatchScorePage';
 import PlayerPage from './pages/PlayerPage';
 
@@ -46,7 +45,6 @@ export default function AppRouter(props) {
 		} else {
 			value.push(
 				<Switch key="auth">
-					<Route key="stats" exact path="/tulokset" component={StatsPage} />
 					<Route key="match" exact path="/matsi" component={MatchScorePage} />
 					<Route key="bet" exact path="/veikkaa" component={BetPage} />
 					<Route key="player" exact path="/pelaaja" component={PlayerPage} />

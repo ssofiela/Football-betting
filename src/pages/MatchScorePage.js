@@ -1,15 +1,13 @@
 import React from 'react';
-import {withFirebase} from "../components/Firebase";
-import MatchScore from "../components/MatchScore";
+import { withFirebase } from '../components/Firebase';
+import MatchScore from '../components/MatchScore';
 
-
-const BetPage = (props) => (
+const MatchScorePage = props => (
 	<div>
-		<MatchScoreFirebase state={props}/>
+		<MatchScoreFirebase state={props} />
 	</div>
 );
 
 const MatchScoreFirebase = withFirebase(MatchScore);
 
-export default BetPage;
-
+export default MatchScorePage;
