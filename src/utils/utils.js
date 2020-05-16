@@ -24,3 +24,31 @@ export const getFlag = team => {
 		/>
 	);
 };
+
+export const getPoints = (myHomeScore, myAwayScore, rightHomeScore, rightAwayScore) => {
+	if (
+		rightHomeScore >= 0 &&
+		rightAwayScore >= 0 &&
+		myHomeScore >= 0 &&
+		myAwayScore >= 0
+	) {
+		if (
+			(rightHomeScore - rightAwayScore) *
+			(myHomeScore - myAwayScore) >
+			0 ||
+			rightHomeScore - rightAwayScore ==
+			myHomeScore - myAwayScore
+		) {
+			if (
+				rightHomeScore == myHomeScore &&
+				rightAwayScore == myAwayScore
+			) {
+				return 3;
+			} else {
+				return 1;
+			}
+		}
+	}
+	return 0
+
+}
