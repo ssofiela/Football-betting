@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { getFlag, getPoints } from '../utils/utils';
 import Card from './Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PointCircle from './PointCircle'
 
 const useStyles = makeStyles(theme => ({
 	groupContainer: {
@@ -140,14 +141,6 @@ const MacthScore = state => {
 		fetchGroupBets();
 	}, []);
 
-		const calculatePoints = (index, homeScore, awayScore) => {
-			const char = state.state.location.state.groupChar;
-			const rightGame = groups[char][index];
-			const rightHomeScore = rightGame.homeScore;
-			const rightAwayScore = rightGame.awayScore;
-			return getPoints(homeScore, awayScore, rightHomeScore, rightAwayScore);
-		};
-
 		const listGroups = () => {
 			const groupJSX = [];
 			if (Object.keys(groups).length > 0) {
@@ -169,11 +162,6 @@ const MacthScore = state => {
 							if (rightGame.homeScore === -1 || rightGame.awayScore === -1) {
 								resultFound = false;
 							}
-							const value = calculatePoints(
-								i,
-								_.values(groupBets)[j].bets[i * 2],
-								_.values(groupBets)[j].bets[i * 2 + 1]
-							)
 							groupJSX.push(
 								<Grid
 									key={`grid ${i}, ${j}`}
@@ -199,16 +187,12 @@ const MacthScore = state => {
 									</Grid>
 									{resultFound && (
 										<Grid item xs={1} style={{flexBasis: '0%'}}>
-											<Paper
-												key={`Points ${i}`}
-												elevation={3}
-												className={[styles.points, value === 3? styles.rightAns : value === 1 ? styles.rightWin : styles.wrongAns].join(' ')}
-											>
-												<div style={{justifyContent: 'center', alignItems: 'center', color: 'white'}}>
-													{`${!_.isEmpty(groups) &&
-													value}p` }
-												</div>
-											</Paper>
+											<PointCircle
+												index={i}
+												groups={groups}
+												groupChar={state.state.location.state.groupChar}
+												homeScore={_.values(groupBets)[j].bets[i * 2]}
+												awayScore={_.values(groupBets)[j].bets[i * 2 + 1]}/>
 										</Grid>
 									)}
 								</Grid>
