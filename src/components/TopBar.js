@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	title: {
 		flexGrow: 1,
-		textAlign: 'center'
+		textAlign: 'center',
+		fontVariant: 'small-caps'
 	},
 	iconButton: {
 		padding: 0,

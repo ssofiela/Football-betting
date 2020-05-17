@@ -65,7 +65,7 @@ const BetList = props => {
 
 	return (
 		<div>
-			<HeaderComponent name="Syötä veikkaukset" />
+			<HeaderComponent backgroundColor={true} name="Syötä veikkaukset" />
 			<div key={'listGroups'}>{listGroups()}</div>
 			<Button
 				fullWidth

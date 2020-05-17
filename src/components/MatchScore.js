@@ -62,6 +62,9 @@ const useStyles = makeStyles(theme => ({
 	wrongAns: {
 		backgroundColor: theme.palette.points.wrongAnswer,
 		borderColor: theme.palette.points.wrongAnswer
+	},
+	textStyle: {
+		fontVariant: 'small-caps'
 	}
 }));
 
@@ -89,7 +92,7 @@ const MacthScore = props => {
 		const groupJSX = [];
 		for (let j = 0; j < Object.keys(groupBets).length; j++) {
 			groupJSX.push(
-				<h2 className={styles.center} key={j}>
+				<h2 className={[styles.center, styles.textStyle].join(' ')} key={j}>
 					{Object.values(groupBets)[j].name}
 				</h2>
 			);
