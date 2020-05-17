@@ -8,8 +8,15 @@ import { getFlag, convertFinals, checkActivity } from '../utils/utils';
 import Card from './Card';
 import HeaderComponent from './HeaderComponent';
 
-const BetList = props => {
-	const styles = useStyles();
+const useStyles = makeStyles((theme) => ({
+	submit: {
+		margin: theme.spacing(3, 0, 2),
+		fontVariant: 'small-caps',
+	},
+}));
+
+const BetList = (props) => {
+	const classes = useStyles();
 
 	const [bets, setBets] = useState(Array(12).fill(-1));
 	const [errors, setErrors] = useState([]); // 1 === error, 0 === no error
@@ -44,7 +51,7 @@ const BetList = props => {
 							type="number"
 							id="bet"
 							inputProps={{ min: 0, style: { textAlign: 'center' } }}
-							onChange={event => handleBets(event.target.value, i * 2)}
+							onChange={(event) => handleBets(event.target.value, i * 2)}
 							fullWidth
 							error={errors[i * 2] === 1}
 						/>
@@ -58,7 +65,7 @@ const BetList = props => {
 							type="number"
 							id="bet"
 							inputProps={{ min: 0, style: { textAlign: 'center' } }}
-							onChange={event => handleBets(event.target.value, i * 2 + 1)}
+							onChange={(event) => handleBets(event.target.value, i * 2 + 1)}
 							fullWidth
 							error={errors[i * 2 + 1] === 1}
 						/>
@@ -85,7 +92,7 @@ const BetList = props => {
 				fullWidth
 				variant="contained"
 				color="primary"
-				className={styles.submit}
+				className={classes.submit}
 				onClick={() => {
 					let fullList = true;
 					let errorList = Array(12).fill(0);
@@ -106,7 +113,7 @@ const BetList = props => {
 							.doc(props.firebase.getCurrentUser().uid)
 							.set(
 								{
-									[groupChar]: bets
+									[groupChar]: bets,
 								},
 								{ merge: true }
 							);
@@ -116,8 +123,8 @@ const BetList = props => {
 							state: {
 								matches: matches,
 								groupChar: groupChar,
-								justSaved: true
-							}
+								justSaved: true,
+							},
 						});
 					}
 				}}
@@ -128,28 +135,9 @@ const BetList = props => {
 	);
 };
 
-const useStyles = makeStyles(theme => ({
-	groupContainer: { margin: '20px', height: 50 },
-	root: {
-		'& .MuiTextField-root': {
-			maxWidth: 100
-		}
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-		fontVariant: 'small-caps'
-	},
-	center: {
-		display: 'flex',
-		textAlign: 'center',
-		alignItems: 'center',
-		justifyContent: 'center'
-	}
-}));
-
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
-		getUserGroup: getUserGroup(state)
+		getUserGroup: getUserGroup(state),
 	};
 };
 

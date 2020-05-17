@@ -41,9 +41,9 @@ export const getPoints = (
 	) {
 		if (
 			(rightHomeScore - rightAwayScore) * (myHomeScore - myAwayScore) > 0 ||
-			rightHomeScore - rightAwayScore == myHomeScore - myAwayScore
+			rightHomeScore - rightAwayScore === myHomeScore - myAwayScore
 		) {
-			if (rightHomeScore == myHomeScore && rightAwayScore == myAwayScore) {
+			if (rightHomeScore === myHomeScore && rightAwayScore === myAwayScore) {
 				return 3;
 			} else {
 				return 1;

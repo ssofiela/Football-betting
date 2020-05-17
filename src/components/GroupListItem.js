@@ -4,11 +4,15 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { getFlag, convertFinals } from '../utils/utils';
 
-const GroupListItem = props => {
-	const styles = useStyles();
+const useStyles = makeStyles((theme) => ({
+	groupContainer: { margin: '20px', cursor: 'pointer' },
+}));
+
+const GroupListItem = (props) => {
+	const classes = useStyles();
 	const getTeams = () => {
 		const uniqTeams = [];
-		props.groupMatches.forEach(match => {
+		props.groupMatches.forEach((match) => {
 			if (!uniqTeams.includes(match.home)) {
 				uniqTeams.push(match.home);
 			}
@@ -16,14 +20,14 @@ const GroupListItem = props => {
 				uniqTeams.push(match.away);
 			}
 		});
-		return uniqTeams.map(team => {
+		return uniqTeams.map((team) => {
 			return getFlag(team);
 		});
 	};
 	return (
 		<Paper
 			elevation={3}
-			className={styles.groupContainer}
+			className={classes.groupContainer}
 			onClick={() =>
 				props.history.push(
 					props.needBet
@@ -31,15 +35,15 @@ const GroupListItem = props => {
 								pathname: '/veikkaa',
 								state: {
 									matches: props.groupMatches,
-									groupChar: props.groupChar
-								}
+									groupChar: props.groupChar,
+								},
 						  }
 						: {
 								pathname: '/matsi',
 								state: {
 									matches: props.groupMatches,
-									groupChar: props.groupChar
-								}
+									groupChar: props.groupChar,
+								},
 						  }
 				)
 			}
@@ -58,14 +62,13 @@ const GroupListItem = props => {
 				</Grid>
 			) : (
 				<Grid container direction="row" justify="space-evenly">
-					<p  style={{ fontVariant: 'small-caps' }}>{convertFinals(props.groupChar)}</p>
+					<p style={{ fontVariant: 'small-caps' }}>
+						{convertFinals(props.groupChar)}
+					</p>
 				</Grid>
 			)}
 		</Paper>
 	);
 };
 
-const useStyles = makeStyles(theme => ({
-	groupContainer: { margin: '20px', cursor: 'pointer' }
-}));
 export default GroupListItem;

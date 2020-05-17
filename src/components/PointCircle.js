@@ -1,18 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-	setTitle,
-	getMatches,
-	getUserGroup,
-	getUserUid
-} from '../redux/actions';
-import _ from 'lodash';
+import { getMatches, getUserGroup, getUserUid } from '../redux/actions';
 import Paper from '@material-ui/core/Paper';
 import { getPoints } from '../utils/utils';
 import { makeStyles } from '@material-ui/core';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	points: {
 		display: 'flex',
 		justifyContent: 'center',
@@ -24,27 +18,27 @@ const useStyles = makeStyles(theme => ({
 		width: '44px',
 		borderRadius: '50%',
 		borderStyle: 'solid',
-		borderWidth: '3px'
+		borderWidth: '3px',
 	},
 	rightAns: {
 		backgroundColor: theme.palette.points.rightAnswer,
-		borderColor: theme.palette.chipColor.gold
+		borderColor: theme.palette.chipColor.gold,
 	},
 	rightWin: {
 		backgroundColor: theme.palette.points.rightAnswer,
-		borderColor: theme.palette.points.rightAnswer
+		borderColor: theme.palette.points.rightAnswer,
 	},
 	wrongAns: {
 		backgroundColor: theme.palette.points.wrongAnswer,
-		borderColor: theme.palette.points.wrongAnswer
+		borderColor: theme.palette.points.wrongAnswer,
 	},
 	notPlayed: {
 		backgroundColor: theme.palette.points.notPlayed,
-		borderColor: theme.palette.points.notPlayed
-	}
+		borderColor: theme.palette.points.notPlayed,
+	},
 }));
 
-const PointCircle = props => {
+const PointCircle = (props) => {
 	const styles = useStyles();
 	const [points, setPoints] = React.useState(-1);
 
@@ -61,7 +55,6 @@ const PointCircle = props => {
 					rightHomeScore,
 					rightAwayScore
 				);
-				console.log(value);
 				setPoints(value);
 			}
 		};
@@ -80,7 +73,7 @@ const PointCircle = props => {
 					? styles.rightAns
 					: points === 1
 					? styles.rightWin
-					: styles.wrongAns
+					: styles.wrongAns,
 			].join(' ')}
 		>
 			<div
@@ -88,7 +81,7 @@ const PointCircle = props => {
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
-					color: 'white'
+					color: 'white',
 				}}
 			>
 				{points < 0 ? <SportsSoccerIcon fontSize="large" /> : `${points}p`}
@@ -97,11 +90,11 @@ const PointCircle = props => {
 	);
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		getMatches: getMatches(state),
 		getUserGroup: getUserGroup(state),
-		getUserUid: getUserUid(state)
+		getUserUid: getUserUid(state),
 	};
 };
 

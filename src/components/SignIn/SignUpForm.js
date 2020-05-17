@@ -16,35 +16,34 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import InputLabel from '@material-ui/core/InputLabel';
-import FilledInput from '@material-ui/core/FilledInput';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	paper: {
 		marginTop: theme.spacing(8),
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	avatar: {
 		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main
+		backgroundColor: theme.palette.secondary.main,
 	},
 	form: {
 		width: '100%', // Fix IE 11 issue.
-		marginTop: theme.spacing(1)
+		marginTop: theme.spacing(1),
 	},
 	submit: {
-		margin: theme.spacing(3, 0, 2)
+		margin: theme.spacing(3, 0, 2),
 	},
 	formControl: {
-		margin: theme.spacing(3)
+		margin: theme.spacing(3),
 	},
 	inputField: {
 		width: '100%',
-		marginTop: theme.spacing(2)
+		marginTop: theme.spacing(2),
 	},
 }));
 
@@ -61,30 +60,30 @@ export default function Register(props) {
 	const [showPassword, setShowPassword] = React.useState(false);
 	const [nameError, setNameError] = React.useState(false);
 
-	const handleEmail = newEmail => {
+	const handleEmail = (newEmail) => {
 		setEmail(newEmail);
 	};
-	const handlePassword = newPassword => {
+	const handlePassword = (newPassword) => {
 		setPassword(newPassword);
 	};
 
-	const handleGroupName = newGroupName => {
+	const handleGroupName = (newGroupName) => {
 		setGroupName(newGroupName);
 	};
 
 	const [value, setValue] = React.useState('create');
 
-	const handleChange = event => {
+	const handleChange = (event) => {
 		setValue(event.target.value);
 	};
 
-	const handleName = name => {
+	const handleName = (name) => {
 		setName(name);
 	};
 
 	const checkEmail = () => {
 		setEmailError(false);
-		setHelperTextAddress('')
+		setHelperTextAddress('');
 		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 		if (!re.test(email)) {
@@ -94,9 +93,9 @@ export default function Register(props) {
 	};
 
 	const checkName = () => {
-		setNameError(false)
+		setNameError(false);
 
-		if(name === ''){
+		if (name === '') {
 			setNameError(true);
 		}
 	};
@@ -119,8 +118,8 @@ export default function Register(props) {
 		let groups = await props.firebase
 			.userGroups()
 			.get()
-			.then(querySnapshot => {
-				return querySnapshot.docs.map(item => {
+			.then((querySnapshot) => {
+				return querySnapshot.docs.map((item) => {
 					return { id: item.id, data: item.data() };
 				});
 			});
@@ -132,11 +131,11 @@ export default function Register(props) {
 					error = true;
 				}
 			}
-			if (groupName === ''){
+			if (groupName === '') {
 				setGroupNameError(true);
 				error = true;
 			}
-		// Check that the group exist
+			// Check that the group exist
 		} else if (value === 'join') {
 			let groupFound = false;
 			for (let i = 0; i < groups.length; i++) {
@@ -152,23 +151,23 @@ export default function Register(props) {
 		return error;
 	};
 
-	const addToGroup = groupName => {
+	const addToGroup = (groupName) => {
 		props.firebase
 			.userGroups()
 			.doc(groupName)
 			.update({
 				userIds: props.firebase.firestore.FieldValue.arrayUnion(
 					props.firebase.getCurrentUser().uid
-				)
+				),
 			});
 	};
 
-	const createGroup = groupName => {
+	const createGroup = (groupName) => {
 		props.firebase
 			.userGroups()
 			.doc(groupName)
 			.set({
-				userIds: [props.firebase.getCurrentUser().uid]
+				userIds: [props.firebase.getCurrentUser().uid],
 			});
 	};
 
@@ -190,7 +189,7 @@ export default function Register(props) {
 						label="Nimesi"
 						type="Name"
 						id="Name"
-						onChange={event => handleName(event.target.value)}
+						onChange={(event) => handleName(event.target.value)}
 						error={nameError}
 					/>
 					<TextField
@@ -202,18 +201,24 @@ export default function Register(props) {
 						label="Sähköposti"
 						name="email"
 						autoComplete="email"
-						onChange={event => handleEmail(event.target.value)}
+						onChange={(event) => handleEmail(event.target.value)}
 						error={helperTextAddress !== ''}
 						helperText={helperTextAddress}
 					/>
-					<FormControl className={classes.inputField} variant="outlined" required>
-						<InputLabel htmlFor="outlined-adornment-password">Salasana</InputLabel>
+					<FormControl
+						className={classes.inputField}
+						variant="outlined"
+						required
+					>
+						<InputLabel htmlFor="outlined-adornment-password">
+							Salasana
+						</InputLabel>
 						<OutlinedInput
 							type={showPassword ? 'text' : 'password'}
 							id="outlined-adornment-password"
 							fullWidth={true}
 							autoComplete="current-password"
-							onChange={event => handlePassword(event.target.value)}
+							onChange={(event) => handlePassword(event.target.value)}
 							value={password}
 							error={passwordError}
 							endAdornment={
@@ -223,18 +228,23 @@ export default function Register(props) {
 										aria-label="toggle password visibility"
 										edge="end"
 									>
-										{showPassword? <VisibilityOffIcon /> :<VisibilityIcon />}
+										{showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
 									</IconButton>
 								</InputAdornment>
 							}
 							labelWidth={75}
-							/>
-							<FormHelperText id="my-helper-text">{passwordError
+						/>
+						<FormHelperText id="my-helper-text">
+							{passwordError
 								? 'Salasanan täytyy sisältää 8 merkkiä ja ainakin yksi numero'
 								: null}
-							</FormHelperText>
+						</FormHelperText>
 					</FormControl>
-					<FormControl component="fieldset" className={classes.formControl} required>
+					<FormControl
+						component="fieldset"
+						className={classes.formControl}
+						required
+					>
 						<FormLabel component="legend">Liity ryhmään</FormLabel>
 						<RadioGroup
 							aria-label="gender"
@@ -259,9 +269,11 @@ export default function Register(props) {
 									id="create"
 									error={GroupNameError}
 									helperText={
-										GroupNameError && groupName !== '' ? 'Valitsemasi nimi on jo käytössä' : null
+										GroupNameError && groupName !== ''
+											? 'Valitsemasi nimi on jo käytössä'
+											: null
 									}
-									onChange={event => handleGroupName(event.target.value)}
+									onChange={(event) => handleGroupName(event.target.value)}
 								/>
 							) : null}
 							<FormControlLabel
@@ -279,7 +291,7 @@ export default function Register(props) {
 									label="Syötä ryhmän nimi"
 									type="join"
 									id="join"
-									onChange={event => handleGroupName(event.target.value)}
+									onChange={(event) => handleGroupName(event.target.value)}
 									error={GroupNameError}
 									helperText={
 										GroupNameError ? 'Laittamaasi nimeä ei löytynyt' : null
@@ -294,7 +306,7 @@ export default function Register(props) {
 						color="primary"
 						className={classes.submit}
 						onClick={async () => {
-							await checkGroup().then(groupError => {
+							await checkGroup().then((groupError) => {
 								checkEmail();
 								checkPassword();
 								checkName();
@@ -310,14 +322,14 @@ export default function Register(props) {
 												.doc(props.firebase.getCurrentUser().uid)
 												.set({
 													userGroup: groupName,
-													name: name
+													name: name,
 												});
 											setEmail('');
 											setPassword('');
 											setGroupName('');
 											props.history.push('/');
 										})
-										.catch(error => {
+										.catch((error) => {
 											console.error('adsdas', error);
 											if (error.code === 'auth/email-already-in-use') {
 												setHelperTextAddress('Sähköposti on jo käytössä');

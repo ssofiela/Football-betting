@@ -4,25 +4,22 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	groupContainer: { margin: '10px', height: 50 },
 	root: {
 		'& .MuiTextField-root': {
-			maxWidth: 100
-		}
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2)
+			maxWidth: 100,
+		},
 	},
 	center: {
 		display: 'flex',
 		textAlign: 'center',
 		alignItems: 'center',
-		justifyContent: 'center'
-	}
+		justifyContent: 'center',
+	},
 }));
 
-const Card = props => {
+const Card = (props) => {
 	const styles = useStyles();
 	return (
 		<Paper elevation={3} className={styles.groupContainer}>

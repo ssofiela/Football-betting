@@ -4,7 +4,7 @@ import {
 	setTitle,
 	getMatches,
 	getUserGroup,
-	getUserUid
+	getUserUid,
 } from '../redux/actions';
 import { makeStyles, Typography, Grid } from '@material-ui/core';
 import _ from 'lodash';
@@ -13,8 +13,18 @@ import Card from './Card';
 import PointCircle from './PointCircle';
 import HorizontalDivider from './HorizontalDivider';
 
-const PlayerBets = props => {
-	const styles = useStyles();
+const useStyles = makeStyles((theme) => ({
+	textStyle: {
+		display: 'flex',
+		textAlign: 'center',
+		alignItems: 'center',
+		justifyContent: 'center',
+		fontVariant: 'small-caps',
+	},
+}));
+
+const PlayerBets = (props) => {
+	const classes = useStyles();
 	const { user } = props.props.location.state;
 	const showMatchGroups = ['A', 'B', 'C', 'D', 'E', 'F'];
 	// Find group members
@@ -26,7 +36,12 @@ const PlayerBets = props => {
 		const betsJSX = [];
 		_.toPairs(_.pick(props.getUserGroup[user.id], showMatchGroups)).forEach(
 			(group, index) => {
-				betsJSX.push(<h3 className={styles.textStyle}>{`Lohko ${group[0]}`}</h3>);
+				betsJSX.push(
+					<h3
+						key={'header ' + index}
+						className={classes.textStyle}
+					>{`Lohko ${group[0]}`}</h3>
+				);
 				props.getMatches[group[0]].forEach((match, index) => {
 					betsJSX.push(
 						<Grid
@@ -60,7 +75,7 @@ const PlayerBets = props => {
 						1 >
 					index
 				) {
-					betsJSX.push(<HorizontalDivider />);
+					betsJSX.push(<HorizontalDivider key={'divider ' + index} />);
 				}
 			}
 		);
@@ -74,30 +89,11 @@ const PlayerBets = props => {
 	);
 };
 
-const useStyles = makeStyles(theme => ({
-	groupContainer: { margin: '20px' },
-	root: {
-		'& .MuiTextField-root': {
-			maxWidth: 100
-		}
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2)
-	},
-	textStyle: {
-		display: 'flex',
-		textAlign: 'center',
-		alignItems: 'center',
-		justifyContent: 'center',
-		fontVariant: 'small-caps'
-	}
-}));
-
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		getMatches: getMatches(state),
 		getUserGroup: getUserGroup(state),
-		getUserUid: getUserUid(state)
+		getUserUid: getUserUid(state),
 	};
 };
 

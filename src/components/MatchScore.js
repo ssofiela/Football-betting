@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
 	setTitle,
 	getMatches,
 	getUserGroup,
-	getUserUid
+	getUserUid,
 } from '../redux/actions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, Typography } from '@material-ui/core';
@@ -17,31 +17,31 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	groupContainer: {
 		margin: '20px',
-		height: 50
+		height: 50,
 	},
 	root: {
 		'& .MuiTextField-root': {
-			maxWidth: 100
-		}
+			maxWidth: 100,
+		},
 	},
 	submit: {
-		margin: theme.spacing(3, 0, 2)
+		margin: theme.spacing(3, 0, 2),
 	},
 	center: {
 		display: 'flex',
 		margin: '10px',
 		textAlign: 'center',
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	pointsCentered: {
 		display: 'flex',
 		textAlign: 'center',
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	points: {
 		display: 'flex',
@@ -52,27 +52,27 @@ const useStyles = makeStyles(theme => ({
 		width: '44px',
 		borderRadius: '50%',
 		borderStyle: 'solid',
-		borderWidth: '3px'
+		borderWidth: '3px',
 	},
 	rightAns: {
 		backgroundColor: theme.palette.points.rightAnswer,
-		borderColor: theme.palette.chipColor.gold
+		borderColor: theme.palette.chipColor.gold,
 	},
 	rightWin: {
 		backgroundColor: theme.palette.points.rightAnswer,
-		borderColor: theme.palette.points.rightAnswer
+		borderColor: theme.palette.points.rightAnswer,
 	},
 	wrongAns: {
 		backgroundColor: theme.palette.points.wrongAnswer,
-		borderColor: theme.palette.points.wrongAnswer
+		borderColor: theme.palette.points.wrongAnswer,
 	},
 	textStyle: {
 		fontVariant: 'small-caps',
-	}
+	},
 }));
 
-const MacthScore = props => {
-	const styles = useStyles();
+const MacthScore = (props) => {
+	const classes = useStyles();
 	const [groupBets, setGroupBets] = useState([]);
 	const [showSnackBar, setShowSnackbar] = useState(false);
 	const { groupChar, matches, justSaved } = props.state.location.state;
@@ -85,12 +85,12 @@ const MacthScore = props => {
 
 		setGroupBets(
 			_.fromPairs(
-				_.map(props.getUserGroup, user => [
+				_.map(props.getUserGroup, (user) => [
 					user.id,
 					{
 						bets: user[groupChar],
-						name: user.name
-					}
+						name: user.name,
+					},
 				])
 			)
 		);
@@ -101,13 +101,13 @@ const MacthScore = props => {
 		const groupJSX = [];
 		for (let j = 0; j < Object.keys(groupBets).length; j++) {
 			groupJSX.push(
-				<h3 className={[styles.center, styles.textStyle].join(' ')} key={j}>
+				<h3 className={[classes.center, classes.textStyle].join(' ')} key={j}>
 					{Object.values(groupBets)[j].name}
 				</h3>
 			);
 			if (_.values(groupBets)[j].bets === undefined) {
 				groupJSX.push(
-					<p className={styles.center} key={'text' + j}>
+					<p className={classes.center} key={'text' + j}>
 						{`Veikkaukset tulille, ${Object.values(groupBets)[j].name}!`}
 					</p>
 				);
@@ -135,7 +135,7 @@ const MacthScore = props => {
 									}
 								/>
 							</Grid>
-							<Grid item xs={2} className={styles.pointsCentered}>
+							<Grid item xs={2} className={classes.pointsCentered}>
 								<PointCircle
 									index={i}
 									groupChar={groupChar}
@@ -169,7 +169,7 @@ const MacthScore = props => {
 			<Snackbar
 				anchorOrigin={{
 					vertical: 'bottom',
-					horizontal: 'left'
+					horizontal: 'left',
 				}}
 				open={showSnackBar}
 				autoHideDuration={6000}
@@ -192,11 +192,11 @@ const MacthScore = props => {
 	);
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		getMatches: getMatches(state),
 		getUserGroup: getUserGroup(state),
-		getUserUid: getUserUid(state)
+		getUserUid: getUserUid(state),
 	};
 };
 
