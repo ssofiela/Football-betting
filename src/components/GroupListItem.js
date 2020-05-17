@@ -8,7 +8,7 @@ const GroupListItem = props => {
 	const styles = useStyles();
 	const getTeams = () => {
 		const uniqTeams = [];
-		//console.log(props.groupMatches);
+		console.log(props);
 		props.groupMatches.forEach(match => {
 			if (!uniqTeams.includes(match.home)) {
 				uniqTeams.push(match.home);

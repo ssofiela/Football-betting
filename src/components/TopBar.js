@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getTitle } from '../redux/actions';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -31,9 +33,9 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function TopBar(props) {
+const TopBar = props => {
 	const classes = useStyles();
-
+	console.log(props);
 	return (
 		<AppBar position="sticky">
 			<Toolbar>
@@ -53,7 +55,7 @@ export default function TopBar(props) {
 					</Grid>
 					<Grid item xs={8}>
 						<Typography variant="h5" className={classes.title}>
-							EM-KISAVEIKKAUS
+							{props.getTitle}
 						</Typography>
 					</Grid>
 					<Grid item xs={2}>
@@ -71,4 +73,9 @@ export default function TopBar(props) {
 			</Toolbar>
 		</AppBar>
 	);
-}
+};
+const mapStateToProps = state => {
+	return { getTitle: getTitle(state) };
+};
+
+export default connect(mapStateToProps, null)(TopBar);

@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
-	groupContainer: { margin: '20px', height: 50 },
+	groupContainer: { margin: '10px', height: 50 },
 	root: {
 		'& .MuiTextField-root': {
 			maxWidth: 100
