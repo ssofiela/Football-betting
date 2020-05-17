@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	textStyle: {
 		fontVariant: 'small-caps',
+		display: 'flex',
+		textAlign: 'center',
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	row: {
 		direction: 'row',
@@ -82,7 +86,7 @@ const MacthScore = (props) => {
 		const groupJSX = [];
 		for (let j = 0; j < Object.keys(groupBets).length; j++) {
 			groupJSX.push(
-				<h3 className={[classes.center, classes.textStyle].join(' ')} key={j}>
+				<h3 className={classes.textStyle} key={j}>
 					{Object.values(groupBets)[j].name}
 				</h3>
 			);
