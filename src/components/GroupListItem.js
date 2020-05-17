@@ -56,6 +56,6 @@ const GroupListItem = props => {
 };
 
 const useStyles = makeStyles(theme => ({
-	groupContainer: { margin: '20px' }
+	groupContainer: { margin: '20px', cursor: 'pointer' }
 }));
 export default GroupListItem;

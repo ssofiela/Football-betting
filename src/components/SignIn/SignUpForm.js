@@ -228,7 +228,7 @@ export default function Register(props) {
 									</IconButton>
 								</InputAdornment>
 							}
-							labelWidth={70}
+							labelWidth={75}
 							/>
 							<FormHelperText id="my-helper-text">{passwordError
 								? 'Salasanan täytyy sisältää 8 merkkiä ja ainakin yksi numero'
