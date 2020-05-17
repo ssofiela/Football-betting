@@ -35,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.points.notPlayed,
 		borderColor: theme.palette.points.notPlayed,
 	},
+	textStyle: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		color: 'white',
+	}
 }));
 
 const PointCircle = (props) => {
@@ -76,14 +82,9 @@ const PointCircle = (props) => {
 			].join(' ')}
 		>
 			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					color: 'white',
-				}}
+				className={classes.textStyle}
 			>
-				{points < 0 ? <SportsSoccerIcon fontSize="large" /> : `${points}p`}
+				{points < 0 ? <SportsSoccerIcon fontSize='large' /> : `${points}p`}
 			</div>
 		</Paper>
 	);

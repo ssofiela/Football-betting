@@ -15,11 +15,11 @@ export const getFlag = (team) => {
 	return (
 		<Flag
 			country={convertedCountryCode}
-			format="png"
+			format='png'
 			pngSize={64}
 			shiny={false}
-			alt="A flag"
-			basePath="../img/flags/"
+			alt='A flag'
+			basePath='../img/flags/'
 			width={flagSize}
 			height={flagSize}
 			key={team}

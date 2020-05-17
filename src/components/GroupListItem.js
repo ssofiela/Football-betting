@@ -2,8 +2,9 @@ import React from 'react';
 import { makeStyles, Grid, Paper } from '@material-ui/core';
 import { getFlag, convertFinals } from '../utils/utils';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	groupContainer: { margin: '20px', cursor: 'pointer' },
+	textStyle: {fontVariant: 'small-caps'},
 }));
 
 const GroupListItem = (props) => {
@@ -49,18 +50,18 @@ const GroupListItem = (props) => {
 			{props.groupChar.length === 1 ? (
 				<Grid
 					container
-					direction="row"
-					justify="space-evenly"
-					alignItems="center"
+					direction='row'
+					justify='space-evenly'
+					alignItems='center'
 				>
-					<p style={{ fontVariant: 'small-caps' }}>
+					<p className={classes.textStyle}>
 						{'Lohko ' + props.groupChar}
 					</p>
 					{getTeams()}
 				</Grid>
 			) : (
-				<Grid container direction="row" justify="space-evenly">
-					<p style={{ fontVariant: 'small-caps' }}>
+				<Grid container direction='row' justify='space-evenly'>
+					<p className={classes.textStyle}>
 						{convertFinals(props.groupChar)}
 					</p>
 				</Grid>

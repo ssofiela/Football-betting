@@ -13,14 +13,21 @@ import Card from './Card';
 import PointCircle from './PointCircle';
 import HorizontalDivider from './HorizontalDivider';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	textStyle: {
 		display: 'flex',
 		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
-		fontVariant: 'small-caps',
+		fontVariant: 'small-caps'
 	},
+	row: {
+		direction: 'row',
+		display: 'flex'
+	},
+	gridStyle: {
+		flexBasis: '0%'
+	}
 }));
 
 const PlayerBets = (props) => {
@@ -47,7 +54,7 @@ const PlayerBets = (props) => {
 						<Grid
 							key={`grid ${group[0]}${index}`}
 							container
-							style={{ direction: 'row', display: 'flex' }}
+							className={classes.row}
 						>
 							<Grid item xs={10}>
 								<Card
@@ -57,7 +64,7 @@ const PlayerBets = (props) => {
 									awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
 								/>
 							</Grid>
-							<Grid item xs={2} style={{ flexBasis: '0%' }}>
+							<Grid item xs={2} className={classes.gridStyle}>
 								<PointCircle
 									index={index}
 									groups={props.getMatches}
