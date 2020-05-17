@@ -122,7 +122,7 @@ const BetList = props => {
 					}
 				}}
 			>
-				Tallenna
+				tallenna
 			</Button>
 		</div>
 	);
@@ -136,7 +136,8 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	submit: {
-		margin: theme.spacing(3, 0, 2)
+		margin: theme.spacing(3, 0, 2),
+		fontVariant: 'small-caps'
 	},
 	center: {
 		display: 'flex',

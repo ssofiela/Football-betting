@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
 	setTitle,
@@ -67,7 +67,7 @@ const useStyles = makeStyles(theme => ({
 		borderColor: theme.palette.points.wrongAnswer
 	},
 	textStyle: {
-		fontVariant: 'small-caps'
+		fontVariant: 'small-caps',
 	}
 }));
 
@@ -101,9 +101,9 @@ const MacthScore = props => {
 		const groupJSX = [];
 		for (let j = 0; j < Object.keys(groupBets).length; j++) {
 			groupJSX.push(
-				<h2 className={[styles.center, styles.textStyle].join(' ')} key={j}>
+				<h3 className={[styles.center, styles.textStyle].join(' ')} key={j}>
 					{Object.values(groupBets)[j].name}
-				</h2>
+				</h3>
 			);
 			if (_.values(groupBets)[j].bets === undefined) {
 				groupJSX.push(
