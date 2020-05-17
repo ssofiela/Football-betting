@@ -30,7 +30,13 @@ const useStyles = makeStyles(theme => ({
 		color: 'white',
 		padding: 0,
 		margin: 0
-	}
+	},
+	iconCentered: {
+		display: 'flex',
+		textAlign: 'center',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
 }));
 
 const TopBar = props => {
@@ -58,7 +64,7 @@ const TopBar = props => {
 							{props.getTitle}
 						</Typography>
 					</Grid>
-					<Grid item xs={2}>
+					<Grid item xs={2} className={classes.iconCentered}>
 						<IconButton
 							aria-label="log out"
 							onClick={() => {
