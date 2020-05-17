@@ -1,6 +1,6 @@
 import React from 'react';
-import {withFirebase} from "../components/Firebase";
-import BetList from "../components/BetList";
+import {withFirebase} from '../components/Firebase';
+import BetList from '../components/BetList';
 
 
 const BetPage = (props) => (

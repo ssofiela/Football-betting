@@ -36,10 +36,16 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.points.notPlayed,
 		borderColor: theme.palette.points.notPlayed,
 	},
+	textStyle: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		color: 'white',
+	}
 }));
 
 const PointCircle = (props) => {
-	const styles = useStyles();
+	const classes = useStyles();
 	const [points, setPoints] = React.useState(-1);
 
 	useEffect(() => {
@@ -66,25 +72,20 @@ const PointCircle = (props) => {
 			key={`Points ${props.key}`}
 			elevation={3}
 			className={[
-				styles.points,
+				classes.points,
 				points < 0
-					? styles.notPlayed
+					? classes.notPlayed
 					: points === 3
-					? styles.rightAns
+					? classes.rightAns
 					: points === 1
-					? styles.rightWin
-					: styles.wrongAns,
+					? classes.rightWin
+					: classes.wrongAns,
 			].join(' ')}
 		>
 			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					color: 'white',
-				}}
+				className={classes.textStyle}
 			>
-				{points < 0 ? <SportsSoccerIcon fontSize="large" /> : `${points}p`}
+				{points < 0 ? <SportsSoccerIcon fontSize='large' /> : `${points}p`}
 			</div>
 		</Paper>
 	);

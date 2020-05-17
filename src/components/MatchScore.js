@@ -18,18 +18,6 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
-	groupContainer: {
-		margin: '20px',
-		height: 50,
-	},
-	root: {
-		'& .MuiTextField-root': {
-			maxWidth: 100,
-		},
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-	},
 	center: {
 		display: 'flex',
 		margin: '10px',
@@ -42,17 +30,6 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
-	},
-	points: {
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginTop: '20px',
-		height: '44px',
-		width: '44px',
-		borderRadius: '50%',
-		borderStyle: 'solid',
-		borderWidth: '3px',
 	},
 	rightAns: {
 		backgroundColor: theme.palette.points.rightAnswer,
@@ -69,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
 	textStyle: {
 		fontVariant: 'small-caps',
 	},
+	row: {
+		direction: 'row',
+		display: 'flex'
+	}
 }));
 
 const MacthScore = (props) => {
@@ -117,7 +98,7 @@ const MacthScore = (props) => {
 						<Grid
 							key={`grid ${i}, ${j}`}
 							container
-							style={{ direction: 'row', display: 'flex' }}
+							className={classes.row}
 						>
 							<Grid item xs={10}>
 								<Card
@@ -174,16 +155,16 @@ const MacthScore = (props) => {
 				open={showSnackBar}
 				autoHideDuration={6000}
 				onClose={closeSnackbar}
-				message="Veikkaukset tallennettu!"
+				message='Veikkaukset tallennettu!'
 				action={
 					<React.Fragment>
 						<IconButton
-							size="small"
-							aria-label="close"
-							color="inherit"
+							size='small'
+							aria-label='close'
+							color='inherit'
 							onClick={closeSnackbar}
 						>
-							<CloseIcon fontSize="small" />
+							<CloseIcon fontSize='small' />
 						</IconButton>
 					</React.Fragment>
 				}

@@ -11,12 +11,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 
 const useStyles = makeStyles(theme => ({
-	root: {
-		flexGrow: 1
-	},
-	menuButton: {
-		marginRight: theme.spacing(2)
-	},
 	title: {
 		flexGrow: 1,
 		textAlign: 'center',
@@ -43,36 +37,36 @@ const useStyles = makeStyles(theme => ({
 const TopBar = props => {
 	const classes = useStyles();
 	return (
-		<AppBar position="sticky">
+		<AppBar position='sticky'>
 			<Toolbar>
-				<Grid container spacing={3} justify="center" alignItems="center">
+				<Grid container spacing={3} justify='center' alignItems='center'>
 					<Grid item xs={2}>
 						<IconButton
-							aria-label="main page"
+							aria-label='main page'
 							onClick={() => {
 								props.history.push('/login');
 							}}
 						>
 							<SportsSoccerIcon
-								fontSize="large"
+								fontSize='large'
 								className={classes.whiteIcon}
 							/>
 						</IconButton>
 					</Grid>
 					<Grid item xs={8}>
-						<Typography variant="h5" className={classes.title}>
+						<Typography variant='h5' className={classes.title}>
 							{props.getTitle}
 						</Typography>
 					</Grid>
 					<Grid item xs={2} className={classes.iconCentered}>
 						<IconButton
-							aria-label="log out"
+							aria-label='log out'
 							onClick={() => {
 								props.firebase.doSignOut();
 							}}
 							className={classes.iconButton}
 						>
-							<ExitToAppIcon fontSize="large" className={classes.whiteIcon} />
+							<ExitToAppIcon fontSize='large' className={classes.whiteIcon} />
 						</IconButton>
 					</Grid>
 				</Grid>

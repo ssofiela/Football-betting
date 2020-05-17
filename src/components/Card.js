@@ -23,8 +23,8 @@ const Card = (props) => {
 	const styles = useStyles();
 	return (
 		<Paper elevation={3} className={styles.groupContainer}>
-			<form className={styles.root} noValidate autoComplete="off">
-				<Grid container direction="row">
+			<form className={styles.root} noValidate autoComplete='off'>
+				<Grid container direction='row'>
 					<Grid item xs className={styles.center}>
 						{props.home}
 					</Grid>
@@ -32,7 +32,7 @@ const Card = (props) => {
 						<Box width={1 / 4}>{props.homeScore}</Box>
 					</Grid>
 					<Grid item xs={2} className={styles.center}>
-						<Box fontWeight="fontWeightMedium" fontSize={20}>
+						<Box fontWeight='fontWeightMedium' fontSize={20}>
 							-
 						</Box>
 					</Grid>

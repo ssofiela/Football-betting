@@ -26,7 +26,7 @@ const HeaderComponent = props => {
 	const classes = useStyles();
 
 	return (
-		<Grid container justify="center" alignItems="center">
+		<Grid container justify='center' alignItems='center'>
 			<Grid item className={[classes.GridStyle, props.backgroundColor ? classes.blue : classes.white].join(' ')}>
 				<div className={classes.center}>{props.name}</div>
 			</Grid>

@@ -27,10 +27,6 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 	},
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main,
-	},
 	form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(1),
@@ -172,61 +168,61 @@ export default function Register(props) {
 	};
 
 	return (
-		<Container component="main" maxWidth="xs">
+		<Container component='main' maxWidth='xs'>
 			<CssBaseline />
 			<div onScroll={true} className={classes.paper}>
-				<Typography component="h1" variant="h5">
+				<Typography component='h1' variant='h5'>
 					Luo käyttäjä
 				</Typography>
 				<form className={classes.form} noValidate>
 					<TextField
-						variant="outlined"
-						margin="normal"
+						variant='outlined'
+						margin='normal'
 						required
 						fullWidth
 						autoFocus
-						name="name"
-						label="Nimesi"
-						type="Name"
-						id="Name"
+						name='name'
+						label='Nimesi'
+						type='Name'
+						id='Name'
 						onChange={(event) => handleName(event.target.value)}
 						error={nameError}
 					/>
 					<TextField
-						variant="outlined"
-						margin="normal"
+						variant='outlined'
+						margin='normal'
 						required
 						fullWidth
-						id="email"
-						label="Sähköposti"
-						name="email"
-						autoComplete="email"
+						id='email'
+						label='Sähköposti'
+						name='email'
+						autoComplete='email'
 						onChange={(event) => handleEmail(event.target.value)}
 						error={helperTextAddress !== ''}
 						helperText={helperTextAddress}
 					/>
 					<FormControl
 						className={classes.inputField}
-						variant="outlined"
+						variant='outlined'
 						required
 					>
-						<InputLabel htmlFor="outlined-adornment-password">
+						<InputLabel htmlFor='outlined-adornment-password'>
 							Salasana
 						</InputLabel>
 						<OutlinedInput
 							type={showPassword ? 'text' : 'password'}
-							id="outlined-adornment-password"
+							id='outlined-adornment-password'
 							fullWidth={true}
-							autoComplete="current-password"
+							autoComplete='current-password'
 							onChange={(event) => handlePassword(event.target.value)}
 							value={password}
 							error={passwordError}
 							endAdornment={
-								<InputAdornment position="end">
+								<InputAdornment position='end'>
 									<IconButton
 										onClick={() => setShowPassword(!showPassword)}
-										aria-label="toggle password visibility"
-										edge="end"
+										aria-label='toggle password visibility'
+										edge='end'
 									>
 										{showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
 									</IconButton>
@@ -234,39 +230,39 @@ export default function Register(props) {
 							}
 							labelWidth={75}
 						/>
-						<FormHelperText id="my-helper-text">
+						<FormHelperText id='my-helper-text'>
 							{passwordError
 								? 'Salasanan täytyy sisältää 8 merkkiä ja ainakin yksi numero'
 								: null}
 						</FormHelperText>
 					</FormControl>
 					<FormControl
-						component="fieldset"
+						component='fieldset'
 						className={classes.formControl}
 						required
 					>
-						<FormLabel component="legend">Liity ryhmään</FormLabel>
+						<FormLabel component='legend'>Liity ryhmään</FormLabel>
 						<RadioGroup
-							aria-label="gender"
-							name="gender1"
+							aria-label='gender'
+							name='gender1'
 							value={value}
 							onChange={handleChange}
 						>
 							<FormControlLabel
-								value="create"
-								control={<Radio color="primary" />}
-								label="Luo uusi ryhmä"
+								value='create'
+								control={<Radio color='primary' />}
+								label='Luo uusi ryhmä'
 							/>
 							{value === 'create' ? (
 								<TextField
-									variant="outlined"
-									margin="normal"
+									variant='outlined'
+									margin='normal'
 									required
 									fullWidth
-									name="create"
-									label="Syötä ryhmällesi nimi"
-									type="create"
-									id="create"
+									name='create'
+									label='Syötä ryhmällesi nimi'
+									type='create'
+									id='create'
 									error={GroupNameError}
 									helperText={
 										GroupNameError && groupName !== ''
@@ -277,20 +273,20 @@ export default function Register(props) {
 								/>
 							) : null}
 							<FormControlLabel
-								value="join"
-								control={<Radio color="primary" />}
-								label="Liity jo olemassa olevaan ryhmään"
+								value='join'
+								control={<Radio color='primary' />}
+								label='Liity jo olemassa olevaan ryhmään'
 							/>
 							{value === 'join' ? (
 								<TextField
-									variant="outlined"
-									margin="normal"
+									variant='outlined'
+									margin='normal'
 									required
 									fullWidth
-									name="join"
-									label="Syötä ryhmän nimi"
-									type="join"
-									id="join"
+									name='join'
+									label='Syötä ryhmän nimi'
+									type='join'
+									id='join'
 									onChange={(event) => handleGroupName(event.target.value)}
 									error={GroupNameError}
 									helperText={
@@ -302,8 +298,8 @@ export default function Register(props) {
 					</FormControl>
 					<Button
 						fullWidth
-						variant="contained"
-						color="primary"
+						variant='contained'
+						color='primary'
 						className={classes.submit}
 						onClick={async () => {
 							await checkGroup().then((groupError) => {
@@ -343,7 +339,7 @@ export default function Register(props) {
 					</Button>
 					<Grid container>
 						<Grid item>
-							<Link to="/login">Vanha käyttäjä? Kirjaudu sisään</Link>
+							<Link to='/login'>Vanha käyttäjä? Kirjaudu sisään</Link>
 						</Grid>
 					</Grid>
 				</form>

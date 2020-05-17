@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(3, 0, 2),
 		fontVariant: 'small-caps',
 	},
+	center: {
+		textAlign: 'center'
+	}
 }));
 
 const BetList = (props) => {
@@ -47,10 +50,10 @@ const BetList = (props) => {
 						<TextField
 							disabled={!isActive}
 							required
-							name="bet"
-							type="number"
-							id="bet"
-							inputProps={{ min: 0, style: { textAlign: 'center' } }}
+							name='bet'
+							type='number'
+							id='bet'
+							inputProps={{ min: 0,  className: classes.center }}
 							onChange={(event) => handleBets(event.target.value, i * 2)}
 							fullWidth
 							error={errors[i * 2] === 1}
@@ -61,10 +64,10 @@ const BetList = (props) => {
 						<TextField
 							disabled={!isActive}
 							required
-							name="bet"
-							type="number"
-							id="bet"
-							inputProps={{ min: 0, style: { textAlign: 'center' } }}
+							name='bet'
+							type='number'
+							id='bet'
+							inputProps={{ min: 0, className: classes.center }}
 							onChange={(event) => handleBets(event.target.value, i * 2 + 1)}
 							fullWidth
 							error={errors[i * 2 + 1] === 1}
@@ -90,8 +93,8 @@ const BetList = (props) => {
 			<Button
 				disabled={!isActive}
 				fullWidth
-				variant="contained"
-				color="primary"
+				variant='contained'
+				color='primary'
 				className={classes.submit}
 				onClick={() => {
 					let fullList = true;
