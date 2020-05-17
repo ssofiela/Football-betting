@@ -2,14 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import { getFlag, convertFinals } from '../utils/utils';
 
 const GroupListItem = props => {
 	const styles = useStyles();
 	const getTeams = () => {
 		const uniqTeams = [];
-		console.log(props);
 		props.groupMatches.forEach(match => {
 			if (!uniqTeams.includes(match.home)) {
 				uniqTeams.push(match.home);
@@ -55,7 +53,7 @@ const GroupListItem = props => {
 				</Grid>
 			) : (
 				<Grid container direction="row" justify="space-evenly">
-					<p>{convertFinals(props.groupChar)}</p>
+					<p  style={{ fontVariant: 'small-caps' }}>{convertFinals(props.groupChar)}</p>
 				</Grid>
 			)}
 		</Paper>

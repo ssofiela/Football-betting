@@ -132,7 +132,6 @@ export default function Register(props) {
 					error = true;
 				}
 			}
-			console.log("groupname", groupName)
 			if (groupName === ''){
 				setGroupNameError(true);
 				error = true;

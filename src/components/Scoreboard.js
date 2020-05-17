@@ -50,7 +50,6 @@ const Scoreboard = props => {
 					item => item.userGroup === currentUser.userGroup
 				)
 			).map(user => {
-				console.log(user);
 				return {
 					points: countPoints(user, props.getMatches),
 					username: user.name ? user.name : 'Anonymous',
@@ -59,7 +58,6 @@ const Scoreboard = props => {
 			}),
 			['points']
 		).reverse();
-		console.log(scoreboard);
 		setGroupName(currentUser.userGroup);
 		setScoreBoard(scoreboard);
 	}, []);
@@ -67,11 +65,9 @@ const Scoreboard = props => {
 	const countPoints = (user, matches) => {
 		const groupChars = 'ABCDEF';
 		let points = 0;
-		console.log(user);
 		for (let groupChar of groupChars) {
 			const userBets = user[groupChar];
 			if (userBets) {
-				console.log(groupChar, userBets);
 				matches[groupChar].forEach((match, index) => {
 					points += getPoints(
 						userBets[index * 2],
@@ -85,7 +81,6 @@ const Scoreboard = props => {
 		return points;
 	};
 	const getScoreboard = topHowMany => {
-		console.log(scoreboard);
 		const medalColors = [classes.gold, classes.silver, classes.bronze];
 		return _.chunk(
 			scoreboard.slice(0, topHowMany).map((user, index) => {

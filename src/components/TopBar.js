@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
 
 const TopBar = props => {
 	const classes = useStyles();
-	console.log(props);
 	return (
 		<AppBar position="sticky">
 			<Toolbar>

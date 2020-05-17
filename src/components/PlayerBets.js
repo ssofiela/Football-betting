@@ -26,9 +26,8 @@ const PlayerBets = props => {
 		const betsJSX = [];
 		_.toPairs(_.pick(props.getUserGroup[user.id], showMatchGroups)).forEach(
 			(group, index) => {
-				betsJSX.push(<h2 className={styles.textStyle}>{`Lohko ${group[0]}`}</h2>);
+				betsJSX.push(<h3 className={styles.textStyle}>{`Lohko ${group[0]}`}</h3>);
 				props.getMatches[group[0]].forEach((match, index) => {
-					//console.log(match);
 					betsJSX.push(
 						<Grid
 							key={`grid ${group[0]}${index}`}
@@ -55,7 +54,6 @@ const PlayerBets = props => {
 						</Grid>
 					);
 				});
-				console.log(index);
 				if (
 					_.values(_.pick(props.getUserGroup[user.id], showMatchGroups))
 						.length -

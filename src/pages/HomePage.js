@@ -10,8 +10,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import GroupList from '../components/GroupList';
 import Scoreboard from '../components/Scoreboard';
-import HeaderComponent from '../components/HeaderComponent';
-import { withFirebase } from '../components/Firebase';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import data from './../data/matches.json';
@@ -20,7 +18,7 @@ const HomePage = props => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		props.setTitle('EM-KISAVEIKKAUS');
+		props.setTitle('em-kisaveikkaus');
 		Promise.all([
 			props.firebase
 				.users()
@@ -59,8 +57,6 @@ const HomePage = props => {
 	}, []);
 
 	const writeDB = () => {
-		console.log('writing database... ');
-		console.log(data);
 		for (let i = 0; i < data.matches.length; i++) {
 			props.firebase
 				.matches()
@@ -87,8 +83,6 @@ const HomePage = props => {
 	);
 };
 
-const HeaderComponentFirebase = withFirebase(HeaderComponent);
-const GroupListFirebase = withFirebase(GroupList);
 const ScoreboardRouter = withRouter(Scoreboard);
 
 export default connect(null, {
