@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getMatches, getUserGroup, getUserUid } from '../redux/actions';
-import Paper from '@material-ui/core/Paper';
 import { getPoints } from '../utils/utils';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Paper } from '@material-ui/core';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PointCircle = (props) => {
-	const styles = useStyles();
+	const classes = useStyles();
 	const [points, setPoints] = React.useState(-1);
 
 	useEffect(() => {
@@ -59,21 +58,21 @@ const PointCircle = (props) => {
 			}
 		};
 		calculatePoints(props.index, props.homeScore, props.awayScore);
-	}, []);
+	}, [props]);
 
 	return (
 		<Paper
 			key={`Points ${props.key}`}
 			elevation={3}
 			className={[
-				styles.points,
+				classes.points,
 				points < 0
-					? styles.notPlayed
+					? classes.notPlayed
 					: points === 3
-					? styles.rightAns
+					? classes.rightAns
 					: points === 1
-					? styles.rightWin
-					: styles.wrongAns,
+					? classes.rightWin
+					: classes.wrongAns,
 			].join(' ')}
 		>
 			<div

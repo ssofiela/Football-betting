@@ -15,19 +15,19 @@ const groupOrderRef = [
 	'rof16',
 	'rof8',
 	'rof4',
-	'rof2'
+	'rof2',
 ];
 
-const GroupList = props => {
+const GroupList = (props) => {
 	const [bettedGroups, setBettedGroups] = useState([]);
 
 	useEffect(() => {
 		let bettedGroups = _.keys(
-			_.find(props.getUserGroup, user => user.id === props.getUserUid)
-		).filter(key => _.includes('ABCDEF', key));
+			_.find(props.getUserGroup, (user) => user.id === props.getUserUid)
+		).filter((key) => _.includes('ABCDEF', key));
 
 		setBettedGroups(bettedGroups);
-	}, []);
+	}, [props]);
 
 	const listGroups = () => {
 		const groupJSX = [];
@@ -52,11 +52,11 @@ const GroupList = props => {
 
 const GroupListItemWithRouter = withRouter(GroupListItem);
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		getMatches: getMatches(state),
 		getUserGroup: getUserGroup(state),
-		getUserUid: getUserUid(state)
+		getUserUid: getUserUid(state),
 	};
 };
 

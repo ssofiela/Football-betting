@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { setTitle, setUserGroup, getUserGroup } from '../redux/actions';
-import { makeStyles } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { makeStyles, TextField, Button } from '@material-ui/core';
 import { getFlag, convertFinals, checkActivity } from '../utils/utils';
 import Card from './Card';
 import HeaderComponent from './HeaderComponent';
@@ -28,7 +26,7 @@ const BetList = (props) => {
 			groupChar.length === 1 ? 'Lohko ' + groupChar : convertFinals(groupChar)
 		);
 		setIsActive(checkActivity(groupChar));
-	}, []);
+	}, [props, groupChar]);
 
 	const handleBets = (bet, i) => {
 		const firstList = bets;

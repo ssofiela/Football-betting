@@ -1,46 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getTitle } from '../redux/actions';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
+import {
+	makeStyles,
+	AppBar,
+	Toolbar,
+	Typography,
+	IconButton,
+	Grid,
+} from '@material-ui/core/';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
 	},
 	menuButton: {
-		marginRight: theme.spacing(2)
+		marginRight: theme.spacing(2),
 	},
 	title: {
 		flexGrow: 1,
 		textAlign: 'center',
-		fontVariant: 'small-caps'
+		fontVariant: 'small-caps',
 	},
 	iconButton: {
 		padding: 0,
 		margin: 0,
-		color: 'black'
+		color: 'black',
 	},
 	whiteIcon: {
 		color: 'white',
 		padding: 0,
-		margin: 0
+		margin: 0,
 	},
 	iconCentered: {
 		display: 'flex',
 		textAlign: 'center',
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 }));
 
-const TopBar = props => {
+const TopBar = (props) => {
 	const classes = useStyles();
 	return (
 		<AppBar position="sticky">
@@ -80,7 +82,7 @@ const TopBar = props => {
 		</AppBar>
 	);
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return { getTitle: getTitle(state) };
 };
 

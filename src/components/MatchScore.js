@@ -6,15 +6,18 @@ import {
 	getUserGroup,
 	getUserUid,
 } from '../redux/actions';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles, Typography } from '@material-ui/core';
+import {
+	makeStyles,
+	Typography,
+	Snackbar,
+	IconButton,
+	Grid,
+} from '@material-ui/core';
 import _ from 'lodash';
 import { getFlag, convertFinals } from '../utils/utils';
 import Card from './Card';
 import PointCircle from './PointCircle';
 import HorizontalDivider from './HorizontalDivider';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
@@ -95,7 +98,7 @@ const MacthScore = (props) => {
 			)
 		);
 		setShowSnackbar(justSaved);
-	}, []);
+	}, [groupChar, props, justSaved]);
 
 	const listGroups = () => {
 		const groupJSX = [];

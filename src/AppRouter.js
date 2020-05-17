@@ -6,7 +6,7 @@ import {
 	Route,
 	Redirect,
 	withRouter,
-	BrowserRouter as Router
+	BrowserRouter as Router,
 } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import BetPage from './pages/BetPage';
@@ -25,11 +25,11 @@ export default function AppRouter(props) {
 	// Check authentication
 	useEffect(() => {
 		//setIndicator(true);
-		props.firebase.auth.onAuthStateChanged(function(user) {
+		props.firebase.auth.onAuthStateChanged(function (user) {
 			setAuth(user);
 			setIndicator(false);
 		});
-	}, []);
+	}, [props]);
 
 	// If user is not authenticated, she/he can only log in/register
 	const authCheck = () => {

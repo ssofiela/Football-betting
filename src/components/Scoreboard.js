@@ -2,41 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getMatches, getUserGroup, getUserUid } from '../redux/actions';
 import _ from 'lodash';
-import { makeStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
-import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
 import HeaderComponent from './HeaderComponent';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { getPoints } from '../utils/utils';
-import { Divider } from '@material-ui/core';
+import {
+	Divider,
+	Chip,
+	Paper,
+	IconButton,
+	makeStyles,
+} from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	container: {
-		position: 'relative'
+		position: 'relative',
 	},
 	chip: {
 		marginTop: 10,
-		margin: 5
+		margin: 5,
 	},
 	scoreboard: {
 		textAlign: 'center',
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	showmore: {
 		position: 'absolute',
 		right: 5,
-		bottom: 2
+		bottom: 2,
 	},
 	gold: { backgroundColor: theme.palette.chipColor.gold },
 	silver: { backgroundColor: theme.palette.chipColor.silver },
 	bronze: { backgroundColor: theme.palette.chipColor.bronze },
-	others: { backgroundColor: theme.palette.primary.main, color: 'white' }
+	others: { backgroundColor: theme.palette.primary.main, color: 'white' },
 }));
 
-const Scoreboard = props => {
+const Scoreboard = (props) => {
 	const classes = useStyles();
 	const [scoreboard, setScoreBoard] = useState([]);
 	const [groupName, setGroupName] = useState('');
@@ -48,20 +50,20 @@ const Scoreboard = props => {
 			_.values(
 				_.pickBy(
 					props.getUserGroup,
-					item => item.userGroup === currentUser.userGroup
+					(item) => item.userGroup === currentUser.userGroup
 				)
-			).map(user => {
+			).map((user) => {
 				return {
 					points: countPoints(user, props.getMatches),
 					username: user.name ? user.name : 'Anonymous',
-					id: user.id
+					id: user.id,
 				};
 			}),
 			['points']
 		).reverse();
 		setGroupName(currentUser.userGroup);
 		setScoreBoard(scoreboard);
-	}, []);
+	}, [props]);
 
 	const countPoints = (user, matches) => {
 		const groupChars = 'ABCDEF';
@@ -81,7 +83,7 @@ const Scoreboard = props => {
 		}
 		return points;
 	};
-	const getScoreboard = topHowMany => {
+	const getScoreboard = (topHowMany) => {
 		const medalColors = [classes.gold, classes.silver, classes.bronze];
 		return _.chunk(
 			scoreboard.slice(0, topHowMany).map((user, index) => {
@@ -95,14 +97,14 @@ const Scoreboard = props => {
 						onClick={() =>
 							props.history.push({
 								pathname: 'pelaaja',
-								state: { user, serverData: props.serverData }
+								state: { user, serverData: props.serverData },
 							})
 						}
 					/>
 				);
 			}),
 			3
-		).map(row => (
+		).map((row) => (
 			<div key={row} className={classes.center}>
 				{row}
 			</div>
@@ -129,11 +131,11 @@ const Scoreboard = props => {
 	);
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		getMatches: getMatches(state),
 		getUserGroup: getUserGroup(state),
-		getUserUid: getUserUid(state)
+		getUserUid: getUserUid(state),
 	};
 };
 

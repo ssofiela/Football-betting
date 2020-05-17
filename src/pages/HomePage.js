@@ -6,8 +6,7 @@ import {
 	setUserGroup,
 	setUserUid,
 } from '../redux/actions';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
+import { CircularProgress, Grid } from '@material-ui/core/';
 import GroupList from '../components/GroupList';
 import Scoreboard from '../components/Scoreboard';
 import { withRouter } from 'react-router-dom';
@@ -54,7 +53,7 @@ const HomePage = (props) => {
 			setLoading(false);
 		});
 		//writeDB();
-	}, []);
+	}, [props]);
 
 	const writeDB = () => {
 		for (let i = 0; i < data.matches.length; i++) {

@@ -1,8 +1,5 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { makeStyles, Grid, Paper, Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	groupContainer: { margin: '10px', height: 50 },
@@ -20,26 +17,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Card = (props) => {
-	const styles = useStyles();
+	const classes = useStyles();
 	return (
-		<Paper elevation={3} className={styles.groupContainer}>
-			<form className={styles.root} noValidate autoComplete="off">
+		<Paper elevation={3} className={classes.groupContainer}>
+			<form className={classes.root} noValidate autoComplete="off">
 				<Grid container direction="row">
-					<Grid item xs className={styles.center}>
+					<Grid item xs className={classes.center}>
 						{props.home}
 					</Grid>
-					<Grid item xs={2} className={styles.center}>
+					<Grid item xs={2} className={classes.center}>
 						<Box width={1 / 4}>{props.homeScore}</Box>
 					</Grid>
-					<Grid item xs={2} className={styles.center}>
+					<Grid item xs={2} className={classes.center}>
 						<Box fontWeight="fontWeightMedium" fontSize={20}>
 							-
 						</Box>
 					</Grid>
-					<Grid item xs={2} className={styles.center}>
+					<Grid item xs={2} className={classes.center}>
 						<Box width={1 / 4}>{props.awayScore}</Box>
 					</Grid>
-					<Grid item xs className={styles.center}>
+					<Grid item xs className={classes.center}>
 						{props.away}
 					</Grid>
 				</Grid>

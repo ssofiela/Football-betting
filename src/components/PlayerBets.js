@@ -30,7 +30,7 @@ const PlayerBets = (props) => {
 	// Find group members
 	useEffect(() => {
 		props.setTitle(user.username);
-	}, []);
+	}, [props, user]);
 
 	const listBets = () => {
 		const betsJSX = [];
