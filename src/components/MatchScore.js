@@ -34,6 +34,12 @@ const useStyles = makeStyles(theme => ({
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
+	pointsCentered: {
+		display: 'flex',
+		textAlign: 'center',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
 	points: {
 		display: 'flex',
 		justifyContent: 'center',
@@ -117,7 +123,7 @@ const MacthScore = props => {
 									}
 								/>
 							</Grid>
-							<Grid item xs={2} style={{ flexBasis: '0%' }}>
+							<Grid item xs={2} className={styles.pointsCentered}>
 								<PointCircle
 									index={i}
 									groupChar={props.state.location.state.groupChar}
