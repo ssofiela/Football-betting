@@ -3,9 +3,8 @@ import React from 'react';
 const HorizontalDivider = () => (
 	<div
 		style={{
-			color: '#e9e9e9',
-			backgroundColor: '#e9e9e9',
-			height: 15,
+			backgroundColor: '#27496d',
+			height: 0,
 			marginTop: 10
 		}}
 	/>

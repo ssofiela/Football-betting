@@ -2,6 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
 import { getFlag } from '../utils/utils';
 
 const GroupListItem = props => {
@@ -46,7 +48,7 @@ const GroupListItem = props => {
 			}
 		>
 			<Grid container direction="row" justify="space-evenly">
-				<p>Lohko {props.groupChar}</p>
+				<p>{'Lohko ' + props.groupChar}</p>
 				{getTeams()}
 			</Grid>
 		</Paper>

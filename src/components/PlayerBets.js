@@ -16,7 +16,7 @@ import HorizontalDivider from './HorizontalDivider';
 const PlayerBets = props => {
 	const styles = useStyles();
 	const { user } = props.props.location.state;
-
+	const showMatchGroups = ['A', 'B', 'C', 'D', 'E', 'F'];
 	// Find group members
 	useEffect(() => {
 		props.setTitle(user.username);
@@ -24,42 +24,48 @@ const PlayerBets = props => {
 
 	const listBets = () => {
 		const betsJSX = [];
-		_.toPairs(
-			_.pick(props.getUserGroup[user.id], ['A', 'B', 'C', 'D', 'E', 'F'])
-		).forEach(group => {
-			betsJSX.push(<h2 className={styles.center}>{`LOHKO ${group[0]}`}</h2>);
-			props.getMatches[group[0]].forEach((match, index) => {
-				//console.log(match);
-				const resultFound = match.homeScore >= 0 && match.awayScore >= 0;
-				betsJSX.push(
-					<Grid
-						key={`grid ${group[0]}${index}`}
-						container
-						style={{ direction: 'row', display: 'flex' }}
-					>
-						<Grid item xs={10}>
-							<Card
-								key={`${group[0]}${index}`}
-								home={getFlag(match.home)}
-								away={getFlag(match.away)}
-								homeScore={<Typography>{group[1][index * 2]}</Typography>}
-								awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
-							/>
+		_.toPairs(_.pick(props.getUserGroup[user.id], showMatchGroups)).forEach(
+			(group, index) => {
+				betsJSX.push(<h2 className={styles.center}>{`LOHKO ${group[0]}`}</h2>);
+				props.getMatches[group[0]].forEach((match, index) => {
+					//console.log(match);
+					betsJSX.push(
+						<Grid
+							key={`grid ${group[0]}${index}`}
+							container
+							style={{ direction: 'row', display: 'flex' }}
+						>
+							<Grid item xs={10}>
+								<Card
+									home={getFlag(match.home)}
+									away={getFlag(match.away)}
+									homeScore={<Typography>{group[1][index * 2]}</Typography>}
+									awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
+								/>
+							</Grid>
+							<Grid item xs={2} style={{ flexBasis: '0%' }}>
+								<PointCircle
+									index={index}
+									groups={props.getMatches}
+									groupChar={group[0]}
+									homeScore={group[1][index * 2]}
+									awayScore={group[1][index * 2 + 1]}
+								/>
+							</Grid>
 						</Grid>
-						<Grid item xs={2} style={{ flexBasis: '0%' }}>
-							<PointCircle
-								index={index}
-								groups={props.getMatches}
-								groupChar={group[0]}
-								homeScore={group[1][index * 2]}
-								awayScore={group[1][index * 2 + 1]}
-							/>
-						</Grid>
-					</Grid>
-				);
-			});
-			betsJSX.push(<HorizontalDivider />);
-		});
+					);
+				});
+				console.log(index);
+				if (
+					_.values(_.pick(props.getUserGroup[user.id], showMatchGroups))
+						.length -
+						1 >
+					index
+				) {
+					betsJSX.push(<HorizontalDivider />);
+				}
+			}
+		);
 		return betsJSX;
 	};
 

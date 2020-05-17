@@ -1,6 +1,13 @@
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import {
+	setTitle,
+	getMatches,
+	getUserGroup,
+	getUserUid
+} from '../redux/actions';
 import _ from 'lodash';
 import Paper from '@material-ui/core/Paper';
-import React, { useEffect } from 'react';
 import { getPoints } from '../utils/utils';
 import { makeStyles } from '@material-ui/core';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
@@ -43,9 +50,8 @@ const PointCircle = props => {
 
 	useEffect(() => {
 		const calculatePoints = (index, homeScore, awayScore) => {
-			console.log('props,', props);
 			const char = props.groupChar;
-			const rightGame = props.groups[char][index];
+			const rightGame = props.getMatches[char][index];
 			const rightHomeScore = rightGame.homeScore;
 			const rightAwayScore = rightGame.awayScore;
 			if (rightHomeScore >= 0 && rightAwayScore >= 0) {
@@ -90,4 +96,12 @@ const PointCircle = props => {
 	);
 };
 
-export default PointCircle;
+const mapStateToProps = state => {
+	return {
+		getMatches: getMatches(state),
+		getUserGroup: getUserGroup(state),
+		getUserUid: getUserUid(state)
+	};
+};
+
+export default connect(mapStateToProps, null)(PointCircle);

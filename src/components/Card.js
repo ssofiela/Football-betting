@@ -24,9 +24,8 @@ const useStyles = makeStyles(theme => ({
 
 const Card = props => {
 	const styles = useStyles();
-
 	return (
-		<Paper key={props.key} elevation={3} className={styles.groupContainer}>
+		<Paper elevation={3} className={styles.groupContainer}>
 			<form className={styles.root} noValidate autoComplete="off">
 				<Grid container direction="row">
 					<Grid item xs className={styles.center}>
