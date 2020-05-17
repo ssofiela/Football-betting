@@ -14,6 +14,7 @@ import HeaderComponent from '../components/HeaderComponent';
 import { withFirebase } from '../components/Firebase';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
+import data from './../data/matches.json';
 
 const HomePage = props => {
 	const [loading, setLoading] = useState(true);
@@ -54,7 +55,19 @@ const HomePage = props => {
 			props.setMatches(results[1]);
 			setLoading(false);
 		});
+		writeDB();
 	}, []);
+
+	const writeDB = () => {
+		console.log('writing database... ');
+		console.log(data);
+		for (let i = 0; i < data.matches.length; i++) {
+			props.firebase
+				.matches()
+				.doc(i.toString())
+				.set(data.matches[i]);
+		}
+	};
 
 	return (
 		<div>

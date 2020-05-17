@@ -4,7 +4,19 @@ import { getMatches, getUserGroup, getUserUid } from '../redux/actions';
 import _ from 'lodash';
 import GroupListItem from './GroupListItem';
 import { withRouter } from 'react-router';
-import data from './../data/matches.json';
+
+const groupOrderRef = [
+	'A',
+	'B',
+	'C',
+	'D',
+	'E',
+	'F',
+	'rof16',
+	'rof8',
+	'rof4',
+	'rof2'
+];
 
 const GroupList = props => {
 	const [bettedGroups, setBettedGroups] = useState([]);
@@ -19,9 +31,8 @@ const GroupList = props => {
 
 	const listGroups = () => {
 		const groupJSX = [];
-		const groupsArray = _.sortBy(
-			Object.entries(props.getMatches),
-			group => group[0]
+		const groupsArray = Object.entries(props.getMatches).sort(
+			(a, b) => groupOrderRef.indexOf(a[0]) - groupOrderRef.indexOf(b[0])
 		);
 		for (const [key, value] of groupsArray) {
 			groupJSX.push(
@@ -34,15 +45,6 @@ const GroupList = props => {
 			);
 		}
 		return groupJSX;
-	};
-
-	const writeDB = () => {
-		for (let i = 0; i < data.matches.length; i++) {
-			props.firebase
-				.matches()
-				.doc(i.toString())
-				.set(data.matches[i]);
-		}
 	};
 
 	return <div>{listGroups()}</div>;

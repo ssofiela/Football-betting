@@ -9,7 +9,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
-import { getFlag, getPoints } from '../utils/utils';
+import { getFlag, convertFinals } from '../utils/utils';
 import Card from './Card';
 import PointCircle from './PointCircle';
 import HorizontalDivider from './HorizontalDivider';
@@ -62,16 +62,20 @@ const useStyles = makeStyles(theme => ({
 const MacthScore = props => {
 	const styles = useStyles();
 	const [groupBets, setGroupBets] = React.useState([]);
+	const { groupChar, matches } = props.state.location.state;
 
 	// Find group members
 	useEffect(() => {
-		props.setTitle('Lohko ' + props.state.location.state.groupChar);
+		props.setTitle(
+			groupChar.length === 1 ? 'Lohko ' + groupChar : convertFinals(groupChar)
+		);
+
 		setGroupBets(
 			_.fromPairs(
 				_.map(props.getUserGroup, user => [
 					user.id,
 					{
-						bets: user[props.state.location.state.groupChar],
+						bets: user[groupChar],
 						name: user.name
 					}
 				])
@@ -90,11 +94,11 @@ const MacthScore = props => {
 			if (_.values(groupBets)[j].bets === undefined) {
 				groupJSX.push(
 					<p className={styles.center} key={'text' + j}>
-						Käyttäjä ei ole veikannut vielä
+						{`Veikkaukset tulille, ${Object.values(groupBets)[j].name}!`}
 					</p>
 				);
 			} else {
-				for (let i = 0; i < props.state.location.state.matches.length; i++) {
+				for (let i = 0; i < matches.length; i++) {
 					groupJSX.push(
 						<Grid
 							key={`grid ${i}, ${j}`}
@@ -103,8 +107,8 @@ const MacthScore = props => {
 						>
 							<Grid item xs={10}>
 								<Card
-									home={getFlag(props.state.location.state.matches[i].home)}
-									away={getFlag(props.state.location.state.matches[i].away)}
+									home={getFlag(matches[i].home)}
+									away={getFlag(matches[i].away)}
 									homeScore={
 										<Typography>
 											{_.values(groupBets)[j].bets[i * 2]}
@@ -120,7 +124,7 @@ const MacthScore = props => {
 							<Grid item xs={2} style={{ flexBasis: '0%' }}>
 								<PointCircle
 									index={i}
-									groupChar={props.state.location.state.groupChar}
+									groupChar={groupChar}
 									homeScore={_.values(groupBets)[j].bets[i * 2]}
 									awayScore={_.values(groupBets)[j].bets[i * 2 + 1]}
 								/>

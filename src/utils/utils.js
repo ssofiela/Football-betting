@@ -25,7 +25,12 @@ export const getFlag = team => {
 	);
 };
 
-export const getPoints = (myHomeScore, myAwayScore, rightHomeScore, rightAwayScore) => {
+export const getPoints = (
+	myHomeScore,
+	myAwayScore,
+	rightHomeScore,
+	rightAwayScore
+) => {
 	if (
 		rightHomeScore >= 0 &&
 		rightAwayScore >= 0 &&
@@ -33,22 +38,29 @@ export const getPoints = (myHomeScore, myAwayScore, rightHomeScore, rightAwaySco
 		myAwayScore >= 0
 	) {
 		if (
-			(rightHomeScore - rightAwayScore) *
-			(myHomeScore - myAwayScore) >
-			0 ||
-			rightHomeScore - rightAwayScore ==
-			myHomeScore - myAwayScore
+			(rightHomeScore - rightAwayScore) * (myHomeScore - myAwayScore) > 0 ||
+			rightHomeScore - rightAwayScore == myHomeScore - myAwayScore
 		) {
-			if (
-				rightHomeScore == myHomeScore &&
-				rightAwayScore == myAwayScore
-			) {
+			if (rightHomeScore == myHomeScore && rightAwayScore == myAwayScore) {
 				return 3;
 			} else {
 				return 1;
 			}
 		}
 	}
-	return 0
+	return 0;
+};
 
-}
+export const convertFinals = code => {
+	const names = {
+		rof16: 'Neljännesvälierät',
+		rof8: 'Puolivälierät',
+		rof4: 'Välierät',
+		rof2: 'Mitaliottelut'
+	};
+	return names[code];
+};
+
+export const checkActivity = groupCode => {
+	return _.includes(['A', 'B', 'C', 'D', 'E', 'F'], groupCode);
+};

@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-
-import { getFlag } from '../utils/utils';
+import { getFlag, convertFinals } from '../utils/utils';
 
 const GroupListItem = props => {
 	const styles = useStyles();
@@ -47,10 +46,16 @@ const GroupListItem = props => {
 				)
 			}
 		>
-			<Grid container direction="row" justify="space-evenly">
-				<p>{'Lohko ' + props.groupChar}</p>
-				{getTeams()}
-			</Grid>
+			{props.groupChar.length === 1 ? (
+				<Grid container direction="row" justify="space-evenly">
+					<p>{'Lohko ' + props.groupChar}</p>
+					{getTeams()}
+				</Grid>
+			) : (
+				<Grid container direction="row" justify="space-evenly">
+					<p>{convertFinals(props.groupChar)}</p>
+				</Grid>
+			)}
 		</Paper>
 	);
 };

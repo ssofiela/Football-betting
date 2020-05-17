@@ -4,7 +4,7 @@ import { setTitle } from '../redux/actions';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { getFlag } from '../utils/utils';
+import { getFlag, convertFinals, checkActivity } from '../utils/utils';
 import Card from './Card';
 import HeaderComponent from './HeaderComponent';
 
@@ -13,10 +13,14 @@ const BetList = props => {
 
 	const [bets, setBets] = useState(Array(12).fill(-1));
 	const [errors, setErrors] = useState([]); // 1 === error, 0 === no error
+	const [isActive, setIsActive] = useState(true);
+	const { groupChar, matches } = props.state.location.state;
 
 	useEffect(() => {
-		console.log(props);
-		props.setTitle('Lohko ' + props.state.location.state.groupChar);
+		props.setTitle(
+			groupChar.length === 1 ? 'Lohko ' + groupChar : convertFinals(groupChar)
+		);
+		setIsActive(checkActivity(groupChar));
 	}, []);
 
 	const handleBets = (bet, i) => {
@@ -25,15 +29,16 @@ const BetList = props => {
 		setBets(firstList);
 	};
 
-	const listGroups = () => {
+	const listMatches = () => {
 		const groupJSX = [];
-		for (let i = 0; i < props.state.location.state.matches.length; i++) {
+		for (let i = 0; i < matches.length; i++) {
 			groupJSX.push(
 				<Card
 					key={i}
-					home={getFlag(props.state.location.state.matches[i].home)}
+					home={getFlag(matches[i].home)}
 					homeScore={
 						<TextField
+							disabled={!isActive}
 							required
 							name="bet"
 							type="number"
@@ -44,9 +49,10 @@ const BetList = props => {
 							error={errors[i * 2] === 1}
 						/>
 					}
-					away={getFlag(props.state.location.state.matches[i].away)}
+					away={getFlag(matches[i].away)}
 					awayScore={
 						<TextField
+							disabled={!isActive}
 							required
 							name="bet"
 							type="number"
@@ -66,8 +72,9 @@ const BetList = props => {
 	return (
 		<div>
 			<HeaderComponent name="Syötä veikkaukset" />
-			<div key={'listGroups'}>{listGroups()}</div>
+			<div>{listMatches()}</div>
 			<Button
+				disabled={!isActive}
 				fullWidth
 				variant="contained"
 				color="primary"
@@ -88,15 +95,15 @@ const BetList = props => {
 							.doc(props.firebase.getCurrentUser().uid)
 							.set(
 								{
-									[props.state.location.state.groupChar]: bets
+									[groupChar]: bets
 								},
 								{ merge: true }
 							);
 						props.state.history.push({
 							pathname: '/matsi',
 							state: {
-								matches: props.state.location.state.matches,
-								groupChar: props.state.location.state.groupChar
+								matches: matches,
+								groupChar: groupChar
 							}
 						});
 					}
