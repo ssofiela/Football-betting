@@ -13,6 +13,9 @@ import { getFlag, convertFinals } from '../utils/utils';
 import Card from './Card';
 import PointCircle from './PointCircle';
 import HorizontalDivider from './HorizontalDivider';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
 	groupContainer: {
@@ -70,8 +73,9 @@ const useStyles = makeStyles(theme => ({
 
 const MacthScore = props => {
 	const styles = useStyles();
-	const [groupBets, setGroupBets] = React.useState([]);
-	const { groupChar, matches } = props.state.location.state;
+	const [groupBets, setGroupBets] = useState([]);
+	const [showSnackBar, setShowSnackbar] = useState(false);
+	const { groupChar, matches, justSaved } = props.state.location.state;
 
 	// Find group members
 	useEffect(() => {
@@ -90,6 +94,7 @@ const MacthScore = props => {
 				])
 			)
 		);
+		setShowSnackbar(justSaved);
 	}, []);
 
 	const listGroups = () => {
@@ -150,9 +155,39 @@ const MacthScore = props => {
 		return groupJSX;
 	};
 
+	const closeSnackbar = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setShowSnackbar(false);
+	};
+
 	return (
 		<div>
 			<div key={'listGroups'}>{!_.isEmpty(groupBets) && listGroups()}</div>
+			<Snackbar
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left'
+				}}
+				open={showSnackBar}
+				autoHideDuration={6000}
+				onClose={closeSnackbar}
+				message="Veikkaukset tallennettu!"
+				action={
+					<React.Fragment>
+						<IconButton
+							size="small"
+							aria-label="close"
+							color="inherit"
+							onClick={closeSnackbar}
+						>
+							<CloseIcon fontSize="small" />
+						</IconButton>
+					</React.Fragment>
+				}
+			/>
 		</div>
 	);
 };

@@ -47,7 +47,12 @@ const GroupListItem = props => {
 			}
 		>
 			{props.groupChar.length === 1 ? (
-				<Grid container direction="row" justify="space-evenly">
+				<Grid
+					container
+					direction="row"
+					justify="space-evenly"
+					alignItems="center"
+				>
 					<p style={{ fontVariant: 'small-caps' }}>
 						{'Lohko ' + props.groupChar}
 					</p>

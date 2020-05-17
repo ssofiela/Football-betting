@@ -3,13 +3,15 @@ import _ from 'lodash';
 import Flag from 'react-flags';
 import { convertIocCode } from 'convert-country-codes';
 
-export const getFlag = team => {
+export const getFlag = (team) => {
 	const greatBritain = { WAL: '_wales', ENG: '_england' };
 	const convertedCountryCode = convertIocCode(team)
 		? convertIocCode(team).iso3
 		: _.has(greatBritain, team)
 		? greatBritain[team]
 		: 'UND';
+	const flagSize =
+		window.innerWidth > 600 ? 64 : window.innerWidth > 330 ? 48 : 32;
 	return (
 		<Flag
 			country={convertedCountryCode}
@@ -18,8 +20,8 @@ export const getFlag = team => {
 			shiny={false}
 			alt="A flag"
 			basePath="../img/flags/"
-			width={48}
-			height={48}
+			width={flagSize}
+			height={flagSize}
 			key={team}
 		/>
 	);
@@ -51,16 +53,16 @@ export const getPoints = (
 	return 0;
 };
 
-export const convertFinals = code => {
+export const convertFinals = (code) => {
 	const names = {
 		rof16: 'Neljännesvälierät',
 		rof8: 'Puolivälierät',
 		rof4: 'Välierät',
-		rof2: 'Mitaliottelut'
+		rof2: 'Mitaliottelut',
 	};
 	return names[code];
 };
 
-export const checkActivity = groupCode => {
+export const checkActivity = (groupCode) => {
 	return _.includes(['A', 'B', 'C', 'D', 'E', 'F'], groupCode);
 };

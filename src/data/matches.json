@@ -4,32 +4,32 @@
 			"id": 0,
 			"home": "TUR",
 			"away": "ITA",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 1,
+			"awayScore": 3,
 			"group": "A"
 		},
 		{
 			"id": 1,
 			"home": "WAL",
 			"away": "SUI",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 2,
+			"awayScore": 1,
 			"group": "A"
 		},
 		{
 			"id": 2,
 			"home": "DEN",
 			"away": "FIN",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 1,
+			"awayScore": 3,
 			"group": "B"
 		},
 		{
 			"id": 3,
 			"home": "BEL",
 			"away": "RUS",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 1,
+			"awayScore": 1,
 			"group": "B"
 		},
 		{
@@ -100,24 +100,24 @@
 			"id": 12,
 			"home": "FIN",
 			"away": "RUS",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 2,
+			"awayScore": 1,
 			"group": "B"
 		},
 		{
 			"id": 13,
 			"home": "TUR",
 			"away": "WAL",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 0,
+			"awayScore": 3,
 			"group": "A"
 		},
 		{
 			"id": 14,
 			"home": "ITA",
 			"away": "SUI",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 2,
+			"awayScore": 0,
 			"group": "A"
 		},
 		{
@@ -132,8 +132,8 @@
 			"id": 16,
 			"home": "DEN",
 			"away": "BEL",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 2,
+			"awayScore": 1,
 			"group": "B"
 		},
 		{

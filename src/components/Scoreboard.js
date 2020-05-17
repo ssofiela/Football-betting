@@ -10,6 +10,7 @@ import HeaderComponent from './HeaderComponent';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { getPoints } from '../utils/utils';
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
 	container: {
@@ -116,17 +117,19 @@ const Scoreboard = props => {
 	return (
 		<Paper elevation={3} className={classes.container}>
 			<HeaderComponent backgroundColor={false} name={groupName} />
-
+			<Divider variant="middle" />
 			<div className={`${classes.scoreboard} `}>
 				{showAll ? getScoreboard(scoreboard.length) : getScoreboard(3)}
 			</div>
-			<IconButton
-				aria-label="show more or less"
-				className={classes.showmore}
-				onClick={() => setShowAll(!showAll)}
-			>
-				{showAll ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-			</IconButton>
+			{scoreboard.length > 3 && (
+				<IconButton
+					aria-label="show more or less"
+					className={classes.showmore}
+					onClick={() => setShowAll(!showAll)}
+				>
+					{showAll ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+				</IconButton>
+			)}
 		</Paper>
 	);
 };

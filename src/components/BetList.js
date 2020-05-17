@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { setTitle } from '../redux/actions';
+import { setTitle, setUserGroup, getUserGroup } from '../redux/actions';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -73,7 +73,11 @@ const BetList = props => {
 		<div>
 			<HeaderComponent
 				backgroundColor={true}
-				name={isActive ? 'Syötä veikkaukset' : 'Otteluparit eivät ole valmiita'}
+				name={
+					isActive
+						? 'Syötä veikkaukset'
+						: 'Otteluparit eivät ole vielä selvillä'
+				}
 			/>
 			<div>{listMatches()}</div>
 			<Button
@@ -93,6 +97,10 @@ const BetList = props => {
 					}
 					setErrors(errorList);
 					if (fullList) {
+						let updatedUserGroup = props.getUserGroup;
+						updatedUserGroup[props.firebase.getCurrentUser().uid][
+							groupChar
+						] = bets;
 						props.firebase
 							.users()
 							.doc(props.firebase.getCurrentUser().uid)
@@ -102,11 +110,13 @@ const BetList = props => {
 								},
 								{ merge: true }
 							);
+						props.setUserGroup(updatedUserGroup);
 						props.state.history.push({
 							pathname: '/matsi',
 							state: {
 								matches: matches,
-								groupChar: groupChar
+								groupChar: groupChar,
+								justSaved: true
 							}
 						});
 					}
@@ -136,4 +146,10 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default connect(null, { setTitle })(BetList);
+const mapStateToProps = state => {
+	return {
+		getUserGroup: getUserGroup(state)
+	};
+};
+
+export default connect(mapStateToProps, { setTitle, setUserGroup })(BetList);

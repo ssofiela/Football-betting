@@ -55,7 +55,7 @@ const HomePage = props => {
 			props.setMatches(results[1]);
 			setLoading(false);
 		});
-		writeDB();
+		//writeDB();
 	}, []);
 
 	const writeDB = () => {
@@ -87,8 +87,6 @@ const HomePage = props => {
 	);
 };
 
-const HeaderComponentFirebase = withFirebase(HeaderComponent);
-const GroupListFirebase = withFirebase(GroupList);
 const ScoreboardRouter = withRouter(Scoreboard);
 
 export default connect(null, {
