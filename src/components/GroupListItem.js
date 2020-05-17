@@ -48,7 +48,9 @@ const GroupListItem = props => {
 		>
 			{props.groupChar.length === 1 ? (
 				<Grid container direction="row" justify="space-evenly">
-					<p>{'Lohko ' + props.groupChar}</p>
+					<p style={{ fontVariant: 'small-caps' }}>
+						{'Lohko ' + props.groupChar}
+					</p>
 					{getTeams()}
 				</Grid>
 			) : (

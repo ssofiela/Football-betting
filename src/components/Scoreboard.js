@@ -115,7 +115,7 @@ const Scoreboard = props => {
 
 	return (
 		<Paper elevation={3} className={classes.container}>
-			<HeaderComponent name={groupName} />
+			<HeaderComponent backgroundColor={false} name={groupName} />
 
 			<div className={`${classes.scoreboard} `}>
 				{showAll ? getScoreboard(scoreboard.length) : getScoreboard(3)}

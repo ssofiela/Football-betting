@@ -71,7 +71,10 @@ const BetList = props => {
 
 	return (
 		<div>
-			<HeaderComponent name="Syötä veikkaukset" />
+			<HeaderComponent
+				backgroundColor={true}
+				name={isActive ? 'Syötä veikkaukset' : 'Otteluparit eivät ole valmiita'}
+			/>
 			<div>{listMatches()}</div>
 			<Button
 				disabled={!isActive}

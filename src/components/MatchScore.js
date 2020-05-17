@@ -34,6 +34,12 @@ const useStyles = makeStyles(theme => ({
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
+	pointsCentered: {
+		display: 'flex',
+		textAlign: 'center',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
 	points: {
 		display: 'flex',
 		justifyContent: 'center',
@@ -56,6 +62,9 @@ const useStyles = makeStyles(theme => ({
 	wrongAns: {
 		backgroundColor: theme.palette.points.wrongAnswer,
 		borderColor: theme.palette.points.wrongAnswer
+	},
+	textStyle: {
+		fontVariant: 'small-caps'
 	}
 }));
 
@@ -87,7 +96,7 @@ const MacthScore = props => {
 		const groupJSX = [];
 		for (let j = 0; j < Object.keys(groupBets).length; j++) {
 			groupJSX.push(
-				<h2 className={styles.center} key={j}>
+				<h2 className={[styles.center, styles.textStyle].join(' ')} key={j}>
 					{Object.values(groupBets)[j].name}
 				</h2>
 			);
@@ -121,7 +130,7 @@ const MacthScore = props => {
 									}
 								/>
 							</Grid>
-							<Grid item xs={2} style={{ flexBasis: '0%' }}>
+							<Grid item xs={2} className={styles.pointsCentered}>
 								<PointCircle
 									index={i}
 									groupChar={groupChar}
