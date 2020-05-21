@@ -17,7 +17,6 @@ import _ from 'lodash';
 import { getFlag, convertFinals } from '../utils/utils';
 import Card from './Card';
 import PointCircle from './PointCircle';
-import HeaderDivider from './HeaderDivider';
 import HorizontalDivider from './HorizontalDivider';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -56,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	row: {
 		direction: 'row',
-		display: 'flex',
-	},
+		display: 'flex'
+	}
 }));
 
 const MacthScore = (props) => {
@@ -89,17 +88,10 @@ const MacthScore = (props) => {
 	const listGroups = () => {
 		const groupJSX = [];
 		for (let j = 0; j < Object.keys(groupBets).length; j++) {
-			/*
 			groupJSX.push(
 				<h3 className={classes.textStyle} key={j}>
 					{Object.values(groupBets)[j].name}
 				</h3>
-			);
-			*/
-			groupJSX.push(
-				<HeaderDivider className={classes.textStyle} key={j}>
-					{Object.values(groupBets)[j].name}
-				</HeaderDivider>
 			);
 			if (_.values(groupBets)[j].bets === undefined) {
 				groupJSX.push(
@@ -110,7 +102,11 @@ const MacthScore = (props) => {
 			} else {
 				for (let i = 0; i < matches.length; i++) {
 					groupJSX.push(
-						<Grid key={`grid ${i}, ${j}`} container className={classes.row}>
+						<Grid
+							key={`grid ${i}, ${j}`}
+							container
+							className={classes.row}
+						>
 							<Grid item xs={10}>
 								<Card
 									home={getFlag(matches[i].home)}
@@ -166,16 +162,16 @@ const MacthScore = (props) => {
 				open={showSnackBar}
 				autoHideDuration={6000}
 				onClose={closeSnackbar}
-				message="Veikkaukset tallennettu!"
+				message='Veikkaukset tallennettu!'
 				action={
 					<React.Fragment>
 						<IconButton
-							size="small"
-							aria-label="close"
-							color="inherit"
+							size='small'
+							aria-label='close'
+							color='inherit'
 							onClick={closeSnackbar}
 						>
-							<CloseIcon fontSize="small" />
+							<CloseIcon fontSize='small' />
 						</IconButton>
 					</React.Fragment>
 				}

@@ -19,18 +19,15 @@ const useStyles = makeStyles(() => ({
 		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
-		fontVariant: 'small-caps',
+		fontVariant: 'small-caps'
 	},
 	row: {
 		direction: 'row',
-		display: 'flex',
+		display: 'flex'
 	},
-	pointsCentered: {
-		display: 'flex',
-		textAlign: 'center',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
+	gridStyle: {
+		flexBasis: '0%'
+	}
 }));
 
 const PlayerBets = (props) => {
@@ -67,7 +64,7 @@ const PlayerBets = (props) => {
 									awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
 								/>
 							</Grid>
-							<Grid item xs={2} className={classes.pointsCentered}>
+							<Grid item xs={2} className={classes.gridStyle}>
 								<PointCircle
 									index={index}
 									groups={props.getMatches}

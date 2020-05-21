@@ -2,18 +2,11 @@ import React from 'react';
 import { makeStyles, Grid, Paper, Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-	groupContainer: {
-		margin: '10px',
-		minHeight: 50,
-
-		display: 'flex',
-		textAlign: 'center',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-
-	form: {
-		width: '100%',
+	groupContainer: { margin: '10px', height: 50 },
+	root: {
+		'& .MuiTextField-root': {
+			maxWidth: 100,
+		},
 	},
 	center: {
 		display: 'flex',
@@ -27,8 +20,8 @@ const Card = (props) => {
 	const classes = useStyles();
 	return (
 		<Paper elevation={3} className={classes.groupContainer}>
-			<form className={classes.form} noValidate autoComplete="off">
-				<Grid container>
+			<form className={classes.root} noValidate autoComplete="off">
+				<Grid container direction="row">
 					<Grid item xs className={classes.center}>
 						{props.home}
 					</Grid>

@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		marginTop: 10,
 		marginBottom: 10,
+		marginRight: 10,
 		height: '44px',
 		width: '44px',
 		borderRadius: '50%',
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		color: 'white',
-	},
+	}
 }));
 
 const PointCircle = (props) => {
@@ -80,8 +81,10 @@ const PointCircle = (props) => {
 					: classes.wrongAns,
 			].join(' ')}
 		>
-			<div className={classes.textStyle}>
-				{points < 0 ? <SportsSoccerIcon fontSize="large" /> : `${points}p`}
+			<div
+				className={classes.textStyle}
+			>
+				{points < 0 ? <SportsSoccerIcon fontSize='large' /> : `${points}p`}
 			</div>
 		</Paper>
 	);
