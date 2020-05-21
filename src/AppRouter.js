@@ -7,6 +7,8 @@ import {
 	setUserUid,
 	setLoadingState,
 	getLoadingState,
+	getUserUid,
+	getGroupName,
 } from './redux/actions';
 import _ from 'lodash';
 import Register from '../src/pages/register.js';
@@ -42,45 +44,69 @@ const AppRouter = (props) => {
 
 	// Check authentication
 	useEffect(() => {
-		//setLoadingState(true);
-		props.firebase.auth.onAuthStateChanged(function (user) {
-			setAuth(user);
-			Promise.all([
+		props.firebase.auth.onAuthStateChanged(async (user) => {
+			console.log('auth state changed');
+			console.log(props.getGroupName, user);
+			if (user) {
 				props.firebase
 					.users()
+					.doc(user.uid)
 					.get()
-					.then((querySnapshot) => {
-						return _.fromPairs(
-							querySnapshot.docs.map((user) => [
-								user.id,
-								{ ...user.data(), id: user.id },
-							])
-						);
-					}),
-				props.firebase
-					.matches()
-					.get()
-					.then((querySnapshot) => {
-						return _.groupBy(
-							querySnapshot.docs.map((item) => item.data()),
-							(item) => item.group
-						);
-					}),
-			]).then((results) => {
-				props.setUserUid(props.firebase.getCurrentUser().uid);
-				props.setUserGroup(
-					_.pickBy(
-						results[0],
-						(user) =>
-							user.userGroup ===
-							results[0][props.firebase.getCurrentUser().uid].userGroup
-					)
-				);
-				props.setMatches(results[1]);
-				setLoading(false);
-			});
+					.then((currentUser) => {
+						fetchData({ ...currentUser.data(), uid: user.uid });
+					})
+					.catch(() => {
+						if (props.getGroupName) {
+							console.log('user: ', user);
+							console.log(props.state);
+							setLoading(true);
+							fetchData(user);
+						} else {
+							setLoading(false);
+						}
+					});
+			}
+			setLoading(false);
+			setAuth(user);
 		});
-	}, [props]);
+	}, [props, props.getGroupName]);
+
+	const fetchData = (currentUser) => {
+		console.log(currentUser);
+		Promise.all([
+			props.firebase
+				.users()
+				.where(
+					'userGroup',
+					'==',
+					currentUser.userGroup ? currentUser.userGroup : props.getGroupName
+				)
+				.get()
+				.then((querySnapshot) => {
+					return _.fromPairs(
+						querySnapshot.docs.map((user) => [
+							user.id,
+							{ ...user.data(), id: user.id },
+						])
+					);
+				}),
+			props.firebase
+				.matches()
+				.get()
+				.then((querySnapshot) => {
+					return _.groupBy(
+						querySnapshot.docs.map((item) => item.data()),
+						(item) => item.group
+					);
+				}),
+		]).then((results) => {
+			console.log(results[0]);
+			props.setUserUid(currentUser.uid);
+			props.setUserGroup(results[0]);
+			props.setMatches(results[1]);
+			setLoading(false);
+		});
+	};
 
 	// If user is not authenticated, she/he can only log in/register
 	const authCheck = () => {
@@ -99,7 +125,7 @@ const AppRouter = (props) => {
 						<Route key="match" exact path="/matsi" component={MatchScorePage} />
 						<Route key="bet" exact path="/veikkaa" component={BetPage} />
 						<Route key="player" exact path="/pelaaja" component={PlayerPage} />
-						<Route key="home" exact path="/" component={HomePageWithNav} />
+						<Route key="home" exact path="/" component={HomePageWithRouter} />
 						<Redirect to="/" />
 					</Switch>
 				);
@@ -129,12 +155,13 @@ const AppRouter = (props) => {
 	);
 };
 
-const HomePageWithNav = withFirebase(withRouter(HomePage));
+const HomePageWithRouter = withFirebase(withRouter(HomePage));
 const TopBarWithRouter = withFirebase(withRouter(TopBar));
 
 const mapStateToProps = (state) => {
 	return {
-		getLoadingState: getLoadingState(state),
+		getUserUid: getUserUid(state),
+		getGroupName: getGroupName(state),
 	};
 };
 

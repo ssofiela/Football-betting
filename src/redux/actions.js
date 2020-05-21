@@ -2,6 +2,7 @@ import {
 	SET_TITLE,
 	SET_MATCHES,
 	SET_USER_GROUP,
+	SET_GROUP_NAME,
 	SET_USER_UID,
 	SET_LOADING_STATE,
 } from './actionTypes';
@@ -27,6 +28,13 @@ export const setUserGroup = (userGroup) => ({
 	},
 });
 
+export const setGroupName = (groupName) => ({
+	type: SET_GROUP_NAME,
+	payload: {
+		groupName,
+	},
+});
+
 export const setUserUid = (uid) => ({
 	type: SET_USER_UID,
 	payload: {
@@ -44,5 +52,6 @@ export const setLoadingState = (loading) => ({
 export const getTitle = (store) => store.topbar.title;
 export const getMatches = (store) => store.matches;
 export const getUserGroup = (store) => store.user.group;
+export const getGroupName = (store) => store.user.groupName;
 export const getUserUid = (store) => store.user.uid;
 export const getLoadingState = (store) => store.util.loading;

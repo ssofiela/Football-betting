@@ -1,0 +1,42 @@
+[debug] [2020-05-17T14:43:13.782Z] ----------------------------------------------------------------------
+[debug] [2020-05-17T14:43:13.784Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tomi\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2020-05-17T14:43:13.785Z] CLI Version:   8.2.0
+[debug] [2020-05-17T14:43:13.785Z] Platform:      win32
+[debug] [2020-05-17T14:43:13.785Z] Node Version:  v10.13.0
+[debug] [2020-05-17T14:43:13.786Z] Time:          Sun May 17 2020 17:43:13 GMT+0300 (Eastern European Summer Time)
+[debug] [2020-05-17T14:43:13.786Z] ----------------------------------------------------------------------
+[debug] [2020-05-17T14:43:13.786Z] 
+[debug] [2020-05-17T14:43:13.792Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-17T14:43:13.792Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Tomi\Documents\football-betting
+
+[debug] [2020-05-17T14:44:17.009Z] ----------------------------------------------------------------------
+[debug] [2020-05-17T14:44:17.011Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tomi\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2020-05-17T14:44:17.011Z] CLI Version:   8.2.0
+[debug] [2020-05-17T14:44:17.011Z] Platform:      win32
+[debug] [2020-05-17T14:44:17.011Z] Node Version:  v10.13.0
+[debug] [2020-05-17T14:44:17.013Z] Time:          Sun May 17 2020 17:44:17 GMT+0300 (Eastern European Summer Time)
+[debug] [2020-05-17T14:44:17.013Z] ----------------------------------------------------------------------
+[debug] [2020-05-17T14:44:17.013Z] 
+[debug] [2020-05-17T14:44:17.019Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-17T14:44:17.019Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Tomi\Documents\football-betting
+

@@ -22,10 +22,12 @@ const GroupList = (props) => {
 	const [bettedGroups, setBettedGroups] = useState([]);
 
 	useEffect(() => {
+		console.log(props.getUserGroup);
+		console.log(props.getUserUid);
 		let bettedGroups = _.keys(
 			_.find(props.getUserGroup, (user) => user.id === props.getUserUid)
 		).filter((key) => _.includes('ABCDEF', key));
-
+		console.log(bettedGroups);
 		setBettedGroups(bettedGroups);
 	}, [props]);
 

@@ -124,8 +124,8 @@
 			"id": 15,
 			"home": "UKR",
 			"away": "UND",
-			"homeScore": -1,
-			"awayScore": -1,
+			"homeScore": 1,
+			"awayScore": 0,
 			"group": "C"
 		},
 		{

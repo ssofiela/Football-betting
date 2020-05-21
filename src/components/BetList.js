@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
 		fontVariant: 'small-caps',
 	},
 	center: {
-		textAlign: 'center'
-	}
+		textAlign: 'center',
+	},
 }));
 
 const BetList = (props) => {
@@ -48,10 +48,10 @@ const BetList = (props) => {
 						<TextField
 							disabled={!isActive}
 							required
-							name='bet'
-							type='number'
-							id='bet'
-							inputProps={{ min: 0,  className: classes.center }}
+							name="bet"
+							type="number"
+							id="bet"
+							inputProps={{ min: 0, className: classes.center }}
 							onChange={(event) => handleBets(event.target.value, i * 2)}
 							fullWidth
 							error={errors[i * 2] === 1}
@@ -62,9 +62,9 @@ const BetList = (props) => {
 						<TextField
 							disabled={!isActive}
 							required
-							name='bet'
-							type='number'
-							id='bet'
+							name="bet"
+							type="number"
+							id="bet"
 							inputProps={{ min: 0, className: classes.center }}
 							onChange={(event) => handleBets(event.target.value, i * 2 + 1)}
 							fullWidth
@@ -91,8 +91,8 @@ const BetList = (props) => {
 			<Button
 				disabled={!isActive}
 				fullWidth
-				variant='contained'
-				color='primary'
+				variant="contained"
+				color="primary"
 				className={classes.submit}
 				onClick={() => {
 					let fullList = true;
@@ -106,6 +106,8 @@ const BetList = (props) => {
 					setErrors(errorList);
 					if (fullList) {
 						let updatedUserGroup = props.getUserGroup;
+						console.log(updatedUserGroup);
+						console.log(props.firebase.getCurrentUser().uid);
 						updatedUserGroup[props.firebase.getCurrentUser().uid][
 							groupChar
 						] = bets;
@@ -117,16 +119,18 @@ const BetList = (props) => {
 									[groupChar]: bets,
 								},
 								{ merge: true }
-							);
-						props.setUserGroup(updatedUserGroup);
-						props.state.history.push({
-							pathname: '/matsi',
-							state: {
-								matches: matches,
-								groupChar: groupChar,
-								justSaved: true,
-							},
-						});
+							)
+							.then(() => {
+								props.setUserGroup(updatedUserGroup);
+								props.state.history.push({
+									pathname: '/matsi',
+									state: {
+										matches: matches,
+										groupChar: groupChar,
+										justSaved: true,
+									},
+								});
+							});
 					}
 				}}
 			>
