@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	showMore: {
 		position: 'absolute',
-		right: 5,
+		right: 0,
 		bottom: 2,
 	},
 	gold: { backgroundColor: theme.palette.chipColor.gold },
@@ -114,13 +114,13 @@ const Scoreboard = (props) => {
 	return (
 		<Paper elevation={3} className={classes.container}>
 			<HeaderComponent backgroundColor={false} name={groupName} />
-			<Divider variant='middle' />
+			<Divider variant="middle" />
 			<div className={`${classes.scoreboard} `}>
 				{showAll ? getScoreboard(scoreboard.length) : getScoreboard(3)}
 			</div>
 			{scoreboard.length > 3 && (
 				<IconButton
-					aria-label='show more or less'
+					aria-label="show more or less"
 					className={classes.showMore}
 					onClick={() => setShowAll(!showAll)}
 				>
