@@ -1,6 +1,7 @@
 export const SET_TITLE = 'SET_TITLE';
 export const SET_MATCHES = 'SET_MATCHES';
 export const SET_USER_GROUP = 'SET_USER_GROUP';
+export const SET_USER_DATA = 'SET_USER_DATA';
 export const SET_USER_UID = 'SET_USER_UID';
 export const SET_LOADING_STATE = 'SET_LOADING_STATE';
 

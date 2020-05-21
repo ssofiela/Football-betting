@@ -46,24 +46,19 @@ const Scoreboard = (props) => {
 	const [showAll, setShowAll] = useState(false);
 
 	useEffect(() => {
-		const currentUser = props.getUserGroup[props.getUserUid];
-		console.log(props.getUserGroup, props.getUserUid);
+		console.log(props.getUserGroup);
+		console.log(props.getUserUid);
 		const scoreboard = _.sortBy(
-			_.values(
-				_.pickBy(
-					props.getUserGroup,
-					(item) => item.userGroup === currentUser.userGroup
-				)
-			).map((user) => {
+			_.values(props.getUserGroup).map((user) => {
 				return {
 					points: countPoints(user, props.getMatches),
-					username: user.name ? user.name : 'Anonymous',
+					username: user.name ? user.name : 'Anonyymi',
 					id: user.id,
 				};
 			}),
 			['points']
 		).reverse();
-		setGroupName(currentUser.userGroup);
+		setGroupName(props.getUserGroup[props.getUserUid].userGroup);
 		setScoreBoard(scoreboard);
 	}, [props]);
 

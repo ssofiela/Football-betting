@@ -7,6 +7,7 @@ import {
 	setUserUid,
 	setLoadingState,
 	getLoadingState,
+	getUserData,
 } from './redux/actions';
 import _ from 'lodash';
 import Register from '../src/pages/register.js';
@@ -45,42 +46,55 @@ const AppRouter = (props) => {
 		//setLoadingState(true);
 		props.firebase.auth.onAuthStateChanged(function (user) {
 			setAuth(user);
-			Promise.all([
+			setLoading(false);
+			if (user && !_.isEmpty(props.getUserData)) {
+				console.log(props.getUserData);
 				props.firebase
 					.users()
-					.get()
-					.then((querySnapshot) => {
-						return _.fromPairs(
-							querySnapshot.docs.map((user) => [
-								user.id,
-								{ ...user.data(), id: user.id },
-							])
-						);
-					}),
-				props.firebase
-					.matches()
-					.get()
-					.then((querySnapshot) => {
-						return _.groupBy(
-							querySnapshot.docs.map((item) => item.data()),
-							(item) => item.group
-						);
-					}),
-			]).then((results) => {
-				props.setUserUid(props.firebase.getCurrentUser().uid);
-				props.setUserGroup(
-					_.pickBy(
-						results[0],
-						(user) =>
-							user.userGroup ===
-							results[0][props.firebase.getCurrentUser().uid].userGroup
-					)
-				);
-				props.setMatches(results[1]);
-				setLoading(false);
-			});
+					.doc(props.firebase.getCurrentUser().uid)
+					.set(props.getUserData)
+					.then(() => {
+						Promise.all([
+							props.firebase
+								.users()
+								.get()
+								.then((querySnapshot) => {
+									return _.fromPairs(
+										querySnapshot.docs.map((user) => [
+											user.id,
+											{ ...user.data(), id: user.id },
+										])
+									);
+								}),
+							props.firebase
+								.matches()
+								.get()
+								.then((querySnapshot) => {
+									return _.groupBy(
+										querySnapshot.docs.map((item) => item.data()),
+										(item) => item.group
+									);
+								}),
+						]).then((results) => {
+							console.log(results);
+							const myUserGroup = _.pickBy(
+								results[0],
+								(user) =>
+									user.userGroup ===
+									results[0][props.firebase.getCurrentUser().uid].userGroup
+							);
+							myUserGroup[props.firebase.getCurrentUser().uid] =
+								props.getUserData;
+							console.log(myUserGroup);
+							props.setUserUid(user.uid);
+							props.setUserGroup(myUserGroup);
+							props.setMatches(results[1]);
+							setLoading(false);
+						});
+					});
+			}
 		});
-	}, [props]);
+	}, [props, props.getUserData]);
 
 	// If user is not authenticated, she/he can only log in/register
 	const authCheck = () => {
@@ -135,6 +149,7 @@ const TopBarWithRouter = withFirebase(withRouter(TopBar));
 const mapStateToProps = (state) => {
 	return {
 		getLoadingState: getLoadingState(state),
+		getUserData: getUserData(state),
 	};
 };
 

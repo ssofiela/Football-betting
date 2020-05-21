@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getTitle } from '../redux/actions';
+import {
+	getTitle,
+	setUserData,
+	setUserGroup,
+	setUserUid,
+} from '../redux/actions';
 import {
 	makeStyles,
 	AppBar,
@@ -65,6 +70,9 @@ const TopBar = (props) => {
 							aria-label="log out"
 							onClick={() => {
 								props.firebase.doSignOut();
+								props.setUserData({});
+								props.setUserGroup({});
+								props.setUserUid('');
 							}}
 							className={classes.iconButton}
 						>
@@ -80,4 +88,8 @@ const mapStateToProps = (state) => {
 	return { getTitle: getTitle(state) };
 };
 
-export default connect(mapStateToProps, null)(TopBar);
+export default connect(mapStateToProps, {
+	setUserData,
+	setUserGroup,
+	setUserUid,
+})(TopBar);

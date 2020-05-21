@@ -15,11 +15,11 @@ export const getFlag = (team) => {
 	return (
 		<Flag
 			country={convertedCountryCode}
-			format='png'
+			format="png"
 			pngSize={64}
 			shiny={false}
-			alt='A flag'
-			basePath='../img/flags/'
+			alt="A flag"
+			basePath="../img/flags/"
 			width={flagSize}
 			height={flagSize}
 			key={team}
@@ -28,11 +28,15 @@ export const getFlag = (team) => {
 };
 
 export const getPoints = (
-	myHomeScore,
-	myAwayScore,
+	myHomeScoreStr,
+	myAwayScoreStr,
 	rightHomeScore,
 	rightAwayScore
 ) => {
+	const [myHomeScore, myAwayScore] = [
+		Number(myHomeScoreStr),
+		Number(myAwayScoreStr),
+	];
 	if (
 		rightHomeScore >= 0 &&
 		rightAwayScore >= 0 &&
