@@ -4,7 +4,7 @@ import Flag from 'react-flags';
 import { convertIocCode } from 'convert-country-codes';
 
 export const getFlag = (team) => {
-	const greatBritain = { WAL: '_wales', ENG: '_england' };
+	const greatBritain = { SCO: '_scotland', WAL: '_wales', ENG: '_england' };
 	const convertedCountryCode = convertIocCode(team)
 		? convertIocCode(team).iso3
 		: _.has(greatBritain, team)
@@ -15,11 +15,11 @@ export const getFlag = (team) => {
 	return (
 		<Flag
 			country={convertedCountryCode}
-			format='png'
+			format="png"
 			pngSize={64}
 			shiny={false}
-			alt='A flag'
-			basePath='../img/flags/'
+			alt="A flag"
+			basePath="../img/flags/"
 			width={flagSize}
 			height={flagSize}
 			key={team}
@@ -28,11 +28,13 @@ export const getFlag = (team) => {
 };
 
 export const getPoints = (
-	myHomeScore,
-	myAwayScore,
+	myHomeScoreStr,
+	myAwayScoreStr,
 	rightHomeScore,
 	rightAwayScore
 ) => {
+	const myHomeScore = Number(myHomeScoreStr);
+	const myAwayScore = Number(myAwayScoreStr);
 	if (
 		rightHomeScore >= 0 &&
 		rightAwayScore >= 0 &&

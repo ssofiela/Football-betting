@@ -12,6 +12,7 @@ import { getFlag } from '../utils/utils';
 import Card from './Card';
 import PointCircle from './PointCircle';
 import HorizontalDivider from './HorizontalDivider';
+import HeaderDivider from './HeaderDivider';
 
 const useStyles = makeStyles(() => ({
 	textStyle: {
@@ -19,15 +20,21 @@ const useStyles = makeStyles(() => ({
 		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
-		fontVariant: 'small-caps'
+		fontVariant: 'small-caps',
 	},
 	row: {
 		direction: 'row',
-		display: 'flex'
+		display: 'flex',
+	},
+	pointsCentered: {
+		display: 'flex',
+		textAlign: 'center',
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	gridStyle: {
-		flexBasis: '0%'
-	}
+		flexBasis: '0%',
+	},
 }));
 
 const PlayerBets = (props) => {
@@ -44,10 +51,10 @@ const PlayerBets = (props) => {
 		_.toPairs(_.pick(props.getUserGroup[user.id], showMatchGroups)).forEach(
 			(group, index) => {
 				betsJSX.push(
-					<h3
+					<HeaderDivider
 						key={'header ' + index}
 						className={classes.textStyle}
-					>{`Lohko ${group[0]}`}</h3>
+					>{`Lohko ${group[0]}`}</HeaderDivider>
 				);
 				props.getMatches[group[0]].forEach((match, index) => {
 					betsJSX.push(
@@ -64,7 +71,7 @@ const PlayerBets = (props) => {
 									awayScore={<Typography>{group[1][index * 2 + 1]}</Typography>}
 								/>
 							</Grid>
-							<Grid item xs={2} className={classes.gridStyle}>
+							<Grid item xs={2} className={classes.pointsCentered}>
 								<PointCircle
 									index={index}
 									groups={props.getMatches}

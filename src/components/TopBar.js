@@ -42,11 +42,11 @@ const TopBar = (props) => {
 		<AppBar position="sticky">
 			<Toolbar>
 				<Grid container spacing={3} justify="center" alignItems="center">
-					<Grid item xs={2}>
+					<Grid item xs={2} className={classes.iconCentered}>
 						<IconButton
 							aria-label="main page"
 							onClick={() => {
-								props.history.push('/login');
+								props.history.push('/');
 							}}
 						>
 							<SportsSoccerIcon

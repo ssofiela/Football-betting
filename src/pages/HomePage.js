@@ -64,9 +64,14 @@ const HomePage = (props) => {
 	return (
 		<div>
 			{loading ? (
-				<Grid container justify='center' alignItems='center'>
+				<Grid
+					container
+					justify="center"
+					alignItems="center"
+					style={{ marginTop: 200 }}
+				>
 					<Grid item>
-						<CircularProgress color='secondary' />
+						<CircularProgress color="secondary" />
 					</Grid>
 				</Grid>
 			) : (

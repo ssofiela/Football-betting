@@ -53,7 +53,7 @@ export default function Register(props) {
 						required
 						fullWidth
 						id="email"
-						label="Email Address"
+						label="Sähköposti"
 						name="email"
 						autoComplete="email"
 						autoFocus
@@ -66,7 +66,7 @@ export default function Register(props) {
 						required
 						fullWidth
 						name="password"
-						label="Password"
+						label="Salasana"
 						type="password"
 						id="password"
 						autoComplete="current-password"
