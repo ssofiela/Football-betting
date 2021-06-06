@@ -4,7 +4,7 @@ import Flag from 'react-flags';
 import { convertIocCode } from 'convert-country-codes';
 
 export const getFlag = (team) => {
-	const greatBritain = { WAL: '_wales', ENG: '_england' };
+	const greatBritain = { SCO: '_scotland', WAL: '_wales', ENG: '_england' };
 	const convertedCountryCode = convertIocCode(team)
 		? convertIocCode(team).iso3
 		: _.has(greatBritain, team)
