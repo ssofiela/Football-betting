@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage';
 import BetPage from './pages/BetPage';
 import MatchScorePage from './pages/MatchScorePage';
 import PlayerPage from './pages/PlayerPage';
+import AdminPage from './pages/AdminPage';
 
 import { withFirebase } from './components/Firebase';
 import TopBar from './components/TopBar';
@@ -48,6 +49,7 @@ export default function AppRouter(props) {
 					<Route key="match" exact path="/matsi" component={MatchScorePage} />
 					<Route key="bet" exact path="/veikkaa" component={BetPage} />
 					<Route key="player" exact path="/pelaaja" component={PlayerPage} />
+					<Route key="admin" exact path="/admin" component={AdminPage} />
 					<Route key="home" exact path="/" component={HomePageWithNav} />
 					<Redirect to="/" />
 				</Switch>
