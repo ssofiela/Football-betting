@@ -24,7 +24,7 @@ const GroupList = (props) => {
 	useEffect(() => {
 		let bettedGroups = _.keys(
 			_.find(props.getUserGroup, (user) => user.id === props.getUserUid)
-		).filter((key) => _.includes('ABCDEF', key));
+		).filter((key) => _.includes(['A', 'B', 'C', 'D', 'E', 'F', 'rof16'], key));
 
 		setBettedGroups(bettedGroups);
 	}, [props]);

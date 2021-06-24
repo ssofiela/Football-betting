@@ -8,7 +8,7 @@ import {
 } from '../redux/actions';
 import { makeStyles, Typography, Grid } from '@material-ui/core';
 import _ from 'lodash';
-import { getFlag } from '../utils/utils';
+import { getFlag, convertFinals } from '../utils/utils';
 import Card from './Card';
 import PointCircle from './PointCircle';
 import HorizontalDivider from './HorizontalDivider';
@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
 const PlayerBets = (props) => {
 	const classes = useStyles();
 	const { user } = props.props.location.state;
-	const showMatchGroups = ['A', 'B', 'C', 'D', 'E', 'F'];
+	const showMatchGroups = ['A', 'B', 'C', 'D', 'E', 'F', 'rof16'];
 	// Find group members
 	useEffect(() => {
 		props.setTitle(user.username);
@@ -51,10 +51,11 @@ const PlayerBets = (props) => {
 		_.toPairs(_.pick(props.getUserGroup[user.id], showMatchGroups)).forEach(
 			(group, index) => {
 				betsJSX.push(
-					<HeaderDivider
-						key={'header ' + index}
-						className={classes.textStyle}
-					>{`Lohko ${group[0]}`}</HeaderDivider>
+					<HeaderDivider key={'header ' + index} className={classes.textStyle}>
+						{group[0].length === 1
+							? `Lohko ${group[0]}`
+							: convertFinals(group[0])}
+					</HeaderDivider>
 				);
 				props.getMatches[group[0]].forEach((match, index) => {
 					betsJSX.push(

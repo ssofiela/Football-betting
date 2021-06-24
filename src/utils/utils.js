@@ -18,7 +18,7 @@ export const getFlag = (team) => {
 			format="png"
 			pngSize={64}
 			shiny={false}
-			alt="A flag"
+			alt={convertedCountryCode}
 			basePath="../img/flags/"
 			width={flagSize}
 			height={flagSize}
@@ -66,5 +66,5 @@ export const convertFinals = (code) => {
 };
 
 export const checkActivity = (groupCode) => {
-	return _.includes(['A', 'B', 'C', 'D', 'E', 'F'], groupCode);
+	return _.includes(['A', 'B', 'C', 'D', 'E', 'F', 'rof16'], groupCode);
 };
