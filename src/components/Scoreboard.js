@@ -5,7 +5,7 @@ import _ from 'lodash';
 import HeaderComponent from './HeaderComponent';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { getPoints } from '../utils/utils';
+import { getPoints, groupKeys } from '../utils/utils';
 import {
 	Divider,
 	Chip,
@@ -66,9 +66,8 @@ const Scoreboard = (props) => {
 	}, [props]);
 
 	const countPoints = (user, matches) => {
-		const groupChars = 'ABCDEF';
 		let points = 0;
-		for (let groupChar of groupChars) {
+		for (let groupChar of groupKeys) {
 			const userBets = user[groupChar];
 			if (userBets) {
 				matches[groupChar].forEach((match, index) => {

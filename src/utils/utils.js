@@ -3,6 +3,8 @@ import _ from 'lodash';
 import Flag from 'react-flags';
 import { convertIocCode } from 'convert-country-codes';
 
+export const groupKeys = ['A', 'B', 'C', 'D', 'E', 'F', 'rof16'];
+
 export const getFlag = (team) => {
 	const greatBritain = { SCO: '_scotland', WAL: '_wales', ENG: '_england' };
 	const convertedCountryCode = convertIocCode(team)
@@ -66,5 +68,5 @@ export const convertFinals = (code) => {
 };
 
 export const checkActivity = (groupCode) => {
-	return _.includes(['A', 'B', 'C', 'D', 'E', 'F', 'rof16'], groupCode);
+	return _.includes(groupKeys, groupCode);
 };

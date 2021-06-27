@@ -4,6 +4,7 @@ import { getMatches, getUserGroup, getUserUid } from '../redux/actions';
 import _ from 'lodash';
 import GroupListItem from './GroupListItem';
 import { withRouter } from 'react-router';
+import { groupKeys } from '../utils/utils';
 
 const groupOrderRef = [
 	'A',
@@ -24,7 +25,7 @@ const GroupList = (props) => {
 	useEffect(() => {
 		let bettedGroups = _.keys(
 			_.find(props.getUserGroup, (user) => user.id === props.getUserUid)
-		).filter((key) => _.includes(['A', 'B', 'C', 'D', 'E', 'F', 'rof16'], key));
+		).filter((key) => _.includes(groupKeys, key));
 
 		setBettedGroups(bettedGroups);
 	}, [props]);
