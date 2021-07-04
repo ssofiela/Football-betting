@@ -12,17 +12,17 @@ const useStyles = makeStyles((theme) => ({
 		fontVariant: 'small-caps',
 	},
 	center: {
-		textAlign: 'center'
-	}
+		textAlign: 'center',
+	},
 }));
 
 const BetList = (props) => {
 	const classes = useStyles();
+	const { groupChar, matches } = props.state.location.state;
 
-	const [bets, setBets] = useState(Array(12).fill(-1));
+	const [bets, setBets] = useState(Array(matches.length).fill(-1));
 	const [errors, setErrors] = useState([]); // 1 === error, 0 === no error
 	const [isActive, setIsActive] = useState(true);
-	const { groupChar, matches } = props.state.location.state;
 
 	useEffect(() => {
 		props.setTitle(
@@ -48,10 +48,10 @@ const BetList = (props) => {
 						<TextField
 							disabled={!isActive}
 							required
-							name='bet'
-							type='number'
-							id='bet'
-							inputProps={{ min: 0,  className: classes.center }}
+							name="bet"
+							type="number"
+							id="bet"
+							inputProps={{ min: 0, className: classes.center }}
 							onChange={(event) => handleBets(event.target.value, i * 2)}
 							fullWidth
 							error={errors[i * 2] === 1}
@@ -62,9 +62,9 @@ const BetList = (props) => {
 						<TextField
 							disabled={!isActive}
 							required
-							name='bet'
-							type='number'
-							id='bet'
+							name="bet"
+							type="number"
+							id="bet"
 							inputProps={{ min: 0, className: classes.center }}
 							onChange={(event) => handleBets(event.target.value, i * 2 + 1)}
 							fullWidth
@@ -91,12 +91,12 @@ const BetList = (props) => {
 			<Button
 				disabled={!isActive}
 				fullWidth
-				variant='contained'
-				color='primary'
+				variant="contained"
+				color="primary"
 				className={classes.submit}
 				onClick={() => {
 					let fullList = true;
-					let errorList = Array(12).fill(0);
+					let errorList = Array(matches.length).fill(0);
 					for (let i = 0; i < bets.length; i++) {
 						if (bets[i] === -1) {
 							fullList = false;
@@ -106,9 +106,8 @@ const BetList = (props) => {
 					setErrors(errorList);
 					if (fullList) {
 						let updatedUserGroup = props.getUserGroup;
-						updatedUserGroup[props.firebase.getCurrentUser().uid][
-							groupChar
-						] = bets;
+						updatedUserGroup[props.firebase.getCurrentUser().uid][groupChar] =
+							bets;
 						props.firebase
 							.users()
 							.doc(props.firebase.getCurrentUser().uid)
