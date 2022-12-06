@@ -5,7 +5,7 @@ import _ from 'lodash';
 import HeaderComponent from './HeaderComponent';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { getPoints, groupKeys } from '../utils/utils';
+import { countPoints } from '../utils/utils';
 import {
 	Divider,
 	Chip,
@@ -65,23 +65,6 @@ const Scoreboard = (props) => {
 		setScoreBoard(scoreboard);
 	}, [props]);
 
-	const countPoints = (user, matches) => {
-		let points = 0;
-		for (let groupChar of groupKeys) {
-			const userBets = user[groupChar];
-			if (userBets) {
-				matches[groupChar].forEach((match, index) => {
-					points += getPoints(
-						userBets[index * 2],
-						userBets[index * 2 + 1],
-						match.homeScore,
-						match.awayScore
-					);
-				});
-			}
-		}
-		return points;
-	};
 	const getScoreboard = (topHowMany) => {
 		const medalColors = [classes.gold, classes.silver, classes.bronze];
 		return _.chunk(

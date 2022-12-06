@@ -17,7 +17,7 @@ const HomePage = (props) => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		props.setTitle('em-kisaveikkaus');
+		props.setTitle('mm-kisaveikkaus');
 		Promise.all([
 			props.firebase
 				.users()

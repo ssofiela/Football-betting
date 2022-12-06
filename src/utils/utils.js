@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import Flag from 'react-flags';
-import { convertIocCode } from 'convert-country-codes';
+import { convertIso3Code } from 'convert-country-codes';
 
 export const groupKeys = [
 	'A',
@@ -10,15 +10,18 @@ export const groupKeys = [
 	'D',
 	'E',
 	'F',
+	'G',
+	'H',
 	'rof16',
 	'rof8',
 	'rof4',
+	'rof2',
 ];
 
 export const getFlag = (team) => {
 	const greatBritain = { SCO: '_scotland', WAL: '_wales', ENG: '_england' };
-	const convertedCountryCode = convertIocCode(team)
-		? convertIocCode(team).iso3
+	const convertedCountryCode = convertIso3Code(team)
+		? convertIso3Code(team).iso2
 		: _.has(greatBritain, team)
 		? greatBritain[team]
 		: 'UND';
@@ -43,10 +46,12 @@ export const getPoints = (
 	myHomeScoreStr,
 	myAwayScoreStr,
 	rightHomeScore,
-	rightAwayScore
+	rightAwayScore,
+	id
 ) => {
 	const myHomeScore = Number(myHomeScoreStr);
 	const myAwayScore = Number(myAwayScoreStr);
+	let points = 0;
 	if (
 		rightHomeScore >= 0 &&
 		rightAwayScore >= 0 &&
@@ -58,13 +63,33 @@ export const getPoints = (
 			rightHomeScore - rightAwayScore === myHomeScore - myAwayScore
 		) {
 			if (rightHomeScore === myHomeScore && rightAwayScore === myAwayScore) {
-				return 3;
+				points = 3;
 			} else {
-				return 1;
+				points = 1;
 			}
 		}
 	}
-	return 0;
+	if (id === 62) points *= 2;
+	return points;
+};
+
+export const countPoints = (user, matches) => {
+	let points = 0;
+	for (let groupChar of groupKeys) {
+		const userBets = user[groupChar];
+		if (userBets) {
+			matches[groupChar].forEach((match, index) => {
+				points += getPoints(
+					userBets[index * 2],
+					userBets[index * 2 + 1],
+					match.homeScore,
+					match.awayScore,
+					match.id
+				);
+			});
+		}
+	}
+	return points;
 };
 
 export const convertFinals = (code) => {
@@ -72,7 +97,7 @@ export const convertFinals = (code) => {
 		rof16: 'Neljännesvälierät',
 		rof8: 'Puolivälierät',
 		rof4: 'Välierät',
-		rof2: 'Mitaliottelut',
+		rof2: 'Finaali',
 	};
 	return names[code];
 };

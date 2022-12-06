@@ -57,7 +57,8 @@ const PointCircle = (props) => {
 					homeScore,
 					awayScore,
 					rightHomeScore,
-					rightAwayScore
+					rightAwayScore,
+					rightGame.id
 				);
 				setPoints(value);
 			}
