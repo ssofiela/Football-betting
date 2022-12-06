@@ -17,6 +17,7 @@ import { withFirebase } from './components/Firebase';
 import TopBar from './components/TopBar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import ChartPage from './pages/ChartPage.js';
 
 export default function AppRouter(props) {
 	const [userAuth, setAuth] = useState(false);
@@ -48,6 +49,7 @@ export default function AppRouter(props) {
 					<Route key="match" exact path="/matsi" component={MatchScorePage} />
 					<Route key="bet" exact path="/veikkaa" component={BetPage} />
 					<Route key="player" exact path="/pelaaja" component={PlayerPage} />
+					<Route key="statistics" exact path="/tilastot" component={ChartPage} />
 					<Route key="home" exact path="/" component={HomePageWithNav} />
 					<Redirect to="/" />
 				</Switch>

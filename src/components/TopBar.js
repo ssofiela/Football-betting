@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core/';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -61,6 +62,14 @@ const TopBar = (props) => {
 						</Typography>
 					</Grid>
 					<Grid item xs={2} className={classes.iconCentered}>
+						<IconButton
+							aria-label="statistics"
+							onClick={() => {
+								props.history.push('/tilastot');
+							}}
+						>
+							<ShowChartIcon fontSize="large" className={classes.whiteIcon} />
+						</IconButton>
 						<IconButton
 							aria-label="log out"
 							onClick={() => {
