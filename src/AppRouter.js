@@ -61,7 +61,7 @@ export default function AppRouter(props) {
 			<TopBarWithRouter title={'asd'} />
 			{indicator ? (
 				<div style={{ marginTop: 200 }}>
-					<Grid container justify="center" alignItems="center">
+					<Grid container justifyContent="center" alignItems="center">
 						<Grid item>
 							<CircularProgress color="secondary" />
 						</Grid>

@@ -17,7 +17,7 @@ const HomePage = (props) => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		props.setTitle('mm-kisaveikkaus');
+		props.setTitle('em-kisaveikkaus');
 		Promise.all([
 			props.firebase
 				.users()
@@ -66,7 +66,7 @@ const HomePage = (props) => {
 			{loading ? (
 				<Grid
 					container
-					justify="center"
+					justifyContent="center"
 					alignItems="center"
 					style={{ marginTop: 200 }}
 				>

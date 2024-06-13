@@ -1,7 +1,7 @@
 import { SET_TITLE } from '../actionTypes';
 
 const initialState = {
-	title: 'MM-KISAVEIKKAUS'
+	title: 'EM-KISAVEIKKAUS'
 };
 
 export default function(state = initialState, action) {

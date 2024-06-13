@@ -51,7 +51,7 @@ const GroupListItem = (props) => {
 				<Grid
 					container
 					direction='row'
-					justify='space-evenly'
+					justifyContent='space-evenly'
 					alignItems='center'
 				>
 					<p className={classes.textStyle}>
@@ -60,7 +60,7 @@ const GroupListItem = (props) => {
 					{getTeams()}
 				</Grid>
 			) : (
-				<Grid container direction='row' justify='space-evenly'>
+				<Grid container direction='row' justifyContent='space-evenly'>
 					<p className={classes.textStyle}>
 						{convertFinals(props.groupChar)}
 					</p>

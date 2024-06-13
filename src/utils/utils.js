@@ -10,8 +10,6 @@ export const groupKeys = [
 	'D',
 	'E',
 	'F',
-	'G',
-	'H',
 	'rof16',
 	'rof8',
 	'rof4',
@@ -69,7 +67,7 @@ export const getPoints = (
 			}
 		}
 	}
-	if (id === 62) points *= 2;
+	if (id === 50) points *= 2;
 	return points;
 };
 

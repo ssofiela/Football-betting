@@ -41,7 +41,7 @@ const TopBar = (props) => {
 	return (
 		<AppBar position="sticky">
 			<Toolbar>
-				<Grid container spacing={3} justify="center" alignItems="center">
+				<Grid container spacing={3} justifyContent="center" alignItems="center">
 					<Grid item xs={2} className={classes.iconCentered}>
 						<IconButton
 							aria-label="main page"

@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
 	palette: {
 		chipColor: { gold: '#FFDF00', silver: '#C0C0C0', bronze: '#cd7f32' },
 		primary: {

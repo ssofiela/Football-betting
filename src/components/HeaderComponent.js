@@ -25,7 +25,7 @@ const HeaderComponent = (props) => {
 	const classes = useStyles();
 
 	return (
-		<Grid container justify="center" alignItems="center">
+		<Grid container justifyContent="center" alignItems="center">
 			<Grid
 				item
 				className={[

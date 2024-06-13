@@ -13,8 +13,6 @@ const groupOrderRef = [
 	'D',
 	'E',
 	'F',
-	'G',
-	'H',
 	'rof16',
 	'rof8',
 	'rof4',
