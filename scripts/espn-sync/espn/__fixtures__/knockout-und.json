@@ -1,0 +1,34 @@
+{
+  "id": "727350",
+  "date": "2024-06-29T16:00Z",
+  "status": {
+    "type": {
+      "name": "STATUS_SCHEDULED",
+      "state": "pre",
+      "completed": false
+    }
+  },
+  "competitions": [
+    {
+      "id": "727350",
+      "notes": [
+        {
+          "type": "event",
+          "headline": "Round of 16"
+        }
+      ],
+      "competitors": [
+        {
+          "homeAway": "home",
+          "score": "0",
+          "team": { "abbreviation": "" }
+        },
+        {
+          "homeAway": "away",
+          "score": "0",
+          "team": { "abbreviation": "" }
+        }
+      ]
+    }
+  ]
+}
