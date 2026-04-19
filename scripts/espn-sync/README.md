@@ -51,3 +51,23 @@ Under the GitHub repo settings:
 
 `workflow_dispatch` lets you override `tournament_key`, pick the command
 (`sync` or `seed`), and toggle `--force` for re-seeding.
+
+## WC 2026 cutover checklist
+
+When WC 2026 fixtures are available in ESPN:
+
+1. Set GitHub repo variable `TOURNAMENT_KEY=wc2026`.
+2. Run the `ESPN Score Sync` workflow with `workflow_dispatch`:
+   - command: `seed`
+   - tournament_key: `wc2026`
+   - force: `false`
+3. Inspect the new `wc2026_matches` collection in the Firebase console.
+4. Edit `src/components/Firebase/firebase.js` — change the `matches()`
+   method to point at `'wc2026_matches'`. Deploy the React app.
+5. Update `src/utils/utils.js` `groupKeys` to match the WC 2026 bracket
+   (12 group letters A–L + the knockout codes in the tournament config).
+6. The daily cron at `0 6 * * *` takes over from here. Monitor the first
+   few runs via the Actions tab.
+
+Rollback: keep `euro2025_matches` untouched. If cutover breaks, revert
+the `firebase.js` change and the service stops affecting production.
