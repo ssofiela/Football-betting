@@ -27,9 +27,20 @@ function init() {
     );
   }
 
-  const credential = inlineJson
-    ? admin.credential.cert(JSON.parse(inlineJson))
-    : admin.credential.applicationDefault();
+  let credential;
+  if (inlineJson) {
+    let parsed;
+    try {
+      parsed = JSON.parse(inlineJson);
+    } catch (err) {
+      throw new Error(
+        `FIREBASE_SERVICE_ACCOUNT env var is not valid JSON: ${err.message}`
+      );
+    }
+    credential = admin.credential.cert(parsed);
+  } else {
+    credential = admin.credential.applicationDefault();
+  }
 
   app = admin.initializeApp({ credential });
   return app;
