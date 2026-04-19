@@ -1,0 +1,57 @@
+name: ESPN Score Sync
+
+on:
+  schedule:
+    # Daily at 06:00 UTC (catches overnight North American matches for WC 2026).
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Which command to run'
+        required: true
+        default: 'sync'
+        type: choice
+        options:
+          - sync
+          - seed
+      tournament_key:
+        description: 'Tournament config key (defaults to repo var TOURNAMENT_KEY)'
+        required: false
+        default: ''
+      force:
+        description: 'Pass --force (seed only)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scripts/espn-sync
+    env:
+      TOURNAMENT_KEY: ${{ github.event.inputs.tournament_key != '' && github.event.inputs.tournament_key || vars.TOURNAMENT_KEY }}
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: scripts/espn-sync/package-lock.json
+
+      - run: npm ci
+
+      - name: Run command
+        run: |
+          CMD="${{ github.event.inputs.command || 'sync' }}"
+          if [ "$CMD" = "seed" ] && [ "${{ github.event.inputs.force }}" = "true" ]; then
+            node index.js seed "$TOURNAMENT_KEY" --force
+          else
+            node index.js "$CMD" "$TOURNAMENT_KEY"
+          fi
