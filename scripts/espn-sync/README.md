@@ -36,3 +36,18 @@ npm test
 In GitHub Actions, the service-account JSON is passed via the
 `FIREBASE_SERVICE_ACCOUNT` secret and written to a temp file before the
 script runs. See `.github/workflows/espn-sync.yml`.
+
+## GitHub Actions configuration
+
+Under the GitHub repo settings:
+
+1. **Secrets → Actions → New repository secret**
+   - Name: `FIREBASE_SERVICE_ACCOUNT`
+   - Value: the full JSON contents of a service-account key with
+     Cloud Datastore User on the Firebase project.
+2. **Variables → Actions → New repository variable**
+   - Name: `TOURNAMENT_KEY`
+   - Value: `wc2026` in production, `euro2024_test` while testing.
+
+`workflow_dispatch` lets you override `tournament_key`, pick the command
+(`sync` or `seed`), and toggle `--force` for re-seeding.
