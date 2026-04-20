@@ -34,10 +34,11 @@ const HomePage = (props) => {
 				.matches()
 				.get()
 				.then((querySnapshot) => {
-					return _.groupBy(
+					const grouped = _.groupBy(
 						querySnapshot.docs.map((item) => item.data()),
 						(item) => item.group
 					);
+					return _.mapValues(grouped, (arr) => _.sortBy(arr, 'id'));
 				}),
 		]).then((results) => {
 			props.setUserUid(props.firebase.getCurrentUser().uid);
