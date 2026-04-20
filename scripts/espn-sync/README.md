@@ -69,5 +69,12 @@ When WC 2026 fixtures are available in ESPN:
 6. The daily cron at `0 6 * * *` takes over from here. Monitor the first
    few runs via the Actions tab.
 
+> ⚠ Re-seeding gotcha: `--force` does not delete existing docs. If you
+> re-seed after ESPN has added or removed matches, the new docs are
+> written by `set()` over their ESPN IDs, but old docs whose ESPN IDs
+> are no longer in the response stay orphaned with stale sequential
+> `id` values. Wipe the collection in the Firebase console first if you
+> need a clean re-seed.
+
 Rollback: keep `euro2025_matches` untouched. If cutover breaks, revert
 the `firebase.js` change and the service stops affecting production.
