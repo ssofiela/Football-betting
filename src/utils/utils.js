@@ -1,7 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import Flag from 'react-flags';
 import { convertIso3Code } from 'convert-country-codes';
+import FlagWithName from '../components/FlagWithName';
+import { getCountryName } from './countryNames';
 
 export const groupKeys = [
 	'A',
@@ -10,6 +11,13 @@ export const groupKeys = [
 	'D',
 	'E',
 	'F',
+	'G',
+	'H',
+	'I',
+	'J',
+	'K',
+	'L',
+	'rof32',
 	'rof16',
 	'rof8',
 	'rof4',
@@ -23,21 +31,10 @@ export const getFlag = (team) => {
 		: _.has(greatBritain, team)
 		? greatBritain[team]
 		: 'UND';
-	const flagSize =
-		window.innerWidth > 600 ? 64 : window.innerWidth > 330 ? 48 : 32;
-	return (
-		<Flag
-			country={convertedCountryCode}
-			format="png"
-			pngSize={64}
-			shiny={false}
-			alt={convertedCountryCode}
-			basePath="../img/flags/"
-			width={flagSize}
-			height={flagSize}
-			key={team}
-		/>
-	);
+	if (!convertedCountryCode) {
+		return <p key={team}>{getCountryName(team)}</p>;
+	}
+	return <FlagWithName countryCode={team} iso2={convertedCountryCode} key={team} />;
 };
 
 export const getPoints = (
@@ -67,7 +64,7 @@ export const getPoints = (
 			}
 		}
 	}
-	if (id === 50) points *= 2;
+	if (id === 103) points *= 2;
 	return points;
 };
 
@@ -92,10 +89,11 @@ export const countPoints = (user, matches) => {
 
 export const convertFinals = (code) => {
 	const names = {
+		rof32: 'Kahdeksasosavälierät',
 		rof16: 'Neljännesvälierät',
 		rof8: 'Puolivälierät',
 		rof4: 'Välierät',
-		rof2: 'Finaali',
+		rof2: 'Mitaliottelut',
 	};
 	return names[code];
 };

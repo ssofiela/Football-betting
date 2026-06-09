@@ -35,7 +35,7 @@ class Firebase {
 
 	users = () => this.db.collection('users');
 
-	matches = () => this.db.collection('euro2024_matches');
+	matches = () => this.db.collection('WC2026_matches');
 	userGroups = () => this.db.collection('userGroups');
 }
 
