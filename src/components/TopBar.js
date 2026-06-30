@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core/';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
+import TimelineIcon from '@material-ui/icons/Timeline';
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	whiteIcon: {
 		color: 'white',
 		padding: 0,
+		paddingLeft: 10,
 		margin: 0,
 	},
 	iconCentered: {
@@ -48,11 +50,21 @@ const TopBar = (props) => {
 							onClick={() => {
 								props.history.push('/');
 							}}
+							className={classes.iconButton}
 						>
 							<SportsSoccerIcon
 								fontSize="large"
 								className={classes.whiteIcon}
 							/>
+						</IconButton>
+						<IconButton
+							aria-label="statistics"
+							onClick={() => {
+								props.history.push('/tilastot');
+							}}
+							className={classes.iconButton}
+						>
+							<TimelineIcon fontSize="large" className={classes.whiteIcon} />
 						</IconButton>
 					</Grid>
 					<Grid item xs={8}>

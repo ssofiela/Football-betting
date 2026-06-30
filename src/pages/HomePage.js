@@ -10,7 +10,7 @@ import { CircularProgress, Grid } from '@material-ui/core/';
 import GroupList from '../components/GroupList';
 import Scoreboard from '../components/Scoreboard';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
+import { loadLeagueData } from '../utils/loadLeagueData';
 import data from './../data/matches.json';
 
 const HomePage = (props) => {
@@ -18,39 +18,10 @@ const HomePage = (props) => {
 
 	useEffect(() => {
 		props.setTitle('em-kisaveikkaus');
-		Promise.all([
-			props.firebase
-				.users()
-				.get()
-				.then((querySnapshot) => {
-					return _.fromPairs(
-						querySnapshot.docs.map((user) => [
-							user.id,
-							{ ...user.data(), id: user.id },
-						])
-					);
-				}),
-			props.firebase
-				.matches()
-				.get()
-				.then((querySnapshot) => {
-					const grouped = _.groupBy(
-						querySnapshot.docs.map((item) => item.data()),
-						(item) => item.group
-					);
-					return _.mapValues(grouped, (arr) => _.sortBy(arr, 'id'));
-				}),
-		]).then((results) => {
+		loadLeagueData(props.firebase).then(({ users, matches }) => {
 			props.setUserUid(props.firebase.getCurrentUser().uid);
-			props.setUserGroup(
-				_.pickBy(
-					results[0],
-					(user) =>
-						user.userGroup ===
-						results[0][props.firebase.getCurrentUser().uid].userGroup
-				)
-			);
-			props.setMatches(results[1]);
+			props.setUserGroup(users);
+			props.setMatches(matches);
 			setLoading(false);
 		});
 		//writeDB();
